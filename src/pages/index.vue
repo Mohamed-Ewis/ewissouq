@@ -1,0 +1,243 @@
+<template>
+  <div class="home-page">
+    <div class="row g-4">
+      <!-- Main feed — 9 columns -->
+      <div class="col-lg-9">
+        <StoriesBar v-if="stories.length" :stories="stories" />
+
+        <div class="feed-timeline">
+          <h5 class="fw-bold mb-3">
+            <i class="bi bi-clock-history me-2 text-primary" />{{ $t('home.timeline') }}
+          </h5>
+
+          <template v-if="productsStore.feedLoading && !productsStore.feed.length">
+            <div class="feed-shuffle-grid feed-shuffle-grid--loading">
+              <UiSkeletonLoader v-for="i in 5" :key="i" type="card" :class="skeletonClass(i - 1)" />
+            </div>
+          </template>
+
+          <FeedTimelineGrid v-else-if="productsStore.feed.length" :posts="productsStore.feed" />
+
+          <div ref="loadMoreRef" class="text-center py-3">
+            <div v-if="productsStore.feedLoading" class="spinner-border text-primary" role="status" />
+            <p v-else-if="!productsStore.feedHasMore && productsStore.feed.length" class="text-muted small">
+              {{ $t('home.endReached') }}
+            </p>
+          </div>
+
+          <UiEmptyState
+            v-if="!productsStore.feedLoading && !productsStore.feed.length"
+            icon="bi bi-newspaper"
+            :title="$t('home.noPosts')"
+            :description="$t('home.noPostsDesc')"
+          />
+        </div>
+      </div>
+
+      <!-- Sidebar — 3 columns -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <aside class="home-sidebar">
+          <div class="sidebar-card card p-3 mb-4">
+            <h6 class="fw-bold mb-3">{{ $t('home.quickLinks') }}</h6>
+            <ul class="list-unstyled mb-0">
+              <li v-for="link in quickLinks" :key="link.to" class="mb-2">
+                <NuxtLinkLocale :to="link.to" class="sidebar-link d-flex align-items-center gap-2">
+                  <i :class="link.icon" /> {{ link.label }}
+                </NuxtLinkLocale>
+              </li>
+            </ul>
+          </div>
+
+          <CategoryGrid :categories="categories.slice(0, 6)" variant="sidebar" class="mb-4" />
+
+          <div class="sidebar-card card p-3 mb-4">
+            <h6 class="fw-bold mb-3">
+              <i class="bi bi-hammer text-primary" /> {{ $t('home.liveAuctions') }}
+            </h6>
+            <div v-for="auction in liveAuctions.slice(0, 3)" :key="auction.id" class="mini-auction mb-2">
+              <NuxtLinkLocale :to="`/auctions/${auction.id}`" class="text-decoration-none d-flex gap-2 align-items-center">
+                <img :src="auction.images[0]" class="mini-img" :alt="auction.title" />
+                <div class="min-w-0">
+                  <div class="small fw-medium text-truncate">{{ auction.title }}</div>
+                  <div class="small text-primary fw-bold">{{ formatPrice(auction.currentBid) }}</div>
+                </div>
+              </NuxtLinkLocale>
+            </div>
+          </div>
+
+          <div class="sidebar-card card p-3 mb-4">
+            <h6 class="fw-bold mb-3">
+              <i class="bi bi-fire text-danger" /> {{ $t('home.trending') }}
+            </h6>
+            <div v-for="item in productsStore.trending.slice(0, 5)" :key="item.id" class="trending-item mb-2">
+              <NuxtLinkLocale :to="`/marketplace/${item.id}`" class="text-decoration-none d-flex gap-2">
+                <img :src="item.images[0]" class="trending-img" :alt="item.title" />
+                <div class="min-w-0">
+                  <div class="small fw-medium text-truncate">{{ item.title }}</div>
+                  <div class="small text-primary">{{ formatPrice(item.price) }}</div>
+                </div>
+              </NuxtLinkLocale>
+            </div>
+          </div>
+
+          <div class="sidebar-card card p-3">
+            <h6 class="fw-bold mb-3">
+              <i class="bi bi-eye text-info" /> {{ $t('home.mostViewed') }}
+            </h6>
+            <div v-for="item in productsStore.mostViewed.slice(0, 5)" :key="item.id" class="trending-item mb-2">
+              <NuxtLinkLocale :to="`/marketplace/${item.id}`" class="text-decoration-none d-flex gap-2">
+                <img :src="item.images[0]" class="trending-img" :alt="item.title" />
+                <div class="min-w-0">
+                  <div class="small fw-medium text-truncate">{{ item.title }}</div>
+                  <div class="small text-muted"><i class="bi bi-eye" /> {{ item.views }}</div>
+                </div>
+              </NuxtLinkLocale>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Mobile sections -->
+    <div class="d-lg-none mt-4">
+      <CategoryGrid :categories="categories.slice(0, 6)" class="mb-4" />
+      <FeedProductSection
+        :title="$t('home.trending')"
+        icon="bi bi-fire"
+        :products="productsStore.trending"
+        view-all-link="/search?sort=likes"
+      />
+      <FeedProductSection
+        :title="$t('home.recommended')"
+        icon="bi bi-stars"
+        :products="productsStore.recommended"
+        view-all-link="/search"
+      />
+    </div>
+  </div>
+</template>
+
+<script setup>
+definePageMeta({ layout: 'default' })
+
+import { getCategories, getStories } from '@/api/categories'
+import { getAuctions } from '@/api/auctions'
+
+const { t } = useI18n()
+const { formatPrice } = useFormatters()
+const productsStore = useProductsStore()
+const categories = ref([])
+const stories = ref([])
+const liveAuctions = ref([])
+
+const quickLinks = computed(() => [
+  { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
+  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer' },
+  { to: '/saved', label: t('home.savedItems'), icon: 'bi bi-bookmark' },
+  { to: '/create-listing', label: t('home.sellSomething'), icon: 'bi bi-plus-circle' },
+])
+
+const { target: loadMoreRef } = useInfiniteScroll(
+  () => productsStore.fetchFeed(true),
+  { canLoad: () => productsStore.feedHasMore && !productsStore.feedLoading },
+)
+
+const SKELETON_PATTERN = ['wide', 'tall', 'compact', 'compact', 'wide']
+
+function skeletonClass(index) {
+  return `shuffle-skeleton--${SKELETON_PATTERN[index % SKELETON_PATTERN.length]}`
+}
+
+onMounted(async () => {
+  await Promise.all([
+    productsStore.fetchFeed(),
+    productsStore.fetchHomeSections(),
+    getCategories().then((r) => { categories.value = r.data || r || [] }),
+    getStories().then((r) => { stories.value = r.data || r || [] }),
+    getAuctions({ status: 'active' }).then((r) => { liveAuctions.value = r.data || r || [] }),
+  ])
+})
+</script>
+
+<style scoped lang="scss">
+$sidebar-sticky-top: 6.5rem;
+
+.home-sidebar {
+  position: sticky;
+  top: $sidebar-sticky-top;
+  max-height: calc(100vh - #{$sidebar-sticky-top} - 1.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--es-border) transparent;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--es-border);
+    border-radius: 4px;
+  }
+}
+
+.sidebar-card {
+  border: 1px solid var(--es-border);
+}
+
+.sidebar-link {
+  color: var(--es-text-muted);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all $transition;
+  font-size: 0.9rem;
+
+  &:hover {
+    background: var(--es-surface-2);
+    color: var(--es-primary);
+  }
+}
+
+.mini-img,
+.trending-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.feed-shuffle-grid--loading {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .shuffle-skeleton--wide {
+    @media (min-width: 768px) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .shuffle-skeleton--tall {
+    @media (min-width: 768px) {
+      grid-row: span 2;
+      min-height: 420px;
+    }
+  }
+
+  .shuffle-skeleton--compact {
+    min-height: 200px;
+  }
+}
+</style>

@@ -1,0 +1,296 @@
+{
+  "app": {
+    "name": "EwiSSouq",
+    "tagline": "Marché social",
+    "description": "Marché social moderne pour acheter, vendre et enchérir."
+  },
+  "nav": {
+    "feed": "Fil d'actualité",
+    "marketplace": "Marché",
+    "auctions": "Enchères",
+    "search": "Recherche",
+    "sell": "Vendre",
+    "profile": "Profil",
+    "saved": "Enregistrés",
+    "menu": "Menu",
+    "home": "Accueil"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "viewAll": "Voir tout",
+    "items": "{count} articles",
+    "retry": "Réessayer",
+    "breadcrumb": "Fil d'Ariane"
+  },
+  "search": {
+    "placeholder": "Rechercher produits, catégories...",
+    "placeholderShort": "Rechercher...",
+    "title": "Recherche et filtres",
+    "subtitle": "Trouvez exactement ce que vous cherchez",
+    "activeFilters": "Filtres actifs : {count}",
+    "resultsCount": "{count} résultats trouvés",
+    "empty": {
+      "title": "Aucun résultat",
+      "description": "Essayez d'autres mots-clés ou ajustez vos filtres."
+    }
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "welcomeBack": "Bon retour",
+    "loginSubtitle": "Connectez-vous à votre compte EwiSSouq",
+    "registerTitle": "Créer un compte",
+    "registerSubtitle": "Rejoignez la communauté EwiSSouq",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "orContinueWith": "ou continuer avec",
+    "noAccount": "Pas de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "createAccount": "Créer un compte",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "forgotTitle": "Mot de passe oublié ?",
+    "forgotSubtitle": "Entrez votre e-mail et nous vous enverrons un lien de réinitialisation",
+    "sendResetLink": "Envoyer le lien",
+    "checkEmail": "Vérifiez votre e-mail",
+    "resetSent": "Nous avons envoyé un lien de réinitialisation à {email}",
+    "backToLogin": "Retour à la connexion",
+    "backToHome": "Retour à l'accueil",
+    "avatarAlt": "Avatar",
+    "brandWelcome": "Bienvenue sur EwiSSouq",
+    "brandTagline": "Achetez, vendez et connectez-vous sur le marché social moderne",
+    "statProducts": "Produits",
+    "statSellers": "Vendeurs",
+    "statRating": "Note"
+  },
+  "form": {
+    "email": "E-mail",
+    "emailPlaceholder": "vous{'@'}exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "passwordMin": "8 caractères minimum",
+    "confirmPassword": "Confirmer le mot de passe",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Jean Dupont"
+  },
+  "social": {
+    "google": "Google",
+    "facebook": "Facebook"
+  },
+  "theme": {
+    "light": "Mode clair",
+    "dark": "Mode sombre"
+  },
+  "home": {
+    "quickLinks": "Liens rapides",
+    "savedItems": "Articles enregistrés",
+    "sellSomething": "Vendre un article",
+    "liveAuctions": "Enchères en direct",
+    "timeline": "Fil chronologique",
+    "endReached": "Vous avez atteint la fin",
+    "trending": "Tendances",
+    "mostViewed": "Les plus vus",
+    "recommended": "Recommandés",
+    "noPosts": "Aucune publication",
+    "noPostsDesc": "Soyez le premier à publier un produit !"
+  },
+  "marketplace": {
+    "title": "Marché",
+    "subtitle": "Découvrez des produits neufs et d'occasion de vendeurs de confiance",
+    "all": "Tout",
+    "noProducts": "Aucun produit trouvé",
+    "noProductsDesc": "Essayez d'ajuster vos filtres ou revenez plus tard."
+  },
+  "product": {
+    "viewPhotos": "Voir les photos",
+    "watchVideo": "Voir la vidéo",
+    "views": "{count} vues",
+    "likes": "{count} j'aime",
+    "commentsCount": "{count} commentaires",
+    "contactSeller": "Contacter le vendeur",
+    "description": "Description",
+    "comments": "Commentaires",
+    "notFound": "Produit introuvable",
+    "notFoundDesc": "Cette annonce a peut-être été supprimée ou n'est plus disponible.",
+    "backToMarketplace": "Retour au marché",
+    "loadFailed": "Échec du chargement du produit"
+  },
+  "auctions": {
+    "title": "Enchères",
+    "subtitle": "Enchérissez sur des articles exclusifs avant la fin du temps",
+    "active": "Actives",
+    "ended": "Terminées",
+    "noAuctions": "Aucune enchère",
+    "noActive": "Aucune enchère active pour le moment.",
+    "noEnded": "Aucune enchère terminée à afficher.",
+    "currentBid": "Enchère actuelle",
+    "bidders": "Enchérisseurs",
+    "starting": "Départ : {amount}",
+    "biddersCount": "{count} enchérisseurs",
+    "timeRemaining": "Temps restant",
+    "bidSuccess": "Enchère placée avec succès !",
+    "bidHistory": "Historique des enchères",
+    "noBids": "Aucune enchère pour le moment",
+    "placeBid": "Placer une enchère",
+    "minBid": "Enchère minimum : {amount}",
+    "minPlaceholder": "Min {amount}",
+    "bidTooLow": "L'enchère doit être d'au moins {amount}",
+    "statusActive": "actif",
+    "statusEnded": "terminé"
+  },
+  "saved": {
+    "title": "Articles enregistrés",
+    "subtitle": "Produits que vous avez mis en favoris",
+    "empty": "Aucun article enregistré",
+    "emptyDesc": "Enregistrez les produits que vous aimez pour les retrouver plus tard.",
+    "browse": "Parcourir le marché"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread": "{count} non lues",
+    "markAllRead": "Tout marquer comme lu",
+    "empty": "Aucune notification",
+    "emptyDesc": "Vous êtes à jour !",
+    "emptyDropdown": "Aucune notification pour le moment",
+    "showAll": "Voir toutes les notifications",
+    "ariaLabel": "Notifications"
+  },
+  "listing": {
+    "title": "Créer une annonce",
+    "subtitle": "Publiez votre produit et atteignez des milliers d'acheteurs",
+    "photos": "Photos",
+    "photosHint": "Cliquez pour télécharger des images (plusieurs)",
+    "video": "Vidéo du produit (max 60 sec)",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Que vendez-vous ?",
+    "price": "Prix (AED)",
+    "description": "Description",
+    "descriptionPlaceholder": "Décrivez votre produit...",
+    "category": "Catégorie",
+    "selectCategory": "Sélectionner une catégorie",
+    "condition": "État",
+    "city": "Ville",
+    "cityPlaceholder": "Dubaï",
+    "area": "Quartier",
+    "areaPlaceholder": "Marina",
+    "country": "Pays",
+    "success": "Annonce créée avec succès !",
+    "publish": "Publier l'annonce"
+  },
+  "profile": {
+    "follow": "Suivre",
+    "following": "Abonné",
+    "message": "Message",
+    "newListing": "Nouvelle annonce",
+    "joined": "Inscrit {date}",
+    "coverAlt": "Couverture de {name}",
+    "followers": "Abonnés",
+    "followingCount": "Abonnements",
+    "listings": "Annonces",
+    "tabs": {
+      "published": "Publiés",
+      "sold": "Vendus",
+      "saved": "Enregistrés",
+      "activity": "Activité"
+    },
+    "noListings": "Aucune annonce",
+    "noListingsDesc": "Cet utilisateur n'a pas encore publié de produits.",
+    "noSold": "Aucun article vendu",
+    "noSaved": "Aucun article enregistré",
+    "listedProduct": "A publié un nouveau produit",
+    "daysAgo": "Il y a {count} jours"
+  },
+  "categories": {
+    "title": "Catégories",
+    "electronics": "Électronique",
+    "fashion": "Mode",
+    "homeGarden": "Maison & Jardin",
+    "vehicles": "Véhicules",
+    "sports": "Sports",
+    "books": "Livres",
+    "beauty": "Beauté",
+    "kids": "Enfants"
+  },
+  "filters": {
+    "title": "Filtres",
+    "clearAll": "Tout effacer",
+    "category": "Catégorie",
+    "allCategories": "Toutes les catégories",
+    "country": "Pays",
+    "allCountries": "Tous les pays",
+    "city": "Ville",
+    "allCities": "Toutes les villes",
+    "area": "Quartier",
+    "allAreas": "Tous les quartiers",
+    "priceRange": "Fourchette de prix (AED)",
+    "min": "Min",
+    "max": "Max",
+    "condition": "État",
+    "any": "Tout",
+    "sortBy": "Trier par",
+    "verifiedSellers": "Vendeurs vérifiés uniquement",
+    "hasVideo": "Avec vidéo",
+    "apply": "Appliquer les filtres"
+  },
+  "condition": {
+    "new": "Neuf",
+    "used": "Occasion",
+    "refurbished": "Reconditionné"
+  },
+  "sort": {
+    "recent": "Plus récent",
+    "views": "Plus vus",
+    "priceAsc": "Prix : croissant",
+    "priceDesc": "Prix : décroissant",
+    "rating": "Mieux notés",
+    "likes": "Plus aimés"
+  },
+  "country": {
+    "ae": "Émirats arabes unis",
+    "sa": "Arabie saoudite",
+    "eg": "Égypte",
+    "jo": "Jordanie"
+  },
+  "comments": {
+    "empty": "Aucun commentaire. Soyez le premier !",
+    "placeholder": "Écrire un commentaire..."
+  },
+  "empty": {
+    "title": "Rien ici pour le moment",
+    "description": "Revenez plus tard pour du nouveau contenu."
+  },
+  "error": {
+    "title": "Une erreur s'est produite",
+    "message": "Veuillez réessayer plus tard."
+  },
+  "user": {
+    "verified": "Vérifié"
+  },
+  "footer": {
+    "tagline": "Votre marché social moderne. Achetez, vendez et enchérissez en toute confiance.",
+    "marketplace": "Marché",
+    "browse": "Parcourir",
+    "auctions": "Enchères",
+    "sellItem": "Vendre un article",
+    "account": "Compte",
+    "login": "Connexion",
+    "register": "Inscription",
+    "savedItems": "Articles enregistrés",
+    "connect": "Réseaux",
+    "copyright": "© {year} EwiSSouq. Tous droits réservés."
+  },
+  "time": {
+    "justNow": "À l'instant",
+    "minutesAgo": "Il y a {count} min",
+    "hoursAgo": "Il y a {count} h",
+    "daysAgo": "Il y a {count} j",
+    "hrs": "h",
+    "min": "min",
+    "sec": "sec"
+  },
+  "currency": {
+    "code": "AED",
+    "amount": "{amount} AED"
+  }
+}

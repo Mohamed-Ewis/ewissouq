@@ -1,0 +1,296 @@
+{
+  "app": {
+    "name": "EwiSSouq",
+    "tagline": "السوق الاجتماعي",
+    "description": "سوق اجتماعي حديث للشراء والبيع والمزادات."
+  },
+  "nav": {
+    "feed": "الرئيسية",
+    "marketplace": "السوق",
+    "auctions": "المزادات",
+    "search": "بحث",
+    "sell": "بيع",
+    "profile": "الملف الشخصي",
+    "saved": "المحفوظات",
+    "menu": "القائمة",
+    "home": "الرئيسية"
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "viewAll": "عرض الكل",
+    "items": "{count} منتج",
+    "retry": "حاول مرة أخرى",
+    "breadcrumb": "مسار التنقل"
+  },
+  "search": {
+    "placeholder": "ابحث عن منتجات، فئات...",
+    "placeholderShort": "بحث...",
+    "title": "البحث والتصفية",
+    "subtitle": "اعثر على ما تبحث عنه بالضبط",
+    "activeFilters": "فلاتر نشطة: {count}",
+    "resultsCount": "{count} نتيجة",
+    "empty": {
+      "title": "لا توجد نتائج",
+      "description": "جرّب كلمات مختلفة أو عدّل الفلاتر."
+    }
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "signIn": "دخول",
+    "signUp": "إنشاء حساب",
+    "welcomeBack": "مرحباً بعودتك",
+    "loginSubtitle": "سجّل الدخول إلى حسابك في EwiSSouq",
+    "registerTitle": "إنشاء حساب",
+    "registerSubtitle": "انضم إلى مجتمع EwiSSouq",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "orContinueWith": "أو تابع عبر",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "createAccount": "إنشاء حساب",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "forgotTitle": "نسيت كلمة المرور؟",
+    "forgotSubtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "checkEmail": "تحقق من بريدك",
+    "resetSent": "أرسلنا رابط إعادة تعيين كلمة المرور إلى {email}",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "backToHome": "العودة للرئيسية",
+    "avatarAlt": "الصورة الشخصية",
+    "brandWelcome": "مرحباً بك في EwiSSouq",
+    "brandTagline": "اشترِ وبِع وتواصل في السوق الاجتماعي الحديث",
+    "statProducts": "منتجات",
+    "statSellers": "بائعون",
+    "statRating": "التقييم"
+  },
+  "form": {
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "you{'@'}example.com",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "••••••••",
+    "passwordMin": "8 أحرف على الأقل",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "محمد أحمد"
+  },
+  "social": {
+    "google": "جوجل",
+    "facebook": "فيسبوك"
+  },
+  "theme": {
+    "light": "الوضع الفاتح",
+    "dark": "الوضع الداكن"
+  },
+  "home": {
+    "quickLinks": "روابط سريعة",
+    "savedItems": "العناصر المحفوظة",
+    "sellSomething": "بِع شيئاً",
+    "liveAuctions": "مزادات مباشرة",
+    "timeline": "الخط الزمني",
+    "endReached": "وصلت إلى النهاية",
+    "trending": "الأكثر رواجاً",
+    "mostViewed": "الأكثر مشاهدة",
+    "recommended": "موصى به",
+    "noPosts": "لا توجد منشورات",
+    "noPostsDesc": "كن أول من يعرض منتجاً!"
+  },
+  "marketplace": {
+    "title": "السوق",
+    "subtitle": "اكتشف منتجات جديدة ومستعملة من بائعين موثوقين",
+    "all": "الكل",
+    "noProducts": "لا توجد منتجات",
+    "noProductsDesc": "جرّب تعديل الفلاتر أو عد لاحقاً."
+  },
+  "product": {
+    "viewPhotos": "عرض الصور",
+    "watchVideo": "مشاهدة الفيديو",
+    "views": "{count} مشاهدة",
+    "likes": "{count} إعجاب",
+    "commentsCount": "{count} تعليق",
+    "contactSeller": "تواصل مع البائع",
+    "description": "الوصف",
+    "comments": "التعليقات",
+    "notFound": "المنتج غير موجود",
+    "notFoundDesc": "ربما تم حذف هذا الإعلان أو لم يعد متاحاً.",
+    "backToMarketplace": "العودة للسوق",
+    "loadFailed": "فشل تحميل المنتج"
+  },
+  "auctions": {
+    "title": "المزادات",
+    "subtitle": "زايد على منتجات حصرية قبل انتهاء الوقت",
+    "active": "نشطة",
+    "ended": "منتهية",
+    "noAuctions": "لا توجد مزادات",
+    "noActive": "لا توجد مزادات نشطة حالياً.",
+    "noEnded": "لا توجد مزادات منتهية.",
+    "currentBid": "المزايدة الحالية",
+    "bidders": "المزايدون",
+    "starting": "الافتتاحية: {amount}",
+    "biddersCount": "{count} مزايد",
+    "timeRemaining": "الوقت المتبقي",
+    "bidSuccess": "تمت المزايدة بنجاح!",
+    "bidHistory": "سجل المزايدات",
+    "noBids": "لا توجد مزايدات بعد",
+    "placeBid": "قدّم مزايدة",
+    "minBid": "الحد الأدنى للمزايدة: {amount}",
+    "minPlaceholder": "الحد الأدنى {amount}",
+    "bidTooLow": "يجب أن تكون المزايدة {amount} على الأقل",
+    "statusActive": "نشط",
+    "statusEnded": "منتهي"
+  },
+  "saved": {
+    "title": "العناصر المحفوظة",
+    "subtitle": "المنتجات التي حفظتها",
+    "empty": "لا توجد عناصر محفوظة",
+    "emptyDesc": "احفظ المنتجات التي تعجبك للعثور عليها لاحقاً.",
+    "browse": "تصفح السوق"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "unread": "{count} غير مقروء",
+    "markAllRead": "تعليم الكل كمقروء",
+    "empty": "لا توجد إشعارات",
+    "emptyDesc": "أنت على اطلاع بكل شيء!",
+    "emptyDropdown": "لا توجد إشعارات بعد",
+    "showAll": "عرض كل الإشعارات",
+    "ariaLabel": "الإشعارات"
+  },
+  "listing": {
+    "title": "إنشاء إعلان",
+    "subtitle": "اعرض منتجك واصل إلى آلاف المشترين",
+    "photos": "الصور",
+    "photosHint": "انقر لرفع الصور (متعددة)",
+    "video": "فيديو المنتج (60 ثانية كحد أقصى)",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "ماذا تبيع؟",
+    "price": "السعر (درهم)",
+    "description": "الوصف",
+    "descriptionPlaceholder": "صف منتجك...",
+    "category": "الفئة",
+    "selectCategory": "اختر الفئة",
+    "condition": "الحالة",
+    "city": "المدينة",
+    "cityPlaceholder": "دبي",
+    "area": "المنطقة",
+    "areaPlaceholder": "مارينا",
+    "country": "الدولة",
+    "success": "تم إنشاء الإعلان بنجاح!",
+    "publish": "نشر الإعلان"
+  },
+  "profile": {
+    "follow": "متابعة",
+    "following": "متابَع",
+    "message": "رسالة",
+    "newListing": "إعلان جديد",
+    "joined": "انضم {date}",
+    "coverAlt": "غلاف {name}",
+    "followers": "المتابعون",
+    "followingCount": "يتابع",
+    "listings": "الإعلانات",
+    "tabs": {
+      "published": "منشور",
+      "sold": "مباع",
+      "saved": "محفوظ",
+      "activity": "النشاط"
+    },
+    "noListings": "لا توجد إعلانات",
+    "noListingsDesc": "لم يعرض هذا المستخدم أي منتجات بعد.",
+    "noSold": "لا توجد مبيعات",
+    "noSaved": "لا توجد عناصر محفوظة",
+    "listedProduct": "أضاف منتجاً جديداً",
+    "daysAgo": "منذ {count} يوم"
+  },
+  "categories": {
+    "title": "الفئات",
+    "electronics": "إلكترونيات",
+    "fashion": "أزياء",
+    "homeGarden": "المنزل والحديقة",
+    "vehicles": "مركبات",
+    "sports": "رياضة",
+    "books": "كتب",
+    "beauty": "جمال",
+    "kids": "أطفال"
+  },
+  "filters": {
+    "title": "الفلاتر",
+    "clearAll": "مسح الكل",
+    "category": "الفئة",
+    "allCategories": "كل الفئات",
+    "country": "الدولة",
+    "allCountries": "كل الدول",
+    "city": "المدينة",
+    "allCities": "كل المدن",
+    "area": "المنطقة",
+    "allAreas": "كل المناطق",
+    "priceRange": "نطاق السعر (درهم)",
+    "min": "الحد الأدنى",
+    "max": "الحد الأعلى",
+    "condition": "الحالة",
+    "any": "أي",
+    "sortBy": "ترتيب حسب",
+    "verifiedSellers": "بائعون موثقون فقط",
+    "hasVideo": "يحتوي فيديو",
+    "apply": "تطبيق الفلاتر"
+  },
+  "condition": {
+    "new": "جديد",
+    "used": "مستعمل",
+    "refurbished": "مجدّد"
+  },
+  "sort": {
+    "recent": "الأحدث",
+    "views": "الأكثر مشاهدة",
+    "priceAsc": "السعر: من الأقل للأعلى",
+    "priceDesc": "السعر: من الأعلى للأقل",
+    "rating": "الأعلى تقييماً",
+    "likes": "الأكثر إعجاباً"
+  },
+  "country": {
+    "ae": "الإمارات العربية المتحدة",
+    "sa": "المملكة العربية السعودية",
+    "eg": "مصر",
+    "jo": "الأردن"
+  },
+  "comments": {
+    "empty": "لا توجد تعليقات. كن الأول!",
+    "placeholder": "اكتب تعليقاً..."
+  },
+  "empty": {
+    "title": "لا يوجد شيء هنا",
+    "description": "عد لاحقاً للاطلاع على محتوى جديد."
+  },
+  "error": {
+    "title": "حدث خطأ ما",
+    "message": "يرجى المحاولة لاحقاً."
+  },
+  "user": {
+    "verified": "موثق"
+  },
+  "footer": {
+    "tagline": "سوقك الاجتماعي الحديث. اشترِ وبِع وزايد بثقة.",
+    "marketplace": "السوق",
+    "browse": "تصفح",
+    "auctions": "المزادات",
+    "sellItem": "بِع منتجاً",
+    "account": "الحساب",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "savedItems": "المحفوظات",
+    "connect": "تواصل",
+    "copyright": "© {year} EwiSSouq. جميع الحقوق محفوظة."
+  },
+  "time": {
+    "justNow": "الآن",
+    "minutesAgo": "منذ {count} د",
+    "hoursAgo": "منذ {count} س",
+    "daysAgo": "منذ {count} ي",
+    "hrs": "ساعة",
+    "min": "دقيقة",
+    "sec": "ثانية"
+  },
+  "currency": {
+    "code": "درهم",
+    "amount": "{amount} درهم"
+  }
+}

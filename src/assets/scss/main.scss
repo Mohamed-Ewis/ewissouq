@@ -1,0 +1,139 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// CSS custom properties (light)
+:root {
+  --es-primary: #{$primary};
+  --es-primary-dark: #{$primary-dark};
+  --es-secondary: #{$secondary};
+  --es-accent: #{$accent};
+  --es-bg: #f8fafc;
+  --es-surface: #ffffff;
+  --es-surface-2: #f1f5f9;
+  --es-border: #e2e8f0;
+  --es-text: #0f172a;
+  --es-text-muted: #64748b;
+  --es-gradient: linear-gradient(135deg, #{$primary} 0%, #{$secondary} 100%);
+  --es-card-shadow: #{$shadow-md};
+}
+
+[data-bs-theme='dark'] {
+  --es-bg: #0f172a;
+  --es-surface: #1e293b;
+  --es-surface-2: #334155;
+  --es-border: #475569;
+  --es-text: #f1f5f9;
+  --es-text-muted: #94a3b8;
+  --es-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+// Global styles
+body {
+  font-family: $font-family;
+  background-color: var(--es-bg);
+  color: var(--es-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+html[lang='ar'] body {
+  font-family: 'Noto Sans Arabic', $font-family;
+}
+
+html[dir='rtl'] {
+  .carousel-control-prev { right: 0; left: auto; }
+  .carousel-control-next { left: 0; right: auto; }
+  .offcanvas-end { left: 0; right: auto; transform: translateX(-100%); }
+  .dropdown-menu-end { --bs-position: start; }
+}
+
+// Bootstrap overrides
+.btn-primary {
+  background: var(--es-gradient);
+  border: none;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: $border-radius;
+  transition: opacity $transition, transform $transition;
+
+  &:hover, &:focus {
+    background: var(--es-gradient);
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}
+
+.btn-outline-primary {
+  border-color: var(--es-primary);
+  color: var(--es-primary);
+  border-radius: $border-radius;
+  font-weight: 600;
+
+  &:hover {
+    background: var(--es-primary);
+    border-color: var(--es-primary);
+  }
+}
+
+.form-control, .form-select {
+  border-radius: $border-radius;
+  border-color: var(--es-border);
+  background: var(--es-surface);
+  color: var(--es-text);
+  padding: 0.65rem 1rem;
+
+  &:focus {
+    border-color: var(--es-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+}
+
+.card {
+  @include card-base;
+  border: 1px solid var(--es-border);
+}
+
+.badge-verified {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.text-gradient {
+  @include gradient-text;
+}
+
+.skeleton {
+  @include skeleton;
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--es-border);
+  border-radius: 3px;
+}

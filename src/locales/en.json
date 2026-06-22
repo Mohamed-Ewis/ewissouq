@@ -1,0 +1,296 @@
+{
+  "app": {
+    "name": "EwiSSouq",
+    "tagline": "Social Marketplace",
+    "description": "Modern social marketplace for buying, selling, and auctioning products."
+  },
+  "nav": {
+    "feed": "Feed",
+    "marketplace": "Marketplace",
+    "auctions": "Auctions",
+    "search": "Search",
+    "sell": "Sell",
+    "profile": "Profile",
+    "saved": "Saved",
+    "menu": "Menu",
+    "home": "Home"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "viewAll": "View all",
+    "items": "{count} items",
+    "retry": "Try Again",
+    "breadcrumb": "Breadcrumb"
+  },
+  "search": {
+    "placeholder": "Search products, categories...",
+    "placeholderShort": "Search...",
+    "title": "Search & Filters",
+    "subtitle": "Find exactly what you're looking for",
+    "activeFilters": "Active filters: {count}",
+    "resultsCount": "{count} results found",
+    "empty": {
+      "title": "No results",
+      "description": "Try different keywords or adjust your filters."
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "signIn": "Sign In",
+    "signUp": "Sign up",
+    "welcomeBack": "Welcome back",
+    "loginSubtitle": "Sign in to your EwiSSouq account",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Join the EwiSSouq community",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "orContinueWith": "or continue with",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create Account",
+    "passwordMismatch": "Passwords do not match",
+    "forgotTitle": "Forgot password?",
+    "forgotSubtitle": "Enter your email and we'll send you a reset link",
+    "sendResetLink": "Send Reset Link",
+    "checkEmail": "Check your email",
+    "resetSent": "We've sent a password reset link to {email}",
+    "backToLogin": "Back to login",
+    "backToHome": "Back to home",
+    "avatarAlt": "Avatar",
+    "brandWelcome": "Welcome to EwiSSouq",
+    "brandTagline": "Buy, sell, and connect in the modern social marketplace",
+    "statProducts": "Products",
+    "statSellers": "Sellers",
+    "statRating": "Rating"
+  },
+  "form": {
+    "email": "Email",
+    "emailPlaceholder": "you{'@'}example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "passwordMin": "Min 8 characters",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe"
+  },
+  "social": {
+    "google": "Google",
+    "facebook": "Facebook"
+  },
+  "theme": {
+    "light": "Light mode",
+    "dark": "Dark mode"
+  },
+  "home": {
+    "quickLinks": "Quick Links",
+    "savedItems": "Saved Items",
+    "sellSomething": "Sell Something",
+    "liveAuctions": "Live Auctions",
+    "timeline": "Timeline",
+    "endReached": "You've reached the end",
+    "trending": "Trending",
+    "mostViewed": "Most Viewed",
+    "recommended": "Recommended",
+    "noPosts": "No posts yet",
+    "noPostsDesc": "Be the first to list a product!"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "subtitle": "Discover new and used products from trusted sellers",
+    "all": "All",
+    "noProducts": "No products found",
+    "noProductsDesc": "Try adjusting your filters or check back later."
+  },
+  "product": {
+    "viewPhotos": "View Photos",
+    "watchVideo": "Watch Video",
+    "views": "{count} views",
+    "likes": "{count} likes",
+    "commentsCount": "{count} comments",
+    "contactSeller": "Contact Seller",
+    "description": "Description",
+    "comments": "Comments",
+    "notFound": "Product not found",
+    "notFoundDesc": "This listing may have been removed or is no longer available.",
+    "backToMarketplace": "Back to Marketplace",
+    "loadFailed": "Failed to load product"
+  },
+  "auctions": {
+    "title": "Auctions",
+    "subtitle": "Bid on exclusive items before time runs out",
+    "active": "Active",
+    "ended": "Ended",
+    "noAuctions": "No auctions",
+    "noActive": "No active auctions right now.",
+    "noEnded": "No ended auctions to show.",
+    "currentBid": "Current Bid",
+    "bidders": "Bidders",
+    "starting": "Starting: {amount}",
+    "biddersCount": "{count} bidders",
+    "timeRemaining": "Time Remaining",
+    "bidSuccess": "Bid placed successfully!",
+    "bidHistory": "Bid History",
+    "noBids": "No bids yet",
+    "placeBid": "Place Bid",
+    "minBid": "Minimum bid: {amount}",
+    "minPlaceholder": "Min {amount}",
+    "bidTooLow": "Bid must be at least {amount}",
+    "statusActive": "active",
+    "statusEnded": "ended"
+  },
+  "saved": {
+    "title": "Saved Items",
+    "subtitle": "Products you've bookmarked",
+    "empty": "No saved items",
+    "emptyDesc": "Save products you like to find them later.",
+    "browse": "Browse Marketplace"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread": "{count} unread",
+    "markAllRead": "Mark all read",
+    "empty": "No notifications",
+    "emptyDesc": "You're all caught up!",
+    "emptyDropdown": "No notifications yet",
+    "showAll": "Show all notifications",
+    "ariaLabel": "Notifications"
+  },
+  "listing": {
+    "title": "Create Listing",
+    "subtitle": "List your product and reach thousands of buyers",
+    "photos": "Photos",
+    "photosHint": "Click to upload images (multiple)",
+    "video": "Product Video (max 60 sec)",
+    "titleLabel": "Title",
+    "titlePlaceholder": "What are you selling?",
+    "price": "Price (AED)",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe your product...",
+    "category": "Category",
+    "selectCategory": "Select category",
+    "condition": "Condition",
+    "city": "City",
+    "cityPlaceholder": "Dubai",
+    "area": "Area",
+    "areaPlaceholder": "Marina",
+    "country": "Country",
+    "success": "Listing created successfully!",
+    "publish": "Publish Listing"
+  },
+  "profile": {
+    "follow": "Follow",
+    "following": "Following",
+    "message": "Message",
+    "newListing": "New Listing",
+    "joined": "Joined {date}",
+    "coverAlt": "{name} cover",
+    "followers": "Followers",
+    "followingCount": "Following",
+    "listings": "Listings",
+    "tabs": {
+      "published": "Published",
+      "sold": "Sold",
+      "saved": "Saved",
+      "activity": "Activity"
+    },
+    "noListings": "No listings",
+    "noListingsDesc": "This user hasn't listed any products yet.",
+    "noSold": "No sold items",
+    "noSaved": "No saved items",
+    "listedProduct": "Listed a new product",
+    "daysAgo": "{count} days ago"
+  },
+  "categories": {
+    "title": "Categories",
+    "electronics": "Electronics",
+    "fashion": "Fashion",
+    "homeGarden": "Home & Garden",
+    "vehicles": "Vehicles",
+    "sports": "Sports",
+    "books": "Books",
+    "beauty": "Beauty",
+    "kids": "Kids"
+  },
+  "filters": {
+    "title": "Filters",
+    "clearAll": "Clear all",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "country": "Country",
+    "allCountries": "All Countries",
+    "city": "City",
+    "allCities": "All Cities",
+    "area": "Area",
+    "allAreas": "All Areas",
+    "priceRange": "Price Range (AED)",
+    "min": "Min",
+    "max": "Max",
+    "condition": "Condition",
+    "any": "Any",
+    "sortBy": "Sort By",
+    "verifiedSellers": "Verified sellers only",
+    "hasVideo": "Has video",
+    "apply": "Apply Filters"
+  },
+  "condition": {
+    "new": "New",
+    "used": "Used",
+    "refurbished": "Refurbished"
+  },
+  "sort": {
+    "recent": "Most Recent",
+    "views": "Most Viewed",
+    "priceAsc": "Price: Low to High",
+    "priceDesc": "Price: High to Low",
+    "rating": "Highest Rated",
+    "likes": "Most Liked"
+  },
+  "country": {
+    "ae": "United Arab Emirates",
+    "sa": "Saudi Arabia",
+    "eg": "Egypt",
+    "jo": "Jordan"
+  },
+  "comments": {
+    "empty": "No comments yet. Be the first!",
+    "placeholder": "Write a comment..."
+  },
+  "empty": {
+    "title": "Nothing here yet",
+    "description": "Check back later for new content."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "Please try again later."
+  },
+  "user": {
+    "verified": "Verified"
+  },
+  "footer": {
+    "tagline": "Your modern social marketplace. Buy, sell, and auction with confidence.",
+    "marketplace": "Marketplace",
+    "browse": "Browse",
+    "auctions": "Auctions",
+    "sellItem": "Sell Item",
+    "account": "Account",
+    "login": "Login",
+    "register": "Register",
+    "savedItems": "Saved Items",
+    "connect": "Connect",
+    "copyright": "© {year} EwiSSouq. All rights reserved."
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{count}m ago",
+    "hoursAgo": "{count}h ago",
+    "daysAgo": "{count}d ago",
+    "hrs": "hrs",
+    "min": "min",
+    "sec": "sec"
+  },
+  "currency": {
+    "code": "AED",
+    "amount": "AED {amount}"
+  }
+}
