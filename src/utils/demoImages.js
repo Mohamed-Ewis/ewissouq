@@ -19,6 +19,20 @@ export const DEFAULT_COVER = demoImage(28, 1200, 400)
 export const DEFAULT_PRODUCT_IMAGE = demoImage(1, 800, 600)
 export const DEMO_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
 
+/** Short sample clips for story testing (Google CDN, no auth). */
+export const demoStoryVideos = [
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
+]
+
+/** Vertical story image (9:16-ish). */
+export function demoStoryImage(imageId) {
+  return demoImage(imageId, 540, 960)
+}
+
 export const avatarPool = [
   demoAvatar(1),
   demoAvatar(3),

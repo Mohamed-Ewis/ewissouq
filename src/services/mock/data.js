@@ -3,6 +3,8 @@ import {
   coverPool,
   productImages,
   DEMO_VIDEO,
+  demoStoryVideos,
+  demoStoryImage,
 } from '@/utils/demoImages'
 
 export const categories = [
@@ -247,13 +249,41 @@ export const auctions = [
   },
 ]
 
+function buildStoryItems(userIndex) {
+  const imageIds = [1, 10, 20, 30, 48, 60, 77, 96, 101, 119]
+  const base = userIndex * 2
+  return [
+    {
+      id: userIndex * 10 + 1,
+      type: 'image',
+      url: demoStoryImage(imageIds[base % imageIds.length]),
+      duration: 5000,
+    },
+    {
+      id: userIndex * 10 + 2,
+      type: userIndex % 2 === 0 ? 'video' : 'image',
+      url: userIndex % 2 === 0
+        ? demoStoryVideos[userIndex % demoStoryVideos.length]
+        : demoStoryImage(imageIds[(base + 1) % imageIds.length]),
+      duration: userIndex % 2 === 0 ? 12000 : 5000,
+    },
+    {
+      id: userIndex * 10 + 3,
+      type: 'image',
+      url: demoStoryImage(imageIds[(base + 2) % imageIds.length]),
+      duration: 5000,
+    },
+  ]
+}
+
 export const stories = users.map((user, i) => ({
   id: i + 1,
   userId: user.id,
   userName: user.name,
   avatar: user.avatar,
-  image: productImages[i % productImages.length],
   viewed: i % 3 === 0,
+  createdAt: new Date(Date.now() - (i + 1) * 3600000).toISOString(),
+  items: buildStoryItems(i),
 }))
 
 export const notifications = [
