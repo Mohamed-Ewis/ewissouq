@@ -95,6 +95,12 @@
     "noPosts": "Aucune publication",
     "noPostsDesc": "Soyez le premier à publier un produit !"
   },
+  "stories": {
+    "viewer": "Visionneuse de stories",
+    "close": "Fermer la story",
+    "previous": "Diapositive précédente",
+    "next": "Diapositive suivante"
+  },
   "marketplace": {
     "title": "Marché",
     "subtitle": "Découvrez des produits neufs et d'occasion de vendeurs de confiance",

@@ -95,6 +95,12 @@
     "noPosts": "No posts yet",
     "noPostsDesc": "Be the first to list a product!"
   },
+  "stories": {
+    "viewer": "Story viewer",
+    "close": "Close story",
+    "previous": "Previous slide",
+    "next": "Next slide"
+  },
   "marketplace": {
     "title": "Marketplace",
     "subtitle": "Discover new and used products from trusted sellers",
