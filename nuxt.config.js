@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-12-01",
   devtools: { enabled: true },
   ssr: false,
+  experimental: {
+    // Workaround for Nuxt 3.21.8 dev crash with ssr:false (fixed in 3.21.9)
+    viteEnvironmentApi: true,
+  },
   components: [
     {
       path: "~/components",
@@ -19,6 +23,9 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@vueuse/nuxt", "@nuxtjs/i18n"],
 
   i18n: {
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
     restructureDir: false,
     langDir: "locales",
     locales: [
