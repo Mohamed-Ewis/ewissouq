@@ -29,21 +29,26 @@ export function useLocalizedOptions() {
 export function useCategoryName() {
   const { t } = useI18n()
 
-  const slugKeyMap = {
-    electronics: 'categories.electronics',
-    fashion: 'categories.fashion',
-    'home-garden': 'categories.homeGarden',
-    vehicles: 'categories.vehicles',
-    sports: 'categories.sports',
-    books: 'categories.books',
-    beauty: 'categories.beauty',
-    kids: 'categories.kids',
-  }
-
   function translateCategory(category) {
     if (!category) return ''
-    const key = slugKeyMap[category.slug]
-    return key ? t(key) : category.name
+
+    if (typeof category === 'string') {
+      const key = category.startsWith('categories.') ? category : `categories.${category}`
+      const translated = t(key)
+      return translated !== key ? translated : category
+    }
+
+    if (category.i18nKey) {
+      const translated = t(category.i18nKey)
+      if (translated !== category.i18nKey) return translated
+    }
+
+    if (category.slug) {
+      const translated = t(`categories.${category.slug}`)
+      if (translated !== `categories.${category.slug}`) return translated
+    }
+
+    return category.name || ''
   }
 
   function translateCondition(value) {

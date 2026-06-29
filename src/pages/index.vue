@@ -5,6 +5,13 @@
       <div class="col-lg-9">
         <StoriesBar v-if="stories.length" :stories="stories" />
 
+        <CategoryGrid
+          v-if="categoryTree.length"
+          :categories="categoryTree"
+          variant="home"
+          class="mb-4"
+        />
+
         <div class="feed-timeline">
           <h5 class="fw-bold mb-3">
             <i class="bi bi-clock-history me-2 text-primary" />{{ $t('home.timeline') }}
@@ -48,7 +55,7 @@
             </ul>
           </div>
 
-          <CategoryGrid :categories="categories.slice(0, 6)" variant="sidebar" class="mb-4" />
+          <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
 
           <div class="sidebar-card card p-3 mb-4">
             <h6 class="fw-bold mb-3">
@@ -100,7 +107,7 @@
 
     <!-- Mobile sections -->
     <div class="d-lg-none mt-4">
-      <CategoryGrid :categories="categories.slice(0, 6)" class="mb-4" />
+      <CategoryGrid v-if="categoryTree.length" :categories="categoryTree" class="mb-4" />
       <FeedProductSection
         :title="$t('home.trending')"
         icon="bi bi-fire"
@@ -126,7 +133,7 @@ import { getAuctions } from '@/api/auctions'
 const { t } = useI18n()
 const { formatPrice } = useFormatters()
 const productsStore = useProductsStore()
-const categories = ref([])
+const categoryTree = ref([])
 const stories = ref([])
 const liveAuctions = ref([])
 
@@ -152,7 +159,7 @@ onMounted(async () => {
   await Promise.all([
     productsStore.fetchFeed(),
     productsStore.fetchHomeSections(),
-    getCategories().then((r) => { categories.value = r.data || r || [] }),
+    getCategories().then((r) => { categoryTree.value = r.data || r || [] }),
     getStories().then((r) => { stories.value = r.data || r || [] }),
     getAuctions({ status: 'active' }).then((r) => { liveAuctions.value = r.data || r || [] }),
   ])

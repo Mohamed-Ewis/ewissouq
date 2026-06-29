@@ -5,3 +5,7 @@ create ad spase in the side
 chat
 enhance rtl style
 advanced filter
+Accessibility
+META tags - seo
+tags
+edit marketplace

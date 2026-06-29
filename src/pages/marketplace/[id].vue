@@ -49,7 +49,7 @@
         <div class="card p-4">
           <div class="d-flex gap-2 mb-2">
             <span class="badge" :class="conditionClass">{{ translateCondition(product.condition) }}</span>
-            <span class="badge bg-light text-dark">{{ product.category }}</span>
+            <span class="badge bg-light text-dark">{{ translateCategory(product.category) }}</span>
           </div>
           <h3 class="fw-bold mb-2">{{ product.title }}</h3>
           <p class="price display-6 fw-bold text-primary mb-3">{{ formatPrice(product.price) }}</p>
@@ -130,7 +130,7 @@ const route = useRoute()
 const { t } = useI18n()
 const productsStore = useProductsStore()
 const { formatPrice } = useFormatters()
-const { translateCondition } = useCategoryName()
+const { translateCondition, translateCategory } = useCategoryName()
 const showVideo = ref(false)
 const liked = ref(false)
 const saved = ref(false)

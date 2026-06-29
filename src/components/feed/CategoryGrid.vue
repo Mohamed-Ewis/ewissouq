@@ -1,8 +1,14 @@
 <template>
   <section class="categories-section mb-4" :class="`categories-section--${variant}`">
-    <h5 class="fw-bold mb-3">
-      <i class="bi bi-grid me-2 text-primary" />{{ $t('categories.title') }}
-    </h5>
+    <div class="categories-section__head d-flex align-items-center justify-content-between mb-3">
+      <h5 class="fw-bold mb-0">
+        <i class="bi bi-grid me-2 text-primary" />{{ $t('categories.title') }}
+      </h5>
+      <NuxtLinkLocale v-if="showSeeAll" to="/search" class="categories-section__see-all">
+        {{ $t('categories.seeAll') }}
+        <i class="bi bi-arrow-right" />
+      </NuxtLinkLocale>
+    </div>
     <div class="categories-grid">
       <NuxtLinkLocale
         v-for="cat in categories"
@@ -11,10 +17,10 @@
         class="category-card text-decoration-none"
       >
         <div class="cat-icon">
-          <i :class="cat.icon" />
+          <i :class="cat.icon || 'bi bi-tag'" />
         </div>
         <span class="cat-name">{{ translateCategory(cat) }}</span>
-        <span class="cat-count">{{ $t('common.items', { count: cat.count }) }}</span>
+        <span v-if="cat.count" class="cat-count">{{ $t('common.items', { count: cat.count }) }}</span>
       </NuxtLinkLocale>
     </div>
   </section>
@@ -24,12 +30,27 @@
 defineProps({
   categories: { type: Array, default: () => [] },
   variant: { type: String, default: 'sidebar' },
+  showSeeAll: { type: Boolean, default: true },
 })
 
 const { translateCategory } = useCategoryName()
 </script>
 
 <style scoped lang="scss">
+.categories-section__see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--es-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .categories-grid {
   display: grid;
   gap: 0.5rem;
@@ -39,11 +60,18 @@ const { translateCategory } = useCategoryName()
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.categories-section--default .categories-grid {
+.categories-section--default .categories-grid,
+.categories-section--home .categories-grid {
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+.categories-section--home .categories-grid {
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
 

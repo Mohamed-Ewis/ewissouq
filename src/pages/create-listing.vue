@@ -88,6 +88,7 @@
 
 <script setup>
 import { getCategories } from '@/api/categories'
+import { getListingCategories } from '@/utils/categoryHelpers'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -141,7 +142,8 @@ async function handleSubmit() {
 
 onMounted(async () => {
   const res = await getCategories()
-  categories.value = res.data || res || []
+  const tree = res.data || res || []
+  categories.value = getListingCategories(tree)
 })
 </script>
 

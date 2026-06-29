@@ -16,7 +16,7 @@
             <i class="bi bi-geo-alt" /> {{ product.location?.city }} · {{ timeAgo(product.createdAt) }}
           </div>
         </div>
-        <span v-if="variant !== 'compact'" class="badge bg-light text-dark flex-shrink-0">{{ product.category }}</span>
+        <span v-if="variant !== 'compact'" class="badge bg-light text-dark flex-shrink-0">{{ translateCategory(product.category) }}</span>
       </div>
 
       <NuxtLinkLocale :to="`/marketplace/${product.id}`" class="feed-post__media text-decoration-none">
@@ -75,6 +75,7 @@ const props = defineProps({
 
 const productsStore = useProductsStore()
 const { formatPrice, timeAgo } = useFormatters()
+const { translateCategory } = useCategoryName()
 const liked = ref(false)
 const saved = ref(false)
 const showComments = ref(false)

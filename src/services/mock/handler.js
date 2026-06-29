@@ -2,7 +2,7 @@ import {
   users,
   products,
   auctions,
-  categories,
+  categoryTree,
   stories,
   notifications,
   comments,
@@ -11,6 +11,7 @@ import {
   followingUserIds,
 } from './data'
 import { DEFAULT_AVATAR, DEFAULT_COVER, DEFAULT_PRODUCT_IMAGE } from '@/utils/demoImages'
+import { getDescendantIds, findCategoryById, findCategoryPath, getRootCategoryId } from '@/utils/categoryHelpers'
 
 const delay = (ms = 400) => new Promise((r) => setTimeout(r, ms))
 
@@ -34,7 +35,8 @@ function filterProducts(params = {}) {
 
   if (params.category) {
     const catId = Number(params.category)
-    result = result.filter((p) => p.categoryId === catId || p.category?.toLowerCase() === String(params.category).toLowerCase())
+    const ids = getDescendantIds(catId)
+    result = result.filter((p) => ids.includes(p.categoryId) || ids.includes(p.rootCategoryId))
   }
   if (params.country) result = result.filter((p) => p.location?.country === params.country)
   if (params.city) result = result.filter((p) => p.location?.city === params.city)
@@ -155,7 +157,7 @@ export async function handleMockRequest(config) {
 
   // Categories
   if (url === 'categories' && method === 'get') {
-    return { success: true, data: categories }
+    return { success: true, data: categoryTree, tree: categoryTree }
   }
 
   // Stories
@@ -173,12 +175,17 @@ export async function handleMockRequest(config) {
   // Create product
   if (url === 'products' && method === 'post') {
     const seller = users[0]
-    const category = categories.find((c) => c.id === Number(body.categoryId)) || categories[0]
+    const picked = findCategoryById(body.categoryId) || findCategoryById(categoryTree[0]?.id)
+    const path = picked ? findCategoryPath(picked.id) || [picked] : []
     const newProduct = {
       id: products.length + 1,
       ...body,
-      category: category.name,
-      categoryId: category.id,
+      category: picked?.i18nKey || '',
+      categorySlug: picked?.slug,
+      categoryId: picked?.id,
+      rootCategoryId: picked ? getRootCategoryId(picked.id) : null,
+      parentCategoryId: path.length > 1 ? path[path.length - 2].id : null,
+      categoryPath: path.map((n) => n.id),
       currency: 'AED',
       images: body.images || [DEFAULT_PRODUCT_IMAGE],
       sellerId: seller.id,
