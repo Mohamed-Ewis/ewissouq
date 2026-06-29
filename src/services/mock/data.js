@@ -6,17 +6,10 @@ import {
   demoStoryVideos,
   demoStoryImage,
 } from '@/utils/demoImages'
+import { categoryTree } from '@/data/categories'
+import { getLeafCategories, findCategoryPath, getRootCategoryId } from '@/utils/categoryHelpers'
 
-export const categories = [
-  { id: 1, name: 'Electronics', icon: 'bi-phone', slug: 'electronics', count: 1240 },
-  { id: 2, name: 'Fashion', icon: 'bi-bag', slug: 'fashion', count: 890 },
-  { id: 3, name: 'Home & Garden', icon: 'bi-house', slug: 'home-garden', count: 654 },
-  { id: 4, name: 'Vehicles', icon: 'bi-car-front', slug: 'vehicles', count: 432 },
-  { id: 5, name: 'Sports', icon: 'bi-bicycle', slug: 'sports', count: 321 },
-  { id: 6, name: 'Books', icon: 'bi-book', slug: 'books', count: 198 },
-  { id: 7, name: 'Beauty', icon: 'bi-stars', slug: 'beauty', count: 445 },
-  { id: 8, name: 'Kids', icon: 'bi-emoji-smile', slug: 'kids', count: 267 },
-]
+export { categoryTree, categoryTree as categories }
 
 export const users = [
   {
@@ -124,21 +117,28 @@ const titles = [
 ]
 
 function buildProducts() {
+  const leafCategories = getLeafCategories(categoryTree)
   const products = []
   for (let i = 0; i < 48; i++) {
     const seller = users[i % users.length]
-    const category = categories[i % categories.length]
+    const leaf = leafCategories[i % leafCategories.length]
+    const path = findCategoryPath(leaf.id) || [leaf]
+    const rootId = getRootCategoryId(leaf.id)
     const condition = i % 3 === 0 ? 'new' : i % 3 === 1 ? 'used' : 'refurbished'
     const hasVideo = i % 4 === 0
     products.push({
       id: i + 1,
       title: titles[i % titles.length],
-      description: `Premium quality ${category.name.toLowerCase()} item in ${condition} condition. Carefully maintained and ready for immediate use. Includes original packaging where applicable. Contact seller for more details or to arrange viewing.`,
+      description: `Premium quality listing in ${leaf.slug.replace(/-/g, ' ')} category. Item is in ${condition} condition. Carefully maintained and ready for immediate use.`,
       price: Math.round((Math.random() * 15000 + 200) / 10) * 10,
       currency: 'AED',
       condition,
-      categoryId: category.id,
-      category: category.name,
+      categoryId: leaf.id,
+      rootCategoryId: rootId,
+      parentCategoryId: path.length > 1 ? path[path.length - 2].id : rootId,
+      categorySlug: leaf.slug,
+      category: leaf.i18nKey,
+      categoryPath: path.map((n) => n.id),
       images: [
         productImages[i % productImages.length],
         productImages[(i + 3) % productImages.length],

@@ -22,6 +22,14 @@
       </div>
 
       <div class="col-lg-9">
+        <CategoryMegaMenu
+          v-if="categoryTree.length"
+          v-model="filters.category"
+          :tree="categoryTree"
+          class="mb-4"
+          @select="onCategorySelect"
+        />
+
         <div class="mb-3">
           <input
             v-model="filters.q"
@@ -65,14 +73,18 @@
 <script setup>
 import { getProducts } from '@/api/products'
 import { getCategories } from '@/api/categories'
+import { flattenCategoryTree } from '@/utils/categoryHelpers'
 
 const route = useRoute()
+const { localePath } = useLocalizedNavigate()
 const { filters, cityOptions, areaOptions, activeFilterCount, resetFilters, toParams, sortOptions, countries, conditions } = useProductFilters({
   q: route.query.q || '',
   category: route.query.category || '',
 })
 
-const categories = ref([])
+const categoryTree = ref([])
+const flatCategories = computed(() => flattenCategoryTree(categoryTree.value))
+const categories = flatCategories
 const results = ref([])
 const loading = ref(false)
 
@@ -81,10 +93,14 @@ async function search() {
   try {
     const res = await getProducts(toParams())
     results.value = res.data || []
-    navigateTo({ query: toParams() }, { replace: true })
+    await navigateTo({ path: localePath('/search'), query: toParams() }, { replace: true })
   } finally {
     loading.value = false
   }
+}
+
+function onCategorySelect() {
+  search()
 }
 
 function resetAndSearch() {
@@ -94,8 +110,7 @@ function resetAndSearch() {
 
 onMounted(async () => {
   const catRes = await getCategories()
-  categories.value = catRes.data || catRes || []
-  if (route.query.q || route.query.category) search()
-  else search()
+  categoryTree.value = catRes.data || catRes || []
+  search()
 })
 </script>
