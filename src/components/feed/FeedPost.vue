@@ -1,64 +1,66 @@
 <template>
-  <article class="feed-post card animate-fade-in" :class="`feed-post--${variant}`">
-    <div class="feed-post__inner" :class="{ 'feed-post__inner--wide': variant === 'wide' }">
-      <div class="feed-post__header card-header bg-transparent border-0 d-flex align-items-center gap-3 pt-3 px-3">
-        <NuxtLinkLocale :to="`/profile/${product.seller.id}`">
-          <img :src="product.seller.avatar" class="post-avatar" :alt="product.seller.name" />
-        </NuxtLinkLocale>
-        <div class="flex-grow-1 min-w-0">
-          <div class="d-flex align-items-center gap-1">
-            <NuxtLinkLocale :to="`/profile/${product.seller.id}`" class="fw-semibold text-decoration-none post-author text-truncate">
-              {{ product.seller.name }}
-            </NuxtLinkLocale>
-            <VerificationBadge :verified="product.seller.verified" />
-          </div>
-          <div v-if="variant !== 'compact'" class="text-muted small text-truncate">
-            <i class="bi bi-geo-alt" /> {{ product.location?.city }} · {{ timeAgo(product.createdAt) }}
-          </div>
-        </div>
-        <span v-if="variant !== 'compact'" class="badge bg-light text-dark flex-shrink-0">{{ translateCategory(product.category) }}</span>
+  <article class="bento-card animate-fade-in" :class="[`bento-card--${variant}`, spanClass]">
+    <NuxtLinkLocale :to="`/marketplace/${product.id}`" class="bento-card__link">
+      <div class="bento-card__media">
+        <video
+          v-if="product.video"
+          :src="product.video"
+          muted
+          loop
+          playsinline
+        />
+        <img v-else :src="product.images[0]" :alt="product.title" />
       </div>
 
-      <NuxtLinkLocale :to="`/marketplace/${product.id}`" class="feed-post__media text-decoration-none">
-        <div v-if="product.video" class="video-container">
-          <video :src="product.video" muted loop playsinline class="w-100" />
-          <div class="play-overlay"><i class="bi bi-play-circle-fill" /></div>
-        </div>
-        <div v-else class="post-image">
-          <img :src="product.images[0]" :alt="product.title" />
-        </div>
-      </NuxtLinkLocale>
+      <div v-if="product.video" class="bento-card__play">
+        <i class="bi bi-play-fill" />
+      </div>
 
-      <div class="card-body px-3 pb-3 feed-post__body">
-        <NuxtLinkLocale :to="`/marketplace/${product.id}`" class="text-decoration-none">
-          <h6 class="fw-semibold mb-1 post-title">{{ product.title }}</h6>
-          <p class="price-tag mb-2">{{ formatPrice(product.price) }}</p>
-        </NuxtLinkLocale>
+      <div class="bento-card__overlay">
+        <span v-if="variant !== 'compact'" class="bento-card__badge">
+          {{ translateCategory(product.category) }}
+        </span>
 
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="action-bar d-flex gap-1">
-            <button class="action-btn" :class="{ active: liked }" @click="toggleLike">
-              <i :class="liked ? 'bi bi-heart-fill' : 'bi bi-heart'" />
-              <span>{{ product.likes }}</span>
-            </button>
-            <button class="action-btn" @click="showComments = !showComments">
-              <i class="bi bi-chat" />
-              <span v-if="variant !== 'compact'">{{ product.commentsCount }}</span>
-            </button>
-            <button v-if="variant !== 'compact'" class="action-btn" @click="share">
-              <i class="bi bi-share" />
-            </button>
-            <button class="action-btn" :class="{ active: saved }" @click="toggleSave">
-              <i :class="saved ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'" />
-            </button>
+        <h3 class="bento-card__title">{{ product.title }}</h3>
+
+        <div class="bento-card__footer">
+          <div class="bento-card__seller">
+            <img :src="product.seller.avatar" :alt="product.seller.name" />
+            <div class="bento-card__seller-info">
+              <span class="bento-card__seller-name">
+                {{ product.seller.name }}
+                <VerificationBadge :verified="product.seller.verified" />
+              </span>
+              <span v-if="variant !== 'compact'" class="bento-card__meta">
+                {{ locationLabel }} · {{ timeAgo(product.createdAt) }}
+              </span>
+            </div>
           </div>
-          <span v-if="variant !== 'compact'" class="text-muted small"><i class="bi bi-eye" /> {{ product.views }}</span>
-        </div>
-
-        <div v-if="showComments && variant !== 'compact'" class="comments-section mt-3 pt-3 border-top">
-          <CommentList :product-id="product.id" />
+          <span class="bento-card__price">{{ formatPrice(product.price) }}</span>
         </div>
       </div>
+    </NuxtLinkLocale>
+
+    <div class="bento-card__actions">
+      <button
+        type="button"
+        class="bento-action"
+        :class="{ active: liked }"
+        :aria-label="'Like'"
+        @click="toggleLike"
+      >
+        <i :class="liked ? 'bi bi-heart-fill' : 'bi bi-heart'" />
+        <span v-if="variant !== 'compact'">{{ product.likes }}</span>
+      </button>
+      <button
+        type="button"
+        class="bento-action"
+        :class="{ active: saved }"
+        aria-label="Save"
+        @click="toggleSave"
+      >
+        <i :class="saved ? 'bi bi-bookmark-fill' : 'bi bi-bookmark'" />
+      </button>
     </div>
   </article>
 </template>
@@ -69,8 +71,9 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'standard',
-    validator: (v) => ['standard', 'wide', 'tall', 'compact'].includes(v),
+    validator: (v) => ['hero', 'wide', 'tall', 'standard', 'compact'].includes(v),
   },
+  spanClass: { type: String, default: '' },
 })
 
 const productsStore = useProductsStore()
@@ -78,217 +81,276 @@ const { formatPrice, timeAgo } = useFormatters()
 const { translateCategory } = useCategoryName()
 const liked = ref(false)
 const saved = ref(false)
-const showComments = ref(false)
 
-async function toggleLike() {
+const locationLabel = computed(() => props.product.location?.city || '')
+
+async function toggleLike(e) {
+  e?.preventDefault?.()
+  e?.stopPropagation?.()
   await productsStore.toggleLike(props.product.id)
   liked.value = !liked.value
 }
 
-async function toggleSave() {
+async function toggleSave(e) {
+  e?.preventDefault?.()
+  e?.stopPropagation?.()
   await productsStore.toggleSave(props.product.id)
   saved.value = !saved.value
-}
-
-function share() {
-  if (navigator.share) {
-    navigator.share({ title: props.product.title, url: window.location.origin + `/marketplace/${props.product.id}` })
-  }
 }
 </script>
 
 <style scoped lang="scss">
-.feed-post {
+.bento-card {
+  position: relative;
+  border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 0;
+  min-height: 200px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.feed-post__inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.feed-post__inner--wide {
-  @media (min-width: 768px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    .feed-post__header {
-      width: 100%;
-      order: 1;
-    }
-
-    .feed-post__media {
-      width: 52%;
-      order: 2;
-      flex: 1 1 auto;
-      min-height: 200px;
-    }
-
-    .feed-post__body {
-      width: 48%;
-      order: 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-  }
-}
-
-.feed-post__media {
-  display: block;
-  flex-shrink: 0;
-}
-
-.feed-post__body {
-  flex: 1;
-}
-
-// Shuffle grid placement (md+)
-@media (min-width: 768px) {
-  .feed-post--wide {
-    grid-column: 1 / -1;
-  }
-
-  .feed-post--tall {
-    grid-row: span 2;
-  }
-}
-
-// Variant: wide — cinematic banner
-.feed-post--wide {
-  .post-image,
-  .video-container {
-    aspect-ratio: 21 / 9;
-    min-height: 180px;
-  }
-
-  @media (min-width: 768px) {
-    .post-image,
-    .video-container {
-      aspect-ratio: auto;
-      height: 100%;
-      min-height: 220px;
-    }
-  }
-}
-
-// Variant: tall — portrait emphasis
-.feed-post--tall {
-  .post-image,
-  .video-container {
-    aspect-ratio: 3 / 4;
-    flex: 1;
-    min-height: 240px;
-  }
-
-  .feed-post__inner {
-    height: 100%;
-  }
-}
-
-// Variant: compact — smaller tile
-.feed-post--compact {
-  .post-avatar {
-    width: 32px;
-    height: 32px;
-  }
-
-  .feed-post__header {
-    padding-top: 0.65rem !important;
-    padding-bottom: 0 !important;
-  }
-
-  .post-image,
-  .video-container {
-    aspect-ratio: 4 / 3;
-  }
-
-  .post-title {
-    font-size: 0.9rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .price-tag {
-    font-size: 1rem;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .action-btn {
-    padding: 0.3rem 0.55rem;
-    font-size: 0.8rem;
-  }
-}
-
-.post-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.post-author { color: var(--es-text); }
-
-.post-image,
-.video-container {
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
   background: var(--es-surface-2);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+
+    .bento-card__media img,
+    .bento-card__media video {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.bento-card__link {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+.bento-card__media {
+  position: absolute;
+  inset: 0;
 
   img,
   video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
   }
 }
 
-.video-container { position: relative; }
-
-.play-overlay {
+.bento-card__play {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  color: rgba(255, 255, 255, 0.8);
-  pointer-events: none;
-}
-
-.post-title { color: var(--es-text); }
-
-.price-tag {
+  font-size: 1.35rem;
   color: var(--es-primary);
-  font-weight: 700;
-  font-size: 1.15rem;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.action-btn {
+.bento-card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: linear-gradient(
+    180deg,
+    transparent 30%,
+    rgba(15, 23, 42, 0.45) 65%,
+    rgba(15, 23, 42, 0.88) 100%
+  );
+  color: #fff;
+}
+
+.bento-card__badge {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  margin-bottom: 0.5rem;
+}
+
+.bento-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 0.65rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.bento-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.bento-card__seller {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+  }
+}
+
+.bento-card__seller-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.bento-card__seller-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bento-card__meta {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bento-card__price {
+  font-size: 1rem;
+  font-weight: 800;
+  white-space: nowrap;
+  color: #c7d2fe;
+  flex-shrink: 0;
+}
+
+.bento-card__actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: flex;
   gap: 0.35rem;
-  padding: 0.4rem 0.75rem;
+}
+
+html[dir='rtl'] .bento-card__actions {
+  right: auto;
+  left: 0.75rem;
+}
+
+.bento-action {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.55rem;
   border: none;
-  background: var(--es-surface-2);
-  border-radius: 20px;
-  color: var(--es-text-muted);
-  font-size: 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--es-text);
+  font-size: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all $transition;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 
   &:hover,
   &.active {
-    background: rgba(99, 102, 241, 0.1);
-    color: var(--es-primary);
+    background: var(--es-primary);
+    color: #fff;
+  }
+}
+
+// ── Variant sizing (min-heights when not in grid span) ──
+.bento-card--hero {
+  min-height: 280px;
+
+  .bento-card__title {
+    font-size: 1.2rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .bento-card__price {
+    font-size: 1.25rem;
+  }
+}
+
+.bento-card--wide {
+  min-height: 200px;
+}
+
+.bento-card--tall {
+  min-height: 320px;
+}
+
+.bento-card--standard {
+  min-height: 240px;
+}
+
+.bento-card--compact {
+  min-height: 180px;
+
+  .bento-card__overlay {
+    padding: 0.75rem;
+  }
+
+  .bento-card__title {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    -webkit-line-clamp: 1;
+  }
+
+  .bento-card__seller img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .bento-card__price {
+    font-size: 0.9rem;
+  }
+
+  .bento-card__actions {
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
 </style>

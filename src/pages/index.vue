@@ -149,10 +149,10 @@ const { target: loadMoreRef } = useInfiniteScroll(
   { canLoad: () => productsStore.feedHasMore && !productsStore.feedLoading },
 )
 
-const SKELETON_PATTERN = ['wide', 'tall', 'compact', 'compact', 'wide']
+const BENTO_PATTERN = ['hero', 'tall', 'compact', 'compact', 'wide', 'standard', 'tall', 'standard', 'wide', 'standard']
 
 function skeletonClass(index) {
-  return `shuffle-skeleton--${SKELETON_PATTERN[index % SKELETON_PATTERN.length]}`
+  return `bento-skeleton--${BENTO_PATTERN[index % BENTO_PATTERN.length]}`
 }
 
 onMounted(async () => {
@@ -218,33 +218,61 @@ $sidebar-sticky-top: 6.5rem;
 .feed-shuffle-grid--loading {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 0.75rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(180px, auto);
     grid-auto-flow: dense;
-    gap: 1.25rem;
+    gap: 0.875rem;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 992px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(200px, auto);
+    gap: 1rem;
   }
 
-  .shuffle-skeleton--wide {
-    @media (min-width: 768px) {
-      grid-column: 1 / -1;
-    }
+  :deep(.skeleton-card),
+  :deep(.card) {
+    border-radius: 20px;
+    height: 100%;
+    min-height: inherit;
   }
 
-  .shuffle-skeleton--tall {
-    @media (min-width: 768px) {
+  .bento-skeleton--hero {
+    min-height: 280px;
+
+    @media (min-width: 576px) {
+      grid-column: span 2;
       grid-row: span 2;
-      min-height: 420px;
+      min-height: 100%;
     }
   }
 
-  .shuffle-skeleton--compact {
+  .bento-skeleton--tall {
+    min-height: 320px;
+
+    @media (min-width: 576px) {
+      grid-row: span 2;
+      min-height: 100%;
+    }
+  }
+
+  .bento-skeleton--wide {
     min-height: 200px;
+
+    @media (min-width: 576px) {
+      grid-column: span 2;
+    }
+  }
+
+  .bento-skeleton--compact {
+    min-height: 180px;
+  }
+
+  .bento-skeleton--standard {
+    min-height: 240px;
   }
 }
 </style>
