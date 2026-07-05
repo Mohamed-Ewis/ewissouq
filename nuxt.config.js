@@ -6,6 +6,8 @@ export default defineNuxtConfig({
   experimental: {
     // Workaround for Nuxt 3.21.8 dev crash with ssr:false (fixed in 3.21.9)
     viteEnvironmentApi: true,
+    // Avoid Vite pre-transform race on "#app-manifest" during dev
+    appManifest: false,
   },
   components: [
     {
