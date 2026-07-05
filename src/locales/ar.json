@@ -13,7 +13,8 @@
     "profile": "الملف الشخصي",
     "saved": "المحفوظات",
     "menu": "القائمة",
-    "home": "الرئيسية"
+    "home": "الرئيسية",
+    "stores": "المتاجر"
   },
   "common": {
     "cancel": "إلغاء",
@@ -326,6 +327,7 @@
     "any": "أي",
     "sortBy": "ترتيب حسب",
     "verifiedSellers": "بائعون موثقون فقط",
+    "businessOnly": "متاجر تجارية فقط",
     "hasVideo": "يحتوي فيديو",
     "apply": "تطبيق الفلاتر"
   },
@@ -388,5 +390,143 @@
   "currency": {
     "code": "درهم",
     "amount": "{amount} درهم"
+  },
+  "businesses": {
+    "title": "المتاجر التجارية",
+    "subtitle": "تسوّق من براندات ومحلات موثّقة — B.Tech، كارفور، IKEA وأكثر",
+    "featuredTitle": "متاجر مميزة",
+    "searchPlaceholder": "ابحث عن متجر...",
+    "allStores": "كل المتاجر",
+    "allTiers": "كل المستويات",
+    "verified": "متجر موثّق",
+    "follow": "متابعة المتجر",
+    "following": "متابَع",
+    "followers": "متابع",
+    "products": "منتج",
+    "rating": "تقييم",
+    "branches": "الفروع",
+    "branchesCount": "{count} فروع",
+    "about": "عن المتجر",
+    "phone": "الهاتف",
+    "email": "البريد",
+    "website": "الموقع",
+    "hours": "مواعيد العمل",
+    "viewStore": "عرض المتجر",
+    "businessAccount": "حساب تجاري",
+    "loadMore": "تحميل المزيد",
+    "notFound": "المتجر غير موجود",
+    "noProducts": "لا توجد منتجات",
+    "noProductsDesc": "لم يضف هذا المتجر منتجات بعد.",
+    "noSold": "لا توجد مبيعات",
+    "tabs": {
+      "offers": "العروض",
+      "products": "المنتجات",
+      "branches": "الفروع",
+      "about": "عن المتجر"
+    },
+    "offersCount": "عرض",
+    "featuredOffer": "عرض مميز",
+    "claimOffer": "احصل على العرض",
+    "noOffers": "لا توجد عروض حالياً",
+    "noOffersDesc": "تابع المتجر لتصلك العروض الجديدة.",
+    "offerExpired": "انتهى العرض",
+    "offerEndsToday": "ينتهي اليوم",
+    "offerEndsIn": "ينتهي خلال {count} يوم",
+    "offerBadges": {
+      "flash": "عرض خاطف",
+      "weekly": "عرض أسبوعي",
+      "exclusive": "حصري",
+      "bundle": "باقة",
+      "clearance": "تصفية"
+    },
+    "branchesTitle": "فروعنا",
+    "branchesSubtitle": "اعثر على أقرب فرع لـ {name}",
+    "totalBranches": "فرع",
+    "branchUnit": "فرع",
+    "branchSearch": "ابحث بالمنطقة أو اسم الفرع...",
+    "allCities": "كل المدن",
+    "branchesShown": "فرع معروض",
+    "call": "اتصل",
+    "directions": "الاتجاهات",
+    "noBranchesMatch": "لا توجد فروع مطابقة",
+    "noBranchesMatchDesc": "جرّب مدينة أو كلمة بحث مختلفة.",
+    "viewBranches": "{count} فرع",
+    "branchBannerTitle": "{count} فرع في مدن متعددة",
+    "branchBannerDesc": "ابحث عن أقرب فرع — اتصل أو احصل على الاتجاهات",
+    "tiers": {
+      "basic": "محل",
+      "verified": "موثّق",
+      "premium": "مميز"
+    },
+    "empty": {
+      "title": "لا توجد متاجر",
+      "description": "جرّب تعديل البحث أو الفلاتر."
+    },
+    "bTech": {
+      "name": "B.Tech",
+      "description": "أكبر متجر إلكترونيات في مصر — أجهزة منزلية، موبايلات، وتلفزيونات بضمان رسمي."
+    },
+    "carrefour": {
+      "name": "كارفور مصر",
+      "description": "هايبر ماركت شامل — بقالة، إلكترونيات، أثاث، وكل احتياجات المنزل."
+    },
+    "ikea": {
+      "name": "IKEA مصر",
+      "description": "أثاث وديكور منزلي بتصاميم اسكandinavian عصرية وبأسعار مناسبة."
+    },
+    "virgin": {
+      "name": "Virgin Megastore",
+      "description": "ترفيه وتكنولوجيا — إلكترونيات، ألعاب، موسيقى، ومنتجات lifestyle."
+    },
+    "mobileShop": {
+      "name": "Mobile Shop Maadi",
+      "description": "محل موبايلات في المعادي — أجهزة جديدة ومستعملة بأسعار تنافسية."
+    },
+    "elAraby": {
+      "name": "العربي",
+      "description": "أجهزة منزلية مصرية — ثلاجات، غسالات، ميكروويف، وموزعات مياه."
+    },
+    "homeCentre": {
+      "name": "Home Centre",
+      "description": "أثاث ومفروشات منزلية — غرف نوم، صالونات، ومكاتب."
+    },
+    "sharafDg": {
+      "name": "Sharaf DG",
+      "description": "إلكترونيات وموبايلات — أفضل العروض في الإمارات والخليج."
+    },
+    "offers": {
+      "bTech": {
+        "tv": { "title": "تلفزيونات QLED — خصم 30%", "desc": "Samsung & LG بضمان B.Tech — كل الفروع" },
+        "phone": { "title": "iPhone 15 — عرض حصري", "desc": "أقساط بدون فوائد 12 شهر" },
+        "ac": { "title": "تكييفات Split — صيف 2026", "desc": "تركيب مجاني + ضمان 5 سنوات" },
+        "bundle": { "title": "باقة المطبخ الكاملة", "desc": "ثلاجة + غسالة + ميكروويف بسعر واحد" }
+      },
+      "carrefour": {
+        "grocery": { "title": "خصم 40% على البقالة", "desc": "عروض أسبوعية — كل فروع كارفور" },
+        "electronics": { "title": "إلكترونيات — Flash Sale", "desc": "لمدة 24 ساعة فقط" },
+        "home": { "title": "تصفية أدوات المنزل", "desc": "خصم حتى 50% — كميات محدودة" }
+      },
+      "ikea": {
+        "summer": { "title": "تخفيضات الصيف", "desc": "خصم 30% على أثاث الصيف" },
+        "bedroom": { "title": "غرف النوم — عرض حصري", "desc": "سرير + مرتبة + دولاب" }
+      },
+      "virgin": {
+        "gaming": { "title": "Gaming Week", "desc": "PlayStation & Xbox — خصم 20%" },
+        "audio": { "title": "سماعات Premium", "desc": "Sony & Bose — عرض محدود" }
+      },
+      "mobileShop": {
+        "trade": { "title": "استبدال قديم بجديد", "desc": "خصم إضافي 10% عند التبديل" }
+      },
+      "elAraby": {
+        "fridge": { "title": "ثلاجات العربي — عرض الأسبوع", "desc": "توصيل وتركيب مجاني" }
+      },
+      "homeCentre": {
+        "sofa": { "title": "كنبات — تصفية", "desc": "خصم 35% على الصالونات" }
+      },
+      "sharafDg": {
+        "laptop": { "title": "Laptops — Flash Deal", "desc": "MacBook & Dell — 24 ساعة" },
+        "tv": { "title": "شاشات 4K", "desc": "خصم 28% — Sharaf DG" }
+      }
+    }
   }
 }

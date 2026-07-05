@@ -13,7 +13,8 @@
     "profile": "Profile",
     "saved": "Saved",
     "menu": "Menu",
-    "home": "Home"
+    "home": "Home",
+    "stores": "Stores"
   },
   "common": {
     "cancel": "Cancel",
@@ -326,6 +327,7 @@
     "any": "Any",
     "sortBy": "Sort By",
     "verifiedSellers": "Verified sellers only",
+    "businessOnly": "Business stores only",
     "hasVideo": "Has video",
     "apply": "Apply Filters"
   },
@@ -388,5 +390,143 @@
   "currency": {
     "code": "AED",
     "amount": "AED {amount}"
+  },
+  "businesses": {
+    "title": "Business Stores",
+    "subtitle": "Shop from verified brands and retailers — B.Tech, Carrefour, IKEA & more",
+    "featuredTitle": "Featured Stores",
+    "searchPlaceholder": "Search stores...",
+    "allStores": "All stores",
+    "allTiers": "All tiers",
+    "verified": "Verified store",
+    "follow": "Follow store",
+    "following": "Following",
+    "followers": "followers",
+    "products": "products",
+    "rating": "rating",
+    "branches": "Branches",
+    "branchesCount": "{count} branches",
+    "about": "About",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "hours": "Working hours",
+    "viewStore": "View store",
+    "businessAccount": "Business account",
+    "loadMore": "Load more",
+    "notFound": "Store not found",
+    "noProducts": "No products",
+    "noProductsDesc": "This store hasn't listed any products yet.",
+    "noSold": "No sold items",
+    "tabs": {
+      "offers": "Offers",
+      "products": "Products",
+      "branches": "Branches",
+      "about": "About"
+    },
+    "offersCount": "offers",
+    "featuredOffer": "Featured offer",
+    "claimOffer": "Get offer",
+    "noOffers": "No offers right now",
+    "noOffersDesc": "Follow the store to get notified of new deals.",
+    "offerExpired": "Offer expired",
+    "offerEndsToday": "Ends today",
+    "offerEndsIn": "Ends in {count} days",
+    "offerBadges": {
+      "flash": "Flash sale",
+      "weekly": "Weekly deal",
+      "exclusive": "Exclusive",
+      "bundle": "Bundle",
+      "clearance": "Clearance"
+    },
+    "branchesTitle": "Our branches",
+    "branchesSubtitle": "Find the nearest {name} branch",
+    "totalBranches": "branches",
+    "branchUnit": "branches",
+    "branchSearch": "Search by area or branch name...",
+    "allCities": "All cities",
+    "branchesShown": "branches shown",
+    "call": "Call",
+    "directions": "Directions",
+    "noBranchesMatch": "No matching branches",
+    "noBranchesMatchDesc": "Try a different city or search term.",
+    "viewBranches": "{count} branches",
+    "branchBannerTitle": "{count} branches across cities",
+    "branchBannerDesc": "Find the nearest branch — call or get directions",
+    "tiers": {
+      "basic": "Shop",
+      "verified": "Verified",
+      "premium": "Premium"
+    },
+    "empty": {
+      "title": "No stores found",
+      "description": "Try adjusting your search or filters."
+    },
+    "bTech": {
+      "name": "B.Tech",
+      "description": "Egypt's largest electronics retailer — appliances, mobiles, and TVs with official warranty."
+    },
+    "carrefour": {
+      "name": "Carrefour Egypt",
+      "description": "Full hypermarket — groceries, electronics, furniture, and everything for home."
+    },
+    "ikea": {
+      "name": "IKEA Egypt",
+      "description": "Modern Scandinavian furniture and home decor at affordable prices."
+    },
+    "virgin": {
+      "name": "Virgin Megastore",
+      "description": "Entertainment & tech — electronics, gaming, music, and lifestyle products."
+    },
+    "mobileShop": {
+      "name": "Mobile Shop Maadi",
+      "description": "Mobile shop in Maadi — new and used phones at competitive prices."
+    },
+    "elAraby": {
+      "name": "El Araby",
+      "description": "Egyptian home appliances — refrigerators, washers, microwaves, and water dispensers."
+    },
+    "homeCentre": {
+      "name": "Home Centre",
+      "description": "Home furniture & décor — bedrooms, living rooms, and offices."
+    },
+    "sharafDg": {
+      "name": "Sharaf DG",
+      "description": "Electronics & mobiles — best deals in UAE and GCC."
+    },
+    "offers": {
+      "bTech": {
+        "tv": { "title": "QLED TVs — 30% off", "desc": "Samsung & LG with B.Tech warranty — all branches" },
+        "phone": { "title": "iPhone 15 — exclusive", "desc": "0% installments for 12 months" },
+        "ac": { "title": "Split ACs — Summer 2026", "desc": "Free installation + 5-year warranty" },
+        "bundle": { "title": "Full kitchen bundle", "desc": "Fridge + washer + microwave one price" }
+      },
+      "carrefour": {
+        "grocery": { "title": "40% off groceries", "desc": "Weekly deals — all Carrefour branches" },
+        "electronics": { "title": "Electronics flash sale", "desc": "24 hours only" },
+        "home": { "title": "Home clearance", "desc": "Up to 50% off — limited stock" }
+      },
+      "ikea": {
+        "summer": { "title": "Summer sale", "desc": "30% off summer furniture" },
+        "bedroom": { "title": "Bedroom exclusive", "desc": "Bed + mattress + wardrobe" }
+      },
+      "virgin": {
+        "gaming": { "title": "Gaming week", "desc": "PlayStation & Xbox — 20% off" },
+        "audio": { "title": "Premium headphones", "desc": "Sony & Bose — limited offer" }
+      },
+      "mobileShop": {
+        "trade": { "title": "Trade-in bonus", "desc": "Extra 10% off when you trade" }
+      },
+      "elAraby": {
+        "fridge": { "title": "El Araby fridges", "desc": "Free delivery & installation" }
+      },
+      "homeCentre": {
+        "sofa": { "title": "Sofa clearance", "desc": "35% off living room sets" }
+      },
+      "sharafDg": {
+        "laptop": { "title": "Laptop flash deal", "desc": "MacBook & Dell — 24 hours" },
+        "tv": { "title": "4K TVs", "desc": "28% off at Sharaf DG" }
+      }
+    }
   }
 }

@@ -242,6 +242,8 @@ const navLinks = computed(() => [
 
   { to: '/', label: t('nav.feed'), icon: 'bi bi-house' },
 
+  { to: '/stores', label: t('nav.stores'), icon: 'bi bi-building' },
+
   { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
 
   { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer' },

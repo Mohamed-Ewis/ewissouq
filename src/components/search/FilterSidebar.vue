@@ -69,6 +69,11 @@
       <label class="form-check-label small" for="verified">{{ $t('filters.verifiedSellers') }}</label>
     </div>
 
+    <div class="form-check mb-2">
+      <input id="businessOnly" v-model="filters.businessOnly" class="form-check-input" type="checkbox" />
+      <label class="form-check-label small" for="businessOnly">{{ $t('filters.businessOnly') }}</label>
+    </div>
+
     <div class="form-check mb-3">
       <input id="hasVideo" v-model="filters.hasVideo" class="form-check-input" type="checkbox" />
       <label class="form-check-label small" for="hasVideo">{{ $t('filters.hasVideo') }}</label>

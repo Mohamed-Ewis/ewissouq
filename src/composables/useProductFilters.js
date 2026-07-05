@@ -15,6 +15,7 @@ export function useProductFilters(initial = {}) {
     sort: 'recent',
     verified: false,
     hasVideo: false,
+    businessOnly: false,
     ...initial,
   })
 
@@ -32,6 +33,7 @@ export function useProductFilters(initial = {}) {
     if (filters.condition) count++
     if (filters.verified) count++
     if (filters.hasVideo) count++
+    if (filters.businessOnly) count++
     return count
   })
 
@@ -48,6 +50,7 @@ export function useProductFilters(initial = {}) {
       sort: 'recent',
       verified: false,
       hasVideo: false,
+      businessOnly: false,
     })
   }
 
@@ -63,6 +66,7 @@ export function useProductFilters(initial = {}) {
     if (filters.condition) params.condition = filters.condition
     if (filters.verified) params.verified = true
     if (filters.hasVideo) params.hasVideo = true
+    if (filters.businessOnly) params.businessOnly = true
     return params
   }
 
