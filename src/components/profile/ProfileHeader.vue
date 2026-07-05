@@ -34,7 +34,18 @@
         <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
           <h4 class="profile-name fw-bold mb-0">{{ user.name }}</h4>
           <VerificationBadge :verified="user.verified" show-label />
+          <span v-if="user.accountType === 'business'" class="badge bg-primary-subtle text-primary">
+            <i class="bi bi-shop me-1" />{{ $t('businesses.businessAccount') }}
+          </span>
         </div>
+
+        <NuxtLinkLocale
+          v-if="user.business"
+          :to="`/stores/${user.business.slug}`"
+          class="btn btn-sm btn-outline-primary mb-3"
+        >
+          <i class="bi bi-building me-1" />{{ $t('businesses.viewStore') }}
+        </NuxtLinkLocale>
 
         <p v-if="user.bio" class="profile-bio text-muted mb-3">{{ user.bio }}</p>
 

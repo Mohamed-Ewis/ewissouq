@@ -13,7 +13,8 @@
     "profile": "Profil",
     "saved": "Enregistrés",
     "menu": "Menu",
-    "home": "Accueil"
+    "home": "Accueil",
+    "stores": "Magasins"
   },
   "common": {
     "cancel": "Annuler",
@@ -326,6 +327,7 @@
     "any": "Tout",
     "sortBy": "Trier par",
     "verifiedSellers": "Vendeurs vérifiés uniquement",
+    "businessOnly": "Magasins professionnels uniquement",
     "hasVideo": "Avec vidéo",
     "apply": "Appliquer les filtres"
   },
@@ -388,5 +390,143 @@
   "currency": {
     "code": "AED",
     "amount": "{amount} AED"
+  },
+  "businesses": {
+    "title": "Magasins professionnels",
+    "subtitle": "Achetez auprès de marques vérifiées — B.Tech, Carrefour, IKEA et plus",
+    "featuredTitle": "Magasins en vedette",
+    "searchPlaceholder": "Rechercher un magasin...",
+    "allStores": "Tous les magasins",
+    "allTiers": "Tous les niveaux",
+    "verified": "Magasin vérifié",
+    "follow": "Suivre",
+    "following": "Suivi",
+    "followers": "abonnés",
+    "products": "produits",
+    "rating": "note",
+    "branches": "Succursales",
+    "branchesCount": "{count} succursales",
+    "about": "À propos",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "website": "Site web",
+    "hours": "Horaires",
+    "viewStore": "Voir le magasin",
+    "businessAccount": "Compte professionnel",
+    "loadMore": "Charger plus",
+    "notFound": "Magasin introuvable",
+    "noProducts": "Aucun produit",
+    "noProductsDesc": "Ce magasin n'a pas encore de produits.",
+    "noSold": "Aucune vente",
+    "tabs": {
+      "offers": "Offres",
+      "products": "Produits",
+      "branches": "Succursales",
+      "about": "À propos"
+    },
+    "offersCount": "offres",
+    "featuredOffer": "Offre vedette",
+    "claimOffer": "Obtenir l'offre",
+    "noOffers": "Aucune offre pour le moment",
+    "noOffersDesc": "Suivez le magasin pour être notifié.",
+    "offerExpired": "Offre expirée",
+    "offerEndsToday": "Se termine aujourd'hui",
+    "offerEndsIn": "Se termine dans {count} jours",
+    "offerBadges": {
+      "flash": "Vente flash",
+      "weekly": "Offre hebdo",
+      "exclusive": "Exclusif",
+      "bundle": "Pack",
+      "clearance": "Déstockage"
+    },
+    "branchesTitle": "Nos succursales",
+    "branchesSubtitle": "Trouvez la succursale {name} la plus proche",
+    "totalBranches": "succursales",
+    "branchUnit": "succursales",
+    "branchSearch": "Rechercher par zone ou nom...",
+    "allCities": "Toutes les villes",
+    "branchesShown": "affichées",
+    "call": "Appeler",
+    "directions": "Itinéraire",
+    "noBranchesMatch": "Aucune succursale trouvée",
+    "noBranchesMatchDesc": "Essayez une autre ville ou recherche.",
+    "viewBranches": "{count} succursales",
+    "branchBannerTitle": "{count} succursales dans plusieurs villes",
+    "branchBannerDesc": "Trouvez la plus proche — appelez ou obtenez l'itinéraire",
+    "tiers": {
+      "basic": "Boutique",
+      "verified": "Vérifié",
+      "premium": "Premium"
+    },
+    "empty": {
+      "title": "Aucun magasin",
+      "description": "Essayez de modifier votre recherche ou vos filtres."
+    },
+    "bTech": {
+      "name": "B.Tech",
+      "description": "Plus grand détaillant d'électronique en Égypte — appareils, mobiles et TV avec garantie."
+    },
+    "carrefour": {
+      "name": "Carrefour Égypte",
+      "description": "Hypermarché complet — épicerie, électronique, mobilier et plus."
+    },
+    "ikea": {
+      "name": "IKEA Égypte",
+      "description": "Mobilier et décoration scandinave moderne à prix abordables."
+    },
+    "virgin": {
+      "name": "Virgin Megastore",
+      "description": "Divertissement et tech — électronique, jeux, musique et lifestyle."
+    },
+    "mobileShop": {
+      "name": "Mobile Shop Maadi",
+      "description": "Boutique mobile au Maadi — téléphones neufs et d'occasion."
+    },
+    "elAraby": {
+      "name": "El Araby",
+      "description": "Électroménager égyptien — réfrigérateurs, lave-linge, micro-ondes."
+    },
+    "homeCentre": {
+      "name": "Home Centre",
+      "description": "Mobilier et décoration — chambres, salons et bureaux."
+    },
+    "sharafDg": {
+      "name": "Sharaf DG",
+      "description": "Électronique et mobiles — meilleures offres aux EAU et GCC."
+    },
+    "offers": {
+      "bTech": {
+        "tv": { "title": "TV QLED — 30% de réduction", "desc": "Samsung et LG — toutes succursales" },
+        "phone": { "title": "iPhone 15 — exclusif", "desc": "12 mois sans intérêts" },
+        "ac": { "title": "Climatiseurs Split", "desc": "Installation gratuite + garantie 5 ans" },
+        "bundle": { "title": "Pack cuisine complet", "desc": "Frigo + lave-linge + micro-ondes" }
+      },
+      "carrefour": {
+        "grocery": { "title": "40% sur l'épicerie", "desc": "Offres hebdo — tous les Carrefour" },
+        "electronics": { "title": "Flash électronique", "desc": "24 heures seulement" },
+        "home": { "title": "Déstockage maison", "desc": "Jusqu'à 50% de réduction" }
+      },
+      "ikea": {
+        "summer": { "title": "Soldes d'été", "desc": "30% sur le mobilier d'été" },
+        "bedroom": { "title": "Chambre exclusive", "desc": "Lit + matelas + armoire" }
+      },
+      "virgin": {
+        "gaming": { "title": "Semaine gaming", "desc": "PlayStation et Xbox — 20%" },
+        "audio": { "title": "Casques premium", "desc": "Sony et Bose — offre limitée" }
+      },
+      "mobileShop": {
+        "trade": { "title": "Bonus reprise", "desc": "10% supplémentaire à l'échange" }
+      },
+      "elAraby": {
+        "fridge": { "title": "Réfrigérateurs El Araby", "desc": "Livraison et installation gratuites" }
+      },
+      "homeCentre": {
+        "sofa": { "title": "Déstockage canapés", "desc": "35% sur les salons" }
+      },
+      "sharafDg": {
+        "laptop": { "title": "Flash laptops", "desc": "MacBook et Dell — 24h" },
+        "tv": { "title": "TV 4K", "desc": "28% chez Sharaf DG" }
+      }
+    }
   }
 }

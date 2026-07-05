@@ -17,7 +17,17 @@
       </div>
 
       <div class="bento-card__overlay">
-        <span v-if="variant !== 'compact'" class="bento-card__badge">
+        <div v-if="isBusinessListing" class="bento-card__store-row">
+          <BusinessBadge :tier="businessTier" />
+          <NuxtLinkLocale
+            :to="storeLink"
+            class="bento-card__store-link"
+            @click.stop
+          >
+            <i class="bi bi-shop" /> {{ sellerLabel }}
+          </NuxtLinkLocale>
+        </div>
+        <span v-else-if="variant !== 'compact'" class="bento-card__badge">
           {{ translateCategory(product.category) }}
         </span>
 
@@ -25,10 +35,19 @@
 
         <div class="bento-card__footer">
           <div class="bento-card__seller">
-            <img :src="product.seller.avatar" :alt="product.seller.name" />
+            <img :src="product.seller.avatar" :alt="sellerLabel" />
             <div class="bento-card__seller-info">
-              <span class="bento-card__seller-name">
-                {{ product.seller.name }}
+              <NuxtLinkLocale
+                v-if="isBusinessListing"
+                :to="storeLink"
+                class="bento-card__seller-name bento-card__seller-name--link"
+                @click.stop
+              >
+                {{ sellerLabel }}
+                <VerificationBadge :verified="product.seller.verified" />
+              </NuxtLinkLocale>
+              <span v-else class="bento-card__seller-name">
+                {{ sellerLabel }}
                 <VerificationBadge :verified="product.seller.verified" />
               </span>
               <span v-if="variant !== 'compact'" class="bento-card__meta">
@@ -79,10 +98,32 @@ const props = defineProps({
 const productsStore = useProductsStore()
 const { formatPrice, timeAgo } = useFormatters()
 const { translateCategory } = useCategoryName()
+const { translateBusiness } = useBusinessName()
 const liked = ref(false)
 const saved = ref(false)
 
 const locationLabel = computed(() => props.product.location?.city || '')
+
+const isBusinessListing = computed(
+  () => props.product.sellerType === 'business' || props.product.seller?.isBusiness,
+)
+
+const storeLink = computed(() => {
+  const slug = props.product.seller?.businessSlug || props.product.business?.slug
+  return slug ? `/stores/${slug}` : `/profile/${props.product.sellerId}`
+})
+
+const sellerLabel = computed(() => {
+  if (isBusinessListing.value) {
+    return translateBusiness(props.product.seller?.nameKey || props.product.business)
+  }
+  return props.product.seller?.name || ''
+})
+
+const businessTier = computed(() => {
+  const p = props.product
+  return p.seller?.businessTier || (p.business && p.business.tier) || 'verified'
+})
 
 async function toggleLike(e) {
   e?.preventDefault?.()
@@ -178,6 +219,39 @@ async function toggleSave(e) {
     rgba(15, 23, 42, 0.88) 100%
   );
   color: #fff;
+}
+
+.bento-card__store-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bento-card__store-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.28);
+    color: #fff;
+  }
+}
+
+.bento-card__seller-name--link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .bento-card__badge {

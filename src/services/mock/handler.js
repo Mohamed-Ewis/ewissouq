@@ -3,13 +3,17 @@ import {
   products,
   auctions,
   categoryTree,
+  businesses,
   stories,
   notifications,
   comments,
   savedProductIds,
   likedProductIds,
   followingUserIds,
+  followingBusinessIds,
 } from './data'
+import { getBranchesForBusiness } from '@/data/businessBranches'
+import { getOffersForBusiness, getFeaturedOffer } from '@/data/businessOffers'
 import { DEFAULT_AVATAR, DEFAULT_COVER, DEFAULT_PRODUCT_IMAGE } from '@/utils/demoImages'
 import { getDescendantIds, findCategoryById, findCategoryPath, getRootCategoryId } from '@/utils/categoryHelpers'
 
@@ -55,6 +59,11 @@ function filterProducts(params = {}) {
     result = result.filter((p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
   }
   if (params.sellerId) result = result.filter((p) => p.sellerId === Number(params.sellerId))
+  if (params.businessId) result = result.filter((p) => p.businessId === Number(params.businessId))
+  if (params.sellerType) result = result.filter((p) => p.sellerType === params.sellerType)
+  if (params.businessOnly === 'true' || params.businessOnly === true) {
+    result = result.filter((p) => p.sellerType === 'business')
+  }
 
   const sort = params.sort || 'recent'
   switch (sort) {
@@ -78,6 +87,54 @@ function filterProducts(params = {}) {
   }
 
   return result
+}
+
+function filterBusinesses(params = {}) {
+  let result = [...businesses]
+
+  if (params.q) {
+    const q = params.q.toLowerCase()
+    result = result.filter((b) => b.slug.includes(q) || b.nameKey.toLowerCase().includes(q))
+  }
+  if (params.tier) result = result.filter((b) => b.tier === params.tier)
+  if (params.featured === 'true' || params.featured === true) result = result.filter((b) => b.featured)
+  if (params.country) result = result.filter((b) => b.location?.country === params.country)
+  if (params.city) result = result.filter((b) => b.location?.city === params.city)
+  if (params.category) {
+    const catId = Number(params.category)
+    const ids = getDescendantIds(catId)
+    result = result.filter((b) => b.categoryIds.some((id) => ids.includes(id) || id === catId))
+  }
+
+  const sort = params.sort || 'followers'
+  switch (sort) {
+    case 'rating':
+      result.sort((a, B) => B.rating - a.rating)
+      break
+    case 'recent':
+      result.sort((a, b) => new Date(b.joinedAt) - new Date(a.joinedAt))
+      break
+    default:
+      result.sort((a, b) => b.followers - a.followers)
+  }
+
+  return result.map(enrichBusiness)
+}
+
+function enrichBusiness(business) {
+  const storeProducts = products.filter((p) => p.businessId === business.id && p.status === 'active')
+  const branches = getBranchesForBusiness(business.id)
+  const offers = getOffersForBusiness(business.id)
+  return {
+    ...business,
+    branches,
+    branchesCount: branches.length,
+    offers,
+    offersCount: offers.length,
+    featuredOffer: getFeaturedOffer(business.id),
+    productsCount: storeProducts.length,
+    isFollowing: followingBusinessIds.includes(business.id),
+  }
 }
 
 function matchUrl(url, pattern) {
@@ -117,6 +174,8 @@ export async function handleMockRequest(config) {
       avatar: body.avatar || DEFAULT_AVATAR,
       cover: DEFAULT_COVER,
       bio: '',
+      accountType: 'individual',
+      businessId: null,
       verified: false,
       rating: 0,
       followers: 0,
@@ -189,7 +248,9 @@ export async function handleMockRequest(config) {
       currency: 'AED',
       images: body.images || [DEFAULT_PRODUCT_IMAGE],
       sellerId: seller.id,
-      seller: { id: seller.id, name: seller.name, avatar: seller.avatar, verified: seller.verified, rating: seller.rating },
+      sellerType: 'individual',
+      businessId: null,
+      seller: { id: seller.id, name: seller.name, avatar: seller.avatar, verified: seller.verified, rating: seller.rating, isBusiness: false },
       views: 0,
       likes: 0,
       commentsCount: 0,
@@ -334,10 +395,14 @@ export async function handleMockRequest(config) {
     if (!user) return { success: false, message: 'User not found', status: 404 }
     const { password, ...safeUser } = user
     const userProducts = products.filter((p) => p.sellerId === user.id)
+    const linkedBusiness = user.businessId
+      ? enrichBusiness(businesses.find((b) => b.id === user.businessId))
+      : null
     return {
       success: true,
       data: {
         ...safeUser,
+        business: linkedBusiness,
         isFollowing: followingUserIds.includes(user.id),
         publishedProducts: userProducts.filter((p) => p.status === 'active'),
         soldProducts: userProducts.filter((p) => p.status === 'sold'),
@@ -358,6 +423,53 @@ export async function handleMockRequest(config) {
     }
     followingUserIds.splice(idx, 1)
     if (user) user.followers -= 1
+    return { success: true, data: { following: false } }
+  }
+
+  // Businesses / Stores
+  if (url === 'businesses' && method === 'get') {
+    const filtered = filterBusinesses(params)
+    const result = paginate(filtered, Number(params.page) || 1, Number(params.pageSize) || 12)
+    return { success: true, ...result }
+  }
+
+  if (url === 'businesses/featured' && method === 'get') {
+    const data = filterBusinesses({ featured: true })
+    return { success: true, data }
+  }
+
+  match = matchUrl(url, 'businesses/:slugOrId')
+  if (match && method === 'get') {
+    const key = match[1]
+    const business = businesses.find((b) => b.slug === key || b.id === Number(key))
+    if (!business) return { success: false, message: 'Store not found', status: 404 }
+    const enriched = enrichBusiness(business)
+    const storeProducts = products.filter((p) => p.businessId === business.id && p.status === 'active')
+    const owner = users.find((u) => u.id === business.ownerUserId)
+    const { password, ...safeOwner } = owner || {}
+    return {
+      success: true,
+      data: {
+        ...enriched,
+        owner: safeOwner || null,
+        products: storeProducts,
+        soldProducts: products.filter((p) => p.businessId === business.id && p.status === 'sold'),
+      },
+    }
+  }
+
+  match = matchUrl(url, 'businesses/:id/follow')
+  if (match && method === 'post') {
+    const id = Number(match[1])
+    const idx = followingBusinessIds.indexOf(id)
+    const business = businesses.find((b) => b.id === id)
+    if (idx === -1) {
+      followingBusinessIds.push(id)
+      if (business) business.followers += 1
+      return { success: true, data: { following: true } }
+    }
+    followingBusinessIds.splice(idx, 1)
+    if (business) business.followers -= 1
     return { success: true, data: { following: false } }
   }
 

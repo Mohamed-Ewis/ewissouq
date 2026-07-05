@@ -5,7 +5,7 @@
 
   <UiErrorState
     v-else-if="error"
-    :message="error?.message || $t('product.loadFailed')"
+    :message="loadErrorMessage"
     @retry="refresh"
   />
 
@@ -62,7 +62,7 @@
 
           <div class="location mb-4 p-3 rounded" style="background: var(--es-surface-2)">
             <i class="bi bi-geo-alt text-primary" />
-            {{ product.location?.area }}, {{ product.location?.city }}
+            {{ locationLine }}
           </div>
 
           <div class="d-flex gap-2 mb-4">
@@ -81,12 +81,16 @@
           </div>
 
           <div v-if="product.seller" class="seller-card p-3 rounded" style="background: var(--es-surface-2)">
-            <NuxtLinkLocale :to="`/profile/${product.seller.id}`" class="text-decoration-none d-flex align-items-center gap-3">
-              <img :src="product.seller.avatar" class="seller-avatar" :alt="product.seller.name" />
+            <NuxtLinkLocale
+              :to="sellerLink"
+              class="text-decoration-none d-flex align-items-center gap-3"
+            >
+              <img :src="product.seller.avatar" class="seller-avatar" :alt="sellerName" />
               <div>
-                <div class="d-flex align-items-center gap-1">
-                  <span class="fw-semibold">{{ product.seller.name }}</span>
+                <div class="d-flex align-items-center gap-1 flex-wrap">
+                  <span class="fw-semibold">{{ sellerName }}</span>
                   <VerificationBadge :verified="product.seller.verified" />
+                  <BusinessBadge v-if="isBusinessListing" :tier="product.seller.businessTier || 'verified'" />
                 </div>
                 <RatingStars :rating="product.seller.rating" />
               </div>
@@ -131,6 +135,7 @@ const { t } = useI18n()
 const productsStore = useProductsStore()
 const { formatPrice } = useFormatters()
 const { translateCondition, translateCategory } = useCategoryName()
+const { translateBusiness } = useBusinessName()
 const showVideo = ref(false)
 const liked = ref(false)
 const saved = ref(false)
@@ -155,6 +160,17 @@ watch(product, (item) => {
   saved.value = item.isSaved || false
 }, { immediate: true })
 
+const loadErrorMessage = computed(() => {
+  if (error.value && error.value.message) return error.value.message
+  return t('product.loadFailed')
+})
+
+const locationLine = computed(() => {
+  const loc = product.value?.location
+  if (!loc) return ''
+  return [loc.area, loc.city].filter(Boolean).join(', ')
+})
+
 const conditionClass = computed(() => ({
   new: 'bg-success',
   used: 'bg-warning text-dark',
@@ -166,6 +182,23 @@ const breadcrumbItems = computed(() => [
   { to: '/marketplace', label: t('nav.marketplace') },
   { label: product.value?.title || '' },
 ])
+
+const isBusinessListing = computed(
+  () => product.value?.sellerType === 'business' || product.value?.seller?.isBusiness,
+)
+
+const sellerLink = computed(() => {
+  const slug = product.value?.seller?.businessSlug || product.value?.business?.slug
+  if (isBusinessListing.value && slug) return `/stores/${slug}`
+  return `/profile/${product.value?.seller?.id}`
+})
+
+const sellerName = computed(() => {
+  if (isBusinessListing.value) {
+    return translateBusiness(product.value?.seller?.nameKey || product.value?.business)
+  }
+  return product.value?.seller?.name || ''
+})
 
 async function toggleLike() {
   if (!product.value) return

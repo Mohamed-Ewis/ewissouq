@@ -5,12 +5,7 @@
       <div class="col-lg-9">
         <StoriesBar v-if="stories.length" :stories="stories" />
 
-        <CategoryGrid
-          v-if="categoryTree.length"
-          :categories="categoryTree"
-          variant="home"
-          class="mb-4"
-        />
+        <BusinessShowcase v-if="featuredBusinesses.length" :businesses="featuredBusinesses" class="mb-4" />
 
         <div class="feed-timeline">
           <h5 class="fw-bold mb-3">
@@ -44,18 +39,19 @@
       <!-- Sidebar — 3 columns -->
       <div class="col-lg-3 d-none d-lg-block">
         <aside class="home-sidebar">
-          <div class="sidebar-card card p-3 mb-4">
-            <h6 class="fw-bold mb-3">{{ $t('home.quickLinks') }}</h6>
-            <ul class="list-unstyled mb-0">
-              <li v-for="link in quickLinks" :key="link.to" class="mb-2">
-                <NuxtLinkLocale :to="link.to" class="sidebar-link d-flex align-items-center gap-2">
-                  <i :class="link.icon" /> {{ link.label }}
-                </NuxtLinkLocale>
-              </li>
-            </ul>
-          </div>
-
           <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
+
+          <div class="sidebar-card card p-3 mb-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h6 class="fw-bold mb-0">
+                <i class="bi bi-building text-primary" /> {{ $t('businesses.featuredTitle') }}
+              </h6>
+              <NuxtLinkLocale to="/stores" class="small text-primary text-decoration-none">
+                {{ $t('common.viewAll') }}
+              </NuxtLinkLocale>
+            </div>
+            <FeaturedBusinesses :businesses="featuredBusinesses" />
+          </div>
 
           <div class="sidebar-card card p-3 mb-4">
             <h6 class="fw-bold mb-3">
@@ -129,6 +125,7 @@ definePageMeta({ layout: 'default' })
 
 import { getCategories, getStories } from '@/api/categories'
 import { getAuctions } from '@/api/auctions'
+import { getFeaturedBusinesses } from '@/api/businesses'
 
 const { t } = useI18n()
 const { formatPrice } = useFormatters()
@@ -136,13 +133,8 @@ const productsStore = useProductsStore()
 const categoryTree = ref([])
 const stories = ref([])
 const liveAuctions = ref([])
+const featuredBusinesses = ref([])
 
-const quickLinks = computed(() => [
-  { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
-  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer' },
-  { to: '/saved', label: t('home.savedItems'), icon: 'bi bi-bookmark' },
-  { to: '/create-listing', label: t('home.sellSomething'), icon: 'bi bi-plus-circle' },
-])
 
 const { target: loadMoreRef } = useInfiniteScroll(
   () => productsStore.fetchFeed(true),
@@ -160,8 +152,9 @@ onMounted(async () => {
     productsStore.fetchFeed(),
     productsStore.fetchHomeSections(),
     getCategories().then((r) => { categoryTree.value = r.data || r || [] }),
-    getStories().then((r) => { stories.value = r.data || r || [] }),
+    getStories().then((r) => { stories.value = (r.data || r || []).slice(0, 5) }),
     getAuctions({ status: 'active' }).then((r) => { liveAuctions.value = r.data || r || [] }),
+    getFeaturedBusinesses().then((r) => { featuredBusinesses.value = r.data || r || [] }),
   ])
 })
 </script>

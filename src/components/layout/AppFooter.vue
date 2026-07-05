@@ -14,6 +14,7 @@
           <h6 class="fw-semibold mb-3 small text-uppercase">{{ $t('footer.marketplace') }}</h6>
           <ul class="list-unstyled small">
             <li><NuxtLinkLocale to="/marketplace">{{ $t('footer.browse') }}</NuxtLinkLocale></li>
+            <li><NuxtLinkLocale to="/stores">{{ $t('nav.stores') }}</NuxtLinkLocale></li>
             <li><NuxtLinkLocale to="/auctions">{{ $t('footer.auctions') }}</NuxtLinkLocale></li>
             <li><NuxtLinkLocale to="/create-listing">{{ $t('footer.sellItem') }}</NuxtLinkLocale></li>
           </ul>
