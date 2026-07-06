@@ -96,6 +96,39 @@
     "noPosts": "No posts yet",
     "noPostsDesc": "Be the first to list a product!"
   },
+  "ads": {
+    "sponsored": "Ad",
+    "shopNow": "Shop now",
+    "viewDeals": "View deals",
+    "explore": "Explore",
+    "flashSale": "Flash sale",
+    "learnMore": "Learn more",
+    "previous": "Previous ad",
+    "next": "Next ad",
+    "goToSlide": "Go to ad {number}",
+    "items": {
+      "bTech": {
+        "title": "30% off electronics",
+        "subtitle": "Exclusive B.Tech deals — all branches"
+      },
+      "carrefour": {
+        "title": "Weekly grocery deals",
+        "subtitle": "Save up to 40% on selected items"
+      },
+      "ikea": {
+        "title": "Summer furniture sale",
+        "subtitle": "Living & bedroom at special prices"
+      },
+      "sharafDg": {
+        "title": "Flash sale — electronics",
+        "subtitle": "Laptops & TVs up to 28% off"
+      },
+      "premium": {
+        "title": "Advertise on EwiSSouq",
+        "subtitle": "Reach thousands of buyers daily"
+      }
+    }
+  },
   "stories": {
     "viewer": "Story viewer",
     "close": "Close story",

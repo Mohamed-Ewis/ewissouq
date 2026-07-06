@@ -39,6 +39,8 @@
       <!-- Sidebar — 3 columns -->
       <div class="col-lg-3 d-none d-lg-block">
         <aside class="home-sidebar">
+          <AdsSlider v-if="homeAds.length" :ads="homeAds" variant="sidebar" class="mb-4" />
+
           <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
 
           <div class="sidebar-card card p-3 mb-4">
@@ -126,6 +128,7 @@ definePageMeta({ layout: 'default' })
 import { getCategories, getStories } from '@/api/categories'
 import { getAuctions } from '@/api/auctions'
 import { getFeaturedBusinesses } from '@/api/businesses'
+import { getHomeAds } from '@/api/ads'
 
 const { t } = useI18n()
 const { formatPrice } = useFormatters()
@@ -134,6 +137,7 @@ const categoryTree = ref([])
 const stories = ref([])
 const liveAuctions = ref([])
 const featuredBusinesses = ref([])
+const homeAds = ref([])
 
 
 const { target: loadMoreRef } = useInfiniteScroll(
@@ -155,6 +159,7 @@ onMounted(async () => {
     getStories().then((r) => { stories.value = (r.data || r || []).slice(0, 5) }),
     getAuctions({ status: 'active' }).then((r) => { liveAuctions.value = r.data || r || [] }),
     getFeaturedBusinesses().then((r) => { featuredBusinesses.value = r.data || r || [] }),
+    getHomeAds().then((r) => { homeAds.value = r.data || r || [] }),
   ])
 })
 </script>
