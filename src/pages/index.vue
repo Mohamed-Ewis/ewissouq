@@ -5,7 +5,7 @@
       <div class="col-lg-9">
         <StoriesBar v-if="stories.length" :stories="stories" />
 
-        <BusinessShowcase v-if="featuredBusinesses.length" :businesses="featuredBusinesses" class="mb-4" />
+        <!-- <BusinessShowcase v-if="featuredBusinesses.length" :businesses="featuredBusinesses" class="mb-4" /> -->
 
         <div class="feed-timeline">
           <h5 class="fw-bold mb-3">

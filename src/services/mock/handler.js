@@ -13,7 +13,7 @@ import {
   followingBusinessIds,
 } from './data'
 import { getBranchesForBusiness } from '@/data/businessBranches'
-import { getOffersForBusiness, getFeaturedOffer } from '@/data/businessOffers'
+import { businessOffers, getOfferById, getOffersForBusiness, getFeaturedOffer } from '@/data/businessOffers'
 import { homeAds } from '@/data/ads'
 import { DEFAULT_AVATAR, DEFAULT_COVER, DEFAULT_PRODUCT_IMAGE } from '@/utils/demoImages'
 import { getDescendantIds, findCategoryById, findCategoryPath, getRootCategoryId } from '@/utils/categoryHelpers'
@@ -120,6 +120,54 @@ function filterBusinesses(params = {}) {
   }
 
   return result.map(enrichBusiness)
+}
+
+function enrichOffer(offer) {
+  const business = businesses.find((b) => b.id === offer.businessId)
+  const enrichedBusiness = business ? enrichBusiness(business) : null
+  return {
+    ...offer,
+    business: enrichedBusiness
+      ? {
+          id: enrichedBusiness.id,
+          slug: enrichedBusiness.slug,
+          nameKey: enrichedBusiness.nameKey,
+          logo: enrichedBusiness.logo,
+          cover: enrichedBusiness.cover,
+          tier: enrichedBusiness.tier,
+          verified: enrichedBusiness.verified,
+          rating: enrichedBusiness.rating,
+          followers: enrichedBusiness.followers,
+        }
+      : null,
+  }
+}
+
+function filterOffers(params = {}) {
+  let result = [...businessOffers]
+
+  if (params.q) {
+    const q = params.q.toLowerCase()
+    result = result.filter(
+      (o) => o.titleKey.toLowerCase().includes(q) || o.descKey.toLowerCase().includes(q),
+    )
+  }
+  if (params.badge) result = result.filter((o) => o.badge === params.badge)
+  if (params.businessId) result = result.filter((o) => o.businessId === Number(params.businessId))
+  if (params.featured === 'true' || params.featured === true) {
+    result = result.filter((o) => o.featured)
+  }
+
+  const sort = params.sort || 'ending'
+  if (sort === 'discount') {
+    result.sort((a, b) => b.discountPercent - a.discountPercent)
+  } else if (sort === 'price_asc') {
+    result.sort((a, b) => a.salePrice - b.salePrice)
+  } else {
+    result.sort((a, b) => new Date(a.validUntil) - new Date(b.validUntil))
+  }
+
+  return result.map(enrichOffer)
 }
 
 function enrichBusiness(business) {
@@ -431,6 +479,24 @@ export async function handleMockRequest(config) {
     return { success: true, data: { following: false } }
   }
 
+  // Offers
+  if (url === 'offers' && method === 'get') {
+    const filtered = filterOffers(params)
+    const result = paginate(filtered, Number(params.page) || 1, Number(params.pageSize) || 12)
+    return { success: true, ...result }
+  }
+
+  match = matchUrl(url, 'offers/:id')
+  if (match && method === 'get') {
+    const offer = getOfferById(match[1])
+    if (!offer) return { success: false, message: 'Offer not found', status: 404 }
+    const enriched = enrichOffer(offer)
+    const relatedOffers = getOffersForBusiness(offer.businessId)
+      .filter((o) => o.id !== offer.id)
+      .map(enrichOffer)
+    return { success: true, data: { ...enriched, relatedOffers } }
+  }
+
   // Businesses / Stores
   if (url === 'businesses' && method === 'get') {
     const filtered = filterBusinesses(params)
@@ -449,7 +515,6 @@ export async function handleMockRequest(config) {
     const business = businesses.find((b) => b.slug === key || b.id === Number(key))
     if (!business) return { success: false, message: 'Store not found', status: 404 }
     const enriched = enrichBusiness(business)
-    const storeProducts = products.filter((p) => p.businessId === business.id && p.status === 'active')
     const owner = users.find((u) => u.id === business.ownerUserId)
     const { password, ...safeOwner } = owner || {}
     return {
@@ -457,8 +522,6 @@ export async function handleMockRequest(config) {
       data: {
         ...enriched,
         owner: safeOwner || null,
-        products: storeProducts,
-        soldProducts: products.filter((p) => p.businessId === business.id && p.status === 'sold'),
       },
     }
   }

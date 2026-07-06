@@ -14,7 +14,7 @@
     "saved": "المحفوظات",
     "menu": "القائمة",
     "home": "الرئيسية",
-    "stores": "المتاجر"
+    "stores": "العروض"
   },
   "common": {
     "cancel": "إلغاء",
@@ -471,6 +471,22 @@
       "exclusive": "حصري",
       "bundle": "باقة",
       "clearance": "تصفية"
+    },
+    "offersIndex": {
+      "title": "العروض",
+      "subtitle": "تصفّح كل العروض من المتاجر الموثّقة — خصومات حصرية وعروض محدودة",
+      "searchPlaceholder": "ابحث عن عرض...",
+      "allOffers": "كل العروض",
+      "sortEnding": "ينتهي قريباً",
+      "sortDiscount": "أعلى خصم",
+      "sortPrice": "السعر: من الأقل",
+      "viewDetails": "عرض التفاصيل",
+      "moreFromStore": "عروض أخرى من نفس المتجر",
+      "notFound": "العرض غير موجود",
+      "empty": {
+        "title": "لا توجد عروض",
+        "description": "جرّب تعديل البحث أو الفلاتر."
+      }
     },
     "branchesTitle": "فروعنا",
     "branchesSubtitle": "اعثر على أقرب فرع لـ {name}",

@@ -1,25 +1,24 @@
 <template>
-  <div class="stores-page">
-    <div class="stores-hero mb-4">
-      <div class="stores-hero__content">
-        <h1 class="fw-bold mb-2">{{ $t('businesses.title') }}</h1>
-        <p class="text-muted mb-3">{{ $t('businesses.subtitle') }}</p>
+  <div class="offers-page">
+    <div class="offers-hero mb-4">
+      <div class="offers-hero__content">
+        <h1 class="fw-bold mb-2">{{ $t('businesses.offersIndex.title') }}</h1>
+        <p class="text-muted mb-3">{{ $t('businesses.offersIndex.subtitle') }}</p>
         <div class="row g-2">
           <div class="col-md-8">
             <input
               v-model="filters.q"
               type="search"
               class="form-control form-control-lg"
-              :placeholder="$t('businesses.searchPlaceholder')"
-              @keyup.enter="loadStores"
+              :placeholder="$t('businesses.offersIndex.searchPlaceholder')"
+              @keyup.enter="loadOffers"
             />
           </div>
           <div class="col-md-4">
-            <select v-model="filters.tier" class="form-select form-select-lg" @change="loadStores">
-              <option value="">{{ $t('businesses.allTiers') }}</option>
-              <option value="premium">{{ $t('businesses.tiers.premium') }}</option>
-              <option value="verified">{{ $t('businesses.tiers.verified') }}</option>
-              <option value="basic">{{ $t('businesses.tiers.basic') }}</option>
+            <select v-model="filters.sort" class="form-select form-select-lg" @change="loadOffers">
+              <option value="ending">{{ $t('businesses.offersIndex.sortEnding') }}</option>
+              <option value="discount">{{ $t('businesses.offersIndex.sortDiscount') }}</option>
+              <option value="price_asc">{{ $t('businesses.offersIndex.sortPrice') }}</option>
             </select>
           </div>
         </div>
@@ -28,12 +27,12 @@
 
     <div class="d-flex flex-wrap gap-2 mb-4">
       <button
-        v-for="tab in tierTabs"
+        v-for="tab in badgeTabs"
         :key="tab.value"
         type="button"
         class="btn btn-sm"
-        :class="filters.tier === tab.value ? 'btn-primary' : 'btn-outline-secondary'"
-        @click="setTier(tab.value)"
+        :class="filters.badge === tab.value ? 'btn-primary' : 'btn-outline-secondary'"
+        @click="setBadge(tab.value)"
       >
         <i :class="tab.icon" class="me-1" />{{ tab.label }}
       </button>
@@ -45,17 +44,17 @@
       </div>
     </div>
 
-    <div v-else-if="stores.length" class="row g-3">
-      <div v-for="store in stores" :key="store.id" class="col-md-6 col-lg-4">
-        <BusinessCard :business="store" />
+    <div v-else-if="offers.length" class="row g-3">
+      <div v-for="offer in offers" :key="offer.id" class="col-md-6 col-lg-4">
+        <BusinessOfferCard :offer="offer" show-store />
       </div>
     </div>
 
     <UiEmptyState
       v-else
-      icon="bi bi-building"
-      :title="$t('businesses.empty.title')"
-      :description="$t('businesses.empty.description')"
+      icon="bi bi-tag"
+      :title="$t('businesses.offersIndex.empty.title')"
+      :description="$t('businesses.offersIndex.empty.description')"
     />
 
     <div v-if="hasMore" class="text-center mt-4">
@@ -68,13 +67,13 @@
 </template>
 
 <script setup>
-import { getBusinesses } from '@/api/businesses'
+import { getOffers } from '@/api/offers'
 
 definePageMeta({ layout: 'default' })
 
 const { t } = useI18n()
 
-const stores = ref([])
+const offers = ref([])
 const loading = ref(true)
 const loadingMore = ref(false)
 const page = ref(1)
@@ -82,30 +81,32 @@ const hasMore = ref(false)
 
 const filters = reactive({
   q: '',
-  tier: '',
-  sort: 'followers',
+  badge: '',
+  sort: 'ending',
 })
 
-const tierTabs = computed(() => [
-  { value: '', label: t('businesses.allStores'), icon: 'bi bi-grid' },
-  { value: 'premium', label: t('businesses.tiers.premium'), icon: 'bi bi-gem' },
-  { value: 'verified', label: t('businesses.tiers.verified'), icon: 'bi bi-patch-check' },
-  { value: 'basic', label: t('businesses.tiers.basic'), icon: 'bi bi-shop' },
+const badgeTabs = computed(() => [
+  { value: '', label: t('businesses.offersIndex.allOffers'), icon: 'bi bi-grid' },
+  { value: 'flash', label: t('businesses.offerBadges.flash'), icon: 'bi bi-lightning-fill' },
+  { value: 'weekly', label: t('businesses.offerBadges.weekly'), icon: 'bi bi-calendar-week' },
+  { value: 'exclusive', label: t('businesses.offerBadges.exclusive'), icon: 'bi bi-star-fill' },
+  { value: 'bundle', label: t('businesses.offerBadges.bundle'), icon: 'bi bi-box-seam' },
+  { value: 'clearance', label: t('businesses.offerBadges.clearance'), icon: 'bi bi-percent' },
 ])
 
-async function loadStores(reset = true) {
+async function loadOffers(reset = true) {
   if (reset) {
     loading.value = true
     page.value = 1
   }
   try {
-    const res = await getBusinesses({
+    const res = await getOffers({
       ...filters,
       page: page.value,
       pageSize: 12,
     })
     const items = res.data || []
-    stores.value = reset ? items : [...stores.value, ...items]
+    offers.value = reset ? items : [...offers.value, ...items]
     hasMore.value = res.meta?.hasMore ?? false
   } finally {
     loading.value = false
@@ -113,29 +114,29 @@ async function loadStores(reset = true) {
   }
 }
 
-function setTier(tier) {
-  filters.tier = tier
-  loadStores()
+function setBadge(badge) {
+  filters.badge = badge
+  loadOffers()
 }
 
 async function loadMore() {
   loadingMore.value = true
   page.value += 1
-  await loadStores(false)
+  await loadOffers(false)
 }
 
-onMounted(() => loadStores())
+onMounted(() => loadOffers())
 </script>
 
 <style scoped lang="scss">
-.stores-hero {
+.offers-hero {
   padding: 2rem;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(99, 102, 241, 0.08) 100%);
   border: 1px solid var(--es-border);
 }
 
-.stores-hero__content h1 {
+.offers-hero__content h1 {
   font-size: 1.75rem;
 
   @media (min-width: 768px) {

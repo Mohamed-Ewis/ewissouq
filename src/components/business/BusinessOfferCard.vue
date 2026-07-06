@@ -1,5 +1,5 @@
 <template>
-  <article class="offer-card" :class="{ 'offer-card--featured': offer.featured }">
+  <NuxtLinkLocale :to="`/offers/${offer.id}`" class="offer-card text-decoration-none" :class="{ 'offer-card--featured': offer.featured }">
     <div class="offer-card__media">
       <img :src="offer.image" :alt="translateOffer(offer.titleKey)" />
       <span class="offer-card__discount">-{{ offer.discountPercent }}%</span>
@@ -9,6 +9,16 @@
     </div>
 
     <div class="offer-card__body">
+      <NuxtLinkLocale
+        v-if="showStore && offer.business"
+        :to="`/stores/${offer.business.slug}`"
+        class="offer-card__store small text-muted text-decoration-none"
+        @click.stop
+      >
+        <img :src="offer.business.logo" :alt="translateBusiness(offer.business)" class="offer-card__store-logo" />
+        {{ translateBusiness(offer.business) }}
+      </NuxtLinkLocale>
+
       <h3 class="offer-card__title fw-bold">{{ translateOffer(offer.titleKey) }}</h3>
       <p class="offer-card__desc small text-muted">{{ translateOffer(offer.descKey) }}</p>
 
@@ -23,22 +33,22 @@
         <span class="offer-card__expires small">
           <i class="bi bi-clock" /> {{ expiresLabel(offer.validUntil) }}
         </span>
-        <button type="button" class="btn btn-sm btn-primary" @click="$emit('claim', offer)">
-          {{ $t('businesses.claimOffer') }}
-        </button>
+        <span class="btn btn-sm btn-primary">
+          {{ $t('businesses.offersIndex.viewDetails') }}
+        </span>
       </div>
     </div>
-  </article>
+  </NuxtLinkLocale>
 </template>
 
 <script setup>
 defineProps({
   offer: { type: Object, required: true },
+  showStore: { type: Boolean, default: false },
 })
 
-defineEmits(['claim'])
-
 const { t, te } = useI18n()
+const { translateBusiness } = useBusinessName()
 
 function translateOffer(key) {
   if (key && te(key)) return t(key)
@@ -78,11 +88,13 @@ function expiresLabel(validUntil) {
   height: 100%;
   display: flex;
   flex-direction: column;
+  color: inherit;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
+    color: inherit;
   }
 
   &--featured {
@@ -148,6 +160,24 @@ html[dir='rtl'] .offer-card__badge {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.offer-card__store {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    color: var(--es-primary) !important;
+  }
+}
+
+.offer-card__store-logo {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 .offer-card__title {

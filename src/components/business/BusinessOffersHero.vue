@@ -1,6 +1,6 @@
 <template>
   <section v-if="offer" class="offer-hero mb-4">
-    <div class="offer-hero__inner">
+    <NuxtLinkLocale :to="`/offers/${offer.id}`" class="offer-hero__inner text-decoration-none">
       <img :src="offer.image" class="offer-hero__bg" :alt="translateOffer(offer.titleKey)" />
       <div class="offer-hero__overlay">
         <div class="offer-hero__content">
@@ -15,13 +15,13 @@
                 {{ formatPrice(offer.originalPrice, offer.currency) }}
               </div>
             </div>
-            <button type="button" class="btn btn-light btn-lg fw-semibold" @click="$emit('claim', offer)">
-              {{ $t('businesses.claimOffer') }} <i class="bi bi-arrow-left-short rtl-flip ms-1" />
-            </button>
+            <span class="btn btn-light btn-lg fw-semibold">
+              {{ $t('businesses.offersIndex.viewDetails') }} <i class="bi bi-arrow-left-short rtl-flip ms-1" />
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </NuxtLinkLocale>
   </section>
 </template>
 
@@ -29,8 +29,6 @@
 defineProps({
   offer: { type: Object, default: null },
 })
-
-defineEmits(['claim'])
 
 const { t, te } = useI18n()
 
@@ -47,9 +45,11 @@ function formatPrice(amount, currency) {
 <style scoped lang="scss">
 .offer-hero__inner {
   position: relative;
+  display: block;
   border-radius: 20px;
   overflow: hidden;
   min-height: 220px;
+  color: #fff;
 
   @media (min-width: 768px) {
     min-height: 280px;
