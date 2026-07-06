@@ -14,7 +14,7 @@
     "saved": "Enregistrés",
     "menu": "Menu",
     "home": "Accueil",
-    "stores": "Magasins"
+    "stores": "Offres"
   },
   "common": {
     "cancel": "Annuler",
@@ -471,6 +471,22 @@
       "exclusive": "Exclusif",
       "bundle": "Pack",
       "clearance": "Déstockage"
+    },
+    "offersIndex": {
+      "title": "Offres",
+      "subtitle": "Parcourez toutes les offres des magasins vérifiés — remises exclusives et ventes limitées",
+      "searchPlaceholder": "Rechercher une offre...",
+      "allOffers": "Toutes les offres",
+      "sortEnding": "Expire bientôt",
+      "sortDiscount": "Meilleure remise",
+      "sortPrice": "Prix : croissant",
+      "viewDetails": "Voir les détails",
+      "moreFromStore": "Autres offres de ce magasin",
+      "notFound": "Offre introuvable",
+      "empty": {
+        "title": "Aucune offre",
+        "description": "Essayez de modifier votre recherche ou vos filtres."
+      }
     },
     "branchesTitle": "Nos succursales",
     "branchesSubtitle": "Trouvez la succursale {name} la plus proche",

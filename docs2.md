@@ -11,8 +11,7 @@ edit marketplace
 ADS slider in side
 fix rtl style
 fix the responsive style
-convert stores to stores offers
-    -remove product
-    -make the main store index for all ofer
-    - by click in offer show its details
-    -from its details show store details
+fix mobile menu
+update or remove trending and most viewed from sidebar
+-update signup to make prfile for official store to post their offers
+-make offer form that enter the offer details and it dead time

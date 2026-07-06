@@ -14,7 +14,7 @@
     "saved": "Saved",
     "menu": "Menu",
     "home": "Home",
-    "stores": "Stores"
+    "stores": "Offers"
   },
   "common": {
     "cancel": "Cancel",
@@ -471,6 +471,22 @@
       "exclusive": "Exclusive",
       "bundle": "Bundle",
       "clearance": "Clearance"
+    },
+    "offersIndex": {
+      "title": "Offers",
+      "subtitle": "Browse all deals from verified stores — exclusive discounts and limited-time sales",
+      "searchPlaceholder": "Search offers...",
+      "allOffers": "All offers",
+      "sortEnding": "Ending soon",
+      "sortDiscount": "Highest discount",
+      "sortPrice": "Price: low to high",
+      "viewDetails": "View details",
+      "moreFromStore": "More from this store",
+      "notFound": "Offer not found",
+      "empty": {
+        "title": "No offers found",
+        "description": "Try adjusting your search or filters."
+      }
     },
     "branchesTitle": "Our branches",
     "branchesSubtitle": "Find the nearest {name} branch",

@@ -44,6 +44,14 @@ export function getOffersForBusiness(businessId) {
   return businessOffers.filter((o) => o.businessId === businessId)
 }
 
+export function getOfferById(id) {
+  return businessOffers.find((o) => o.id === Number(id))
+}
+
+export function getAllOffers() {
+  return [...businessOffers]
+}
+
 export function getFeaturedOffer(businessId) {
   return businessOffers.find((o) => o.businessId === businessId && o.featured)
     || businessOffers.find((o) => o.businessId === businessId)

@@ -10,7 +10,7 @@
 
           <span class="brand-icon">E</span>
 
-          <span class="brand-text fw-bold">EwiS<span class="text-gradient">Souq</span></span>
+          <span class="brand-text fw-bold"><span class="text-gradient">Souq</span></span>
 
         </NuxtLinkLocale>
 
@@ -242,7 +242,7 @@ const navLinks = computed(() => [
 
   { to: '/', label: t('nav.feed'), icon: 'bi bi-house' },
 
-  { to: '/stores', label: t('nav.stores'), icon: 'bi bi-building' },
+  { to: '/stores', label: t('nav.stores'), icon: 'bi bi-tag-fill' },
 
   { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
 
