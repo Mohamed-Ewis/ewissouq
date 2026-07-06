@@ -14,6 +14,7 @@ import {
 } from './data'
 import { getBranchesForBusiness } from '@/data/businessBranches'
 import { getOffersForBusiness, getFeaturedOffer } from '@/data/businessOffers'
+import { homeAds } from '@/data/ads'
 import { DEFAULT_AVATAR, DEFAULT_COVER, DEFAULT_PRODUCT_IMAGE } from '@/utils/demoImages'
 import { getDescendantIds, findCategoryById, findCategoryPath, getRootCategoryId } from '@/utils/categoryHelpers'
 
@@ -222,6 +223,10 @@ export async function handleMockRequest(config) {
   // Stories
   if (url === 'stories' && method === 'get') {
     return { success: true, data: stories }
+  }
+
+  if (url === 'ads/home' && method === 'get') {
+    return { success: true, data: homeAds }
   }
 
   // Products list

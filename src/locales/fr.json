@@ -96,6 +96,39 @@
     "noPosts": "Aucune publication",
     "noPostsDesc": "Soyez le premier à publier un produit !"
   },
+  "ads": {
+    "sponsored": "Annonce",
+    "shopNow": "Acheter",
+    "viewDeals": "Voir les offres",
+    "explore": "Explorer",
+    "flashSale": "Vente flash",
+    "learnMore": "En savoir plus",
+    "previous": "Annonce précédente",
+    "next": "Annonce suivante",
+    "goToSlide": "Aller à l'annonce {number}",
+    "items": {
+      "bTech": {
+        "title": "30% sur l'électronique",
+        "subtitle": "Offres exclusives B.Tech — toutes succursales"
+      },
+      "carrefour": {
+        "title": "Promos épicerie hebdo",
+        "subtitle": "Économisez jusqu'à 40%"
+      },
+      "ikea": {
+        "title": "Soldes mobilier d'été",
+        "subtitle": "Salon et chambre à prix spéciaux"
+      },
+      "sharafDg": {
+        "title": "Flash sale — électronique",
+        "subtitle": "Laptops et TV jusqu'à -28%"
+      },
+      "premium": {
+        "title": "Publicité sur EwiSSouq",
+        "subtitle": "Touchez des milliers d'acheteurs"
+      }
+    }
+  },
   "stories": {
     "viewer": "Visionneuse de stories",
     "close": "Fermer la story",
