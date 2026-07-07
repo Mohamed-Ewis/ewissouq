@@ -15,16 +15,16 @@ defineProps({
   posts: { type: Array, default: () => [] },
 })
 
-/** 10-tile bento module — mirrors reference UX mix of squares, wides & talls */
+/** 2-column bento module — max 2 cards per row, mixed spans for visual rhythm */
 const BENTO_PATTERN = [
-  { variant: 'hero', span: 'bento-span-2x2' },
+  { variant: 'hero', span: 'bento-span-1x2' },
   { variant: 'tall', span: 'bento-span-1x2' },
-  { variant: 'compact', span: 'bento-span-1x1' },
-  { variant: 'compact', span: 'bento-span-1x1' },
   { variant: 'wide', span: 'bento-span-2x1' },
   { variant: 'standard', span: 'bento-span-1x1' },
-  { variant: 'tall', span: 'bento-span-1x2' },
   { variant: 'standard', span: 'bento-span-1x1' },
+  { variant: 'compact', span: 'bento-span-1x1' },
+  { variant: 'tall', span: 'bento-span-1x2' },
+  { variant: 'compact', span: 'bento-span-1x1' },
   { variant: 'wide', span: 'bento-span-2x1' },
   { variant: 'standard', span: 'bento-span-1x1' },
 ]
@@ -48,17 +48,8 @@ function getSlot(index) {
   }
 
   @media (min-width: 992px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: minmax(200px, auto);
-    gap: 1rem;
-  }
-
-  // Span utilities applied to FeedPost root via :deep
-  :deep(.bento-span-2x2) {
-    @media (min-width: 576px) {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
+    grid-auto-rows: minmax(220px, auto);
+    gap: 1.25rem;
   }
 
   :deep(.bento-span-2x1) {

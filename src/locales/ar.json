@@ -14,7 +14,8 @@
     "saved": "المحفوظات",
     "menu": "القائمة",
     "home": "الرئيسية",
-    "stores": "العروض"
+    "stores": "العروض",
+    "liveAuctions": "{count} مزادات لايف"
   },
   "common": {
     "cancel": "إلغاء",

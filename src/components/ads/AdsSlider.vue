@@ -165,8 +165,8 @@ watch(
 }
 
 .ads-slider--sidebar .ads-slider__viewport {
-  aspect-ratio: 4 / 5;
-  min-height: 280px;
+  aspect-ratio: 1/1;
+  min-height: 200px;
 }
 
 .ads-slider__slide {

@@ -14,7 +14,8 @@
     "saved": "Saved",
     "menu": "Menu",
     "home": "Home",
-    "stores": "Offers"
+    "stores": "Offers",
+    "liveAuctions": "{count} live auctions"
   },
   "common": {
     "cancel": "Cancel",

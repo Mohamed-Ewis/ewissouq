@@ -43,7 +43,7 @@
 
           <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
 
-          <div class="sidebar-card card p-3 mb-4">
+          <!-- <div class="sidebar-card card p-3 mb-4">
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h6 class="fw-bold mb-0">
                 <i class="bi bi-building text-primary" /> {{ $t('businesses.featuredTitle') }}
@@ -53,9 +53,9 @@
               </NuxtLinkLocale>
             </div>
             <FeaturedBusinesses :businesses="featuredBusinesses" />
-          </div>
+          </div> -->
 
-          <div class="sidebar-card card p-3 mb-4">
+          <!-- <div class="sidebar-card card p-3 mb-4">
             <h6 class="fw-bold mb-3">
               <i class="bi bi-hammer text-primary" /> {{ $t('home.liveAuctions') }}
             </h6>
@@ -68,9 +68,9 @@
                 </div>
               </NuxtLinkLocale>
             </div>
-          </div>
+          </div> -->
 
-          <div class="sidebar-card card p-3 mb-4">
+          <!-- <div class="sidebar-card card p-3 mb-4">
             <h6 class="fw-bold mb-3">
               <i class="bi bi-fire text-danger" /> {{ $t('home.trending') }}
             </h6>
@@ -83,9 +83,9 @@
                 </div>
               </NuxtLinkLocale>
             </div>
-          </div>
+          </div> -->
 
-          <div class="sidebar-card card p-3">
+          <!-- <div class="sidebar-card card p-3">
             <h6 class="fw-bold mb-3">
               <i class="bi bi-eye text-info" /> {{ $t('home.mostViewed') }}
             </h6>
@@ -98,7 +98,7 @@
                 </div>
               </NuxtLinkLocale>
             </div>
-          </div>
+          </div> -->
         </aside>
       </div>
     </div>
@@ -145,7 +145,7 @@ const { target: loadMoreRef } = useInfiniteScroll(
   { canLoad: () => productsStore.feedHasMore && !productsStore.feedLoading },
 )
 
-const BENTO_PATTERN = ['hero', 'tall', 'compact', 'compact', 'wide', 'standard', 'tall', 'standard', 'wide', 'standard']
+const BENTO_PATTERN = ['hero', 'tall', 'wide', 'standard', 'standard', 'compact', 'tall', 'compact', 'wide', 'standard']
 
 function skeletonClass(index) {
   return `bento-skeleton--${BENTO_PATTERN[index % BENTO_PATTERN.length]}`
@@ -226,9 +226,8 @@ $sidebar-sticky-top: 6.5rem;
   }
 
   @media (min-width: 992px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: minmax(200px, auto);
-    gap: 1rem;
+    grid-auto-rows: minmax(220px, auto);
+    gap: 1.25rem;
   }
 
   :deep(.skeleton-card),
@@ -242,7 +241,6 @@ $sidebar-sticky-top: 6.5rem;
     min-height: 280px;
 
     @media (min-width: 576px) {
-      grid-column: span 2;
       grid-row: span 2;
       min-height: 100%;
     }
