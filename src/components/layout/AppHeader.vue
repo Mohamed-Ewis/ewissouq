@@ -165,13 +165,25 @@
         <ul class="nav nav-pills gap-1">
 
           <li v-for="link in navLinks" :key="link.to" class="nav-item">
-
-            <NuxtLinkLocale :to="link.to" class="nav-link" active-class="active">
-
-              <i :class="link.icon" class="me-1" />{{ link.label }}
-
+            <NuxtLinkLocale
+              v-if="link.animated && liveAuctionsCount > 0"
+              :to="link.to"
+              class="nav-link nav-link--swap"
+              active-class="active"
+            >
+              <i :class="link.icon" class="me-1" />
+              <span class="nav-swap" aria-live="polite">
+                <span class="nav-swap__track" :class="{ 'nav-swap__track--alt': showLiveAuctionsLabel }">
+                  <span class="nav-swap__item">{{ link.label }}</span>
+                  <span class="nav-swap__item nav-swap__item--live">
+                    <span class="nav-swap__dot" />{{ liveAuctionsLabel }}
+                  </span>
+                </span>
+              </span>
             </NuxtLinkLocale>
-
+            <NuxtLinkLocale v-else :to="link.to" class="nav-link" active-class="active">
+              <i :class="link.icon" class="me-1" />{{ link.label }}
+            </NuxtLinkLocale>
           </li>
 
         </ul>
@@ -205,13 +217,25 @@
         <ul class="nav flex-column gap-1">
 
           <li v-for="link in navLinks" :key="link.to">
-
-            <NuxtLinkLocale :to="link.to" class="nav-link" data-bs-dismiss="offcanvas">
-
-              <i :class="link.icon" class="me-2" />{{ link.label }}
-
+            <NuxtLinkLocale
+              v-if="link.animated && liveAuctionsCount > 0"
+              :to="link.to"
+              class="nav-link nav-link--swap"
+              data-bs-dismiss="offcanvas"
+            >
+              <i :class="link.icon" class="me-2" />
+              <span class="nav-swap" aria-live="polite">
+                <span class="nav-swap__track" :class="{ 'nav-swap__track--alt': showLiveAuctionsLabel }">
+                  <span class="nav-swap__item">{{ link.label }}</span>
+                  <span class="nav-swap__item nav-swap__item--live">
+                    <span class="nav-swap__dot" />{{ liveAuctionsLabel }}
+                  </span>
+                </span>
+              </span>
             </NuxtLinkLocale>
-
+            <NuxtLinkLocale v-else :to="link.to" class="nav-link" data-bs-dismiss="offcanvas">
+              <i :class="link.icon" class="me-2" />{{ link.label }}
+            </NuxtLinkLocale>
           </li>
 
         </ul>
@@ -227,49 +251,51 @@
 
 
 <script setup>
-
 import { DEFAULT_AVATAR } from '@/utils/demoImages'
 
 const { t } = useI18n()
-
 const authStore = useAuthStore()
-
+const auctionsStore = useAuctionsStore()
 const searchQuery = ref('')
+const showLiveAuctionsLabel = ref(false)
 
-
+const liveAuctionsCount = computed(() => auctionsStore.activeAuctions.length)
+const liveAuctionsLabel = computed(() => t('nav.liveAuctions', { count: liveAuctionsCount.value }))
 
 const navLinks = computed(() => [
-
   { to: '/', label: t('nav.feed'), icon: 'bi bi-house' },
-
   { to: '/stores', label: t('nav.stores'), icon: 'bi bi-tag-fill' },
-
   { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
-
-  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer' },
-
+  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer', animated: true },
   { to: '/search', label: t('nav.search'), icon: 'bi bi-funnel' },
-
   { to: '/create-listing', label: t('nav.sell'), icon: 'bi bi-plus-circle' },
-
 ])
 
-
+let swapTimer = null
 
 function goSearch() {
-
   const localePath = useLocalePath()
-
   navigateTo({
-
     path: localePath('/search'),
-
     query: searchQuery.value ? { q: searchQuery.value } : {},
-
   })
-
 }
 
+onMounted(() => {
+  if (!auctionsStore.auctions.length) {
+    auctionsStore.fetchAuctions()
+  }
+
+  swapTimer = setInterval(() => {
+    if (liveAuctionsCount.value > 0) {
+      showLiveAuctionsLabel.value = !showLiveAuctionsLabel.value
+    }
+  }, 3000)
+})
+
+onUnmounted(() => {
+  if (swapTimer) clearInterval(swapTimer)
+})
 </script>
 
 
@@ -430,8 +456,63 @@ function goSearch() {
 
     &.active { background: var(--es-gradient); color: #fff; }
 
+    &--swap {
+      min-width: 9.5rem;
+    }
   }
+}
 
+.nav-swap {
+  display: inline-block;
+  height: 1.25em;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.nav-swap__track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--alt {
+    transform: translateY(-50%);
+  }
+}
+
+.nav-swap__item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 1.25em;
+  line-height: 1.25em;
+  white-space: nowrap;
+
+  &--live {
+    color: var(--es-primary);
+    font-weight: 600;
+  }
+}
+
+.nav-link.active .nav-swap__item--live {
+  color: #fff;
+}
+
+.nav-swap__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+
+.nav-link.active .nav-swap__dot {
+  background: #86efac;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
 }
 
 </style>

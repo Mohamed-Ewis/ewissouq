@@ -14,7 +14,8 @@
     "saved": "Enregistrés",
     "menu": "Menu",
     "home": "Accueil",
-    "stores": "Offres"
+    "stores": "Offres",
+    "liveAuctions": "{count} enchères en direct"
   },
   "common": {
     "cancel": "Annuler",
