@@ -266,9 +266,9 @@ const navLinks = computed(() => [
   { to: '/', label: t('nav.feed'), icon: 'bi bi-house' },
   { to: '/stores', label: t('nav.stores'), icon: 'bi bi-tag-fill' },
   { to: '/marketplace', label: t('nav.marketplace'), icon: 'bi bi-shop' },
-  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer', animated: true },
   { to: '/search', label: t('nav.search'), icon: 'bi bi-funnel' },
   { to: '/create-listing', label: t('nav.sell'), icon: 'bi bi-plus-circle' },
+  { to: '/auctions', label: t('nav.auctions'), icon: 'bi bi-hammer', animated: true },
 ])
 
 let swapTimer = null
