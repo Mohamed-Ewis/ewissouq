@@ -46,9 +46,20 @@
             {{ expiresLabel(offer.validUntil) }}
           </div>
 
-          <button type="button" class="btn btn-primary btn-lg w-100 mb-4" @click="onClaim">
-            {{ $t('businesses.claimOffer') }}
+          <button type="button" class="btn btn-primary btn-lg w-100 mb-3" :disabled="claiming" @click="onClaim">
+            <span v-if="claiming" class="spinner-border spinner-border-sm me-1" />
+            {{ claimed ? $t('businesses.claimSuccessShort') : $t('businesses.claimOffer') }}
           </button>
+          <div v-if="claimed" class="alert alert-success small mb-4">
+            {{ $t('businesses.claimSuccess') }}
+            <NuxtLinkLocale
+              v-if="offer.business"
+              :to="`/stores/${offer.business.slug}`"
+              class="alert-link"
+            >
+              {{ $t('businesses.viewStore') }}
+            </NuxtLinkLocale>
+          </div>
 
           <NuxtLinkLocale
             v-if="offer.business"
@@ -97,6 +108,9 @@ const offer = ref(null)
 const relatedOffers = ref([])
 const loading = ref(true)
 const error = ref('')
+const claiming = ref(false)
+const claimed = ref(false)
+const { requireAuth } = useRequireAuth()
 
 function translateOffer(key) {
   if (key && te(key)) return t(key)
@@ -141,8 +155,15 @@ async function loadOffer() {
   }
 }
 
-function onClaim() {
-  // mock — في الإنتاج: redirect to checkout or coupon
+async function onClaim() {
+  if (!requireAuth()) return
+  claiming.value = true
+  try {
+    await new Promise((r) => setTimeout(r, 400))
+    claimed.value = true
+  } finally {
+    claiming.value = false
+  }
 }
 
 onMounted(loadOffer)

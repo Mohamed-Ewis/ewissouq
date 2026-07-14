@@ -11,8 +11,12 @@ export function useLocalizedNavigate() {
   return { localePath, to }
 }
 
-export function redirectToLogin() {
+export function redirectToLogin(redirect) {
   if (!import.meta.client) return
   const localePath = useLocalePath()
-  return navigateTo(localePath('/auth/login'))
+  const route = useRoute()
+  return navigateTo({
+    path: localePath('/auth/login'),
+    query: { redirect: redirect || route.fullPath },
+  })
 }

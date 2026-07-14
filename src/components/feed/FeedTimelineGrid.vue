@@ -1,11 +1,9 @@
 <template>
-  <div class="bento-grid">
+  <div class="feed-grid">
     <FeedPost
-      v-for="(post, index) in posts"
-      :key="post.id"
+      v-for="post in posts"
+      :key="post.feedId || `${post.listingType || 'classified'}-${post.id}`"
       :product="post"
-      :variant="getSlot(index).variant"
-      :span-class="getSlot(index).span"
     />
   </div>
 </template>
@@ -14,54 +12,17 @@
 defineProps({
   posts: { type: Array, default: () => [] },
 })
-
-/** 2-column bento module — max 2 cards per row, mixed spans for visual rhythm */
-const BENTO_PATTERN = [
-  { variant: 'hero', span: 'bento-span-1x2' },
-  { variant: 'tall', span: 'bento-span-1x2' },
-  { variant: 'wide', span: 'bento-span-2x1' },
-  { variant: 'standard', span: 'bento-span-1x1' },
-  { variant: 'standard', span: 'bento-span-1x1' },
-  { variant: 'compact', span: 'bento-span-1x1' },
-  { variant: 'tall', span: 'bento-span-1x2' },
-  { variant: 'compact', span: 'bento-span-1x1' },
-  { variant: 'wide', span: 'bento-span-2x1' },
-  { variant: 'standard', span: 'bento-span-1x1' },
-]
-
-function getSlot(index) {
-  return BENTO_PATTERN[index % BENTO_PATTERN.length]
-}
 </script>
 
 <style scoped lang="scss">
-.bento-grid {
+.feed-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: 0.85rem;
 
   @media (min-width: 576px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: minmax(180px, auto);
-    grid-auto-flow: dense;
-    gap: 0.875rem;
-  }
-
-  @media (min-width: 992px) {
-    grid-auto-rows: minmax(220px, auto);
-    gap: 1.25rem;
-  }
-
-  :deep(.bento-span-2x1) {
-    @media (min-width: 576px) {
-      grid-column: span 2;
-    }
-  }
-
-  :deep(.bento-span-1x2) {
-    @media (min-width: 576px) {
-      grid-row: span 2;
-    }
+    gap: 1rem;
   }
 }
 </style>

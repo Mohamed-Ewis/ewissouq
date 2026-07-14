@@ -15,7 +15,9 @@
     "menu": "Menu",
     "home": "Home",
     "stores": "Offers",
-    "liveAuctions": "{count} live auctions"
+    "liveAuctions": "{count} live auctions",
+    "messages": "Messages",
+    "publish": "Publish"
   },
   "common": {
     "cancel": "Cancel",
@@ -44,7 +46,10 @@
     "welcomeBack": "Welcome back",
     "loginSubtitle": "Sign in to your EwiSSouq account",
     "registerTitle": "Create account",
-    "registerSubtitle": "Join the EwiSSouq community",
+    "registerSubtitle": "Choose your account type and join EwiSSouq",
+    "accountTypeLabel": "Account type",
+    "accountIndividual": "Individual",
+    "accountStore": "Official store",
     "rememberMe": "Remember me",
     "forgotPassword": "Forgot password?",
     "orContinueWith": "or continue with",
@@ -74,7 +79,11 @@
     "passwordMin": "Min 8 characters",
     "confirmPassword": "Confirm Password",
     "fullName": "Full Name",
-    "fullNamePlaceholder": "John Doe"
+    "fullNamePlaceholder": "John Doe",
+    "storeName": "Store name",
+    "storeNamePlaceholder": "e.g. Tech World",
+    "storeCity": "Store city",
+    "storeCityPlaceholder": "Dubai"
   },
   "social": {
     "google": "Google",
@@ -89,13 +98,20 @@
     "savedItems": "Saved Items",
     "sellSomething": "Sell Something",
     "liveAuctions": "Live Auctions",
-    "timeline": "Timeline",
+    "timeline": "Discover",
     "endReached": "You've reached the end",
     "trending": "Trending",
     "mostViewed": "Most Viewed",
     "recommended": "Recommended",
-    "noPosts": "No posts yet",
-    "noPostsDesc": "Be the first to list a product!"
+    "endingOffers": "Ending soon",
+    "noPosts": "Nothing here yet",
+    "noPostsDesc": "Try another type or check back later.",
+    "chips": {
+      "all": "All",
+      "classified": "Ads",
+      "auction": "Auctions",
+      "offer": "Offers"
+    }
   },
   "ads": {
     "sponsored": "Ad",
@@ -198,14 +214,18 @@
     "ariaLabel": "Notifications"
   },
   "listing": {
-    "title": "Create Listing",
-    "subtitle": "List your product and reach thousands of buyers",
+    "title": "Publish on EwiSSouq",
+    "subtitle": "Choose a type, then fill in the details",
     "photos": "Photos",
     "photosHint": "Click to upload images (multiple)",
     "video": "Product Video (max 60 sec)",
     "titleLabel": "Title",
     "titlePlaceholder": "What are you selling?",
     "price": "Price (AED)",
+    "salePrice": "Offer price",
+    "startingBid": "Starting bid",
+    "validUntil": "Offer ends",
+    "auctionEnds": "Auction ends",
     "description": "Description",
     "descriptionPlaceholder": "Describe your product...",
     "category": "Category",
@@ -217,7 +237,31 @@
     "areaPlaceholder": "Marina",
     "country": "Country",
     "success": "Listing created successfully!",
-    "publish": "Publish Listing"
+    "successAuction": "Auction drafted — check the auctions list soon",
+    "successOffer": "Offer drafted — review it in Offers",
+    "publish": "Publish",
+    "offerStoreOnly": "Store offers are for official store accounts only. Sign up as a store:",
+    "types": {
+      "classified": "Ad",
+      "classifiedHint": "Direct sale between people",
+      "auction": "Auction",
+      "auctionHint": "Timed bidding",
+      "offer": "Store offer",
+      "offerHint": "Official discount from your store"
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "Chat about listings and offers",
+    "aboutListing": "About",
+    "viewListing": "View listing",
+    "placeholder": "Write a message...",
+    "send": "Send",
+    "emptyTitle": "No conversation yet",
+    "emptyDesc": "Start from Contact seller on any ad.",
+    "defaultListing": "Listing",
+    "autoReply": "Hi! How can I help you with this listing?",
+    "justNow": "Just now"
   },
   "profile": {
     "follow": "Follow",
@@ -461,6 +505,8 @@
     "offersCount": "offers",
     "featuredOffer": "Featured offer",
     "claimOffer": "Get offer",
+    "claimSuccessShort": "Claimed",
+    "claimSuccess": "Offer claimed. Visit the store to complete pickup.",
     "noOffers": "No offers right now",
     "noOffersDesc": "Follow the store to get notified of new deals.",
     "offerExpired": "Offer expired",

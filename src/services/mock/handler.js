@@ -215,6 +215,38 @@ export async function handleMockRequest(config) {
   }
 
   if (url === 'auth/register' && method === 'post') {
+    const accountType = body.accountType === 'business' ? 'business' : 'individual'
+    let businessId = null
+
+    if (accountType === 'business') {
+      const slugBase = String(body.name || 'store')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '') || 'store'
+      const newBiz = {
+        id: businesses.length + 1,
+        slug: `${slugBase}-${Date.now().toString(36).slice(-4)}`,
+        nameKey: body.name,
+        descriptionKey: body.name,
+        logo: body.avatar || DEFAULT_AVATAR,
+        cover: DEFAULT_COVER,
+        tier: 'basic',
+        type: 'retail',
+        verified: false,
+        featured: false,
+        rating: 0,
+        followers: 0,
+        ownerUserId: users.length + 1,
+        phone: '',
+        email: body.email,
+        website: '',
+        workingHours: { open: '09:00', close: '21:00' },
+        location: { country: 'ae', city: body.city || 'Dubai' },
+      }
+      businesses.push(newBiz)
+      businessId = newBiz.id
+    }
+
     const newUser = {
       id: users.length + 1,
       name: body.name,
@@ -223,17 +255,23 @@ export async function handleMockRequest(config) {
       avatar: body.avatar || DEFAULT_AVATAR,
       cover: DEFAULT_COVER,
       bio: '',
-      accountType: 'individual',
-      businessId: null,
-      verified: false,
+      accountType,
+      businessId,
+      verified: accountType === 'business',
       rating: 0,
       followers: 0,
       following: 0,
-      location: { country: 'ae', city: 'Dubai', area: 'Downtown' },
+      location: { country: 'ae', city: body.city || 'Dubai', area: '' },
       joinedAt: new Date().toISOString().split('T')[0],
     }
     users.push(newUser)
     const { password, ...safeUser } = newUser
+    if (businessId) {
+      const biz = businesses.find((b) => b.id === businessId)
+      safeUser.business = biz
+        ? { id: biz.id, slug: biz.slug, nameKey: biz.nameKey || biz.name, logo: biz.logo, tier: biz.tier }
+        : null
+    }
     return {
       success: true,
       data: {
@@ -395,10 +433,86 @@ export async function handleMockRequest(config) {
     return { success: true, data }
   }
 
-  // Feed timeline
+  // Feed timeline — mixed listings (classified + auction + offer)
   if (url === 'feed' && method === 'get') {
-    const filtered = filterProducts(params)
-    return paginate(filtered, Number(params.page) || 1, Number(params.pageSize) || 10)
+    const typeFilter = params.type || 'all'
+    const items = []
+
+    if (typeFilter === 'all' || typeFilter === 'classified') {
+      filterProducts({ ...params, type: undefined }).forEach((p) => {
+        items.push({
+          ...p,
+          feedId: `classified-${p.id}`,
+          listingType: 'classified',
+          href: `/marketplace/${p.id}`,
+          sortAt: p.createdAt || p.updatedAt,
+        })
+      })
+    }
+
+    if (typeFilter === 'all' || typeFilter === 'auction') {
+      auctions
+        .filter((a) => a.status === 'active')
+        .forEach((a) => {
+          items.push({
+            id: a.id,
+            feedId: `auction-${a.id}`,
+            listingType: 'auction',
+            title: a.title,
+            images: a.images,
+            price: a.currentBid,
+            currentBid: a.currentBid,
+            endTime: a.endTime,
+            seller: a.seller,
+            sellerId: a.sellerId,
+            status: a.status,
+            href: `/auctions/${a.id}`,
+            sortAt: a.endTime,
+            likes: a.biddersCount || 0,
+          })
+        })
+    }
+
+    if (typeFilter === 'all' || typeFilter === 'offer') {
+      filterOffers({}).forEach((o) => {
+        items.push({
+          id: o.id,
+          feedId: `offer-${o.id}`,
+          listingType: 'offer',
+          titleKey: o.titleKey,
+          title: o.titleKey,
+          images: [o.image],
+          image: o.image,
+          price: o.salePrice,
+          salePrice: o.salePrice,
+          originalPrice: o.originalPrice,
+          discountPercent: o.discountPercent,
+          currency: o.currency,
+          badge: o.badge,
+          validUntil: o.validUntil,
+          business: o.business,
+          businessId: o.businessId,
+          sellerType: 'business',
+          seller: o.business
+            ? {
+                name: o.business.nameKey,
+                nameKey: o.business.nameKey,
+                avatar: o.business.logo,
+                verified: o.business.verified,
+                isBusiness: true,
+                businessSlug: o.business.slug,
+                businessTier: o.business.tier,
+              }
+            : null,
+          href: `/offers/${o.id}`,
+          sortAt: o.validUntil,
+          likes: 0,
+        })
+      })
+    }
+
+    items.sort((a, b) => new Date(b.sortAt || 0) - new Date(a.sortAt || 0))
+    return paginate(items, Number(params.page) || 1, Number(params.pageSize) || 10)
   }
 
   // Auctions

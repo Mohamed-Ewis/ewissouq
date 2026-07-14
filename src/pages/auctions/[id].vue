@@ -87,6 +87,8 @@ const breadcrumbItems = computed(() => [
 ])
 
 async function placeBid(amount) {
+  const { requireAuth } = useRequireAuth()
+  if (!requireAuth()) return
   bidError.value = ''
   bidSuccess.value = false
   try {

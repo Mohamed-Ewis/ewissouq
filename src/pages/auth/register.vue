@@ -7,6 +7,34 @@
     <h3 class="fw-bold mb-1">{{ $t('auth.registerTitle') }}</h3>
     <p class="text-muted mb-4">{{ $t('auth.registerSubtitle') }}</p>
 
+    <div class="account-type mb-4">
+      <p class="small fw-semibold mb-2">{{ $t('auth.accountTypeLabel') }}</p>
+      <div class="row g-2">
+        <div class="col-6">
+          <button
+            type="button"
+            class="account-type__btn"
+            :class="{ active: form.accountType === 'individual' }"
+            @click="form.accountType = 'individual'"
+          >
+            <i class="bi bi-person fs-4 d-block mb-1" />
+            {{ $t('auth.accountIndividual') }}
+          </button>
+        </div>
+        <div class="col-6">
+          <button
+            type="button"
+            class="account-type__btn"
+            :class="{ active: form.accountType === 'business' }"
+            @click="form.accountType = 'business'"
+          >
+            <i class="bi bi-shop fs-4 d-block mb-1" />
+            {{ $t('auth.accountStore') }}
+          </button>
+        </div>
+      </div>
+    </div>
+
     <form @submit.prevent="handleRegister">
       <div class="text-center mb-4">
         <div class="avatar-upload position-relative d-inline-block">
@@ -19,9 +47,21 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">{{ $t('form.fullName') }}</label>
-        <input v-model="form.name" type="text" class="form-control" :placeholder="$t('form.fullNamePlaceholder')" required />
+        <label class="form-label">{{ form.accountType === 'business' ? $t('form.storeName') : $t('form.fullName') }}</label>
+        <input
+          v-model="form.name"
+          type="text"
+          class="form-control"
+          :placeholder="form.accountType === 'business' ? $t('form.storeNamePlaceholder') : $t('form.fullNamePlaceholder')"
+          required
+        />
       </div>
+
+      <div v-if="form.accountType === 'business'" class="mb-3">
+        <label class="form-label">{{ $t('form.storeCity') }}</label>
+        <input v-model="form.city" type="text" class="form-control" :placeholder="$t('form.storeCityPlaceholder')" required />
+      </div>
+
       <div class="mb-3">
         <label class="form-label">{{ $t('form.email') }}</label>
         <input v-model="form.email" type="email" class="form-control" :placeholder="$t('form.emailPlaceholder')" required />
@@ -57,10 +97,20 @@ definePageMeta({ layout: 'auth' })
 
 const { t } = useI18n()
 const authStore = useAuthStore()
-const form = reactive({ name: '', email: '', password: '', confirmPassword: '', avatar: null })
+const form = reactive({
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  avatar: null,
+  accountType: 'individual',
+  city: '',
+})
 const avatarPreview = ref(DEFAULT_AVATAR)
 const loading = ref(false)
 const error = ref('')
+
+const { afterAuthPath } = useRequireAuth()
 
 function onAvatarChange(e) {
   const file = e.target.files[0]
@@ -69,8 +119,6 @@ function onAvatarChange(e) {
     avatarPreview.value = form.avatar
   }
 }
-
-const { to: localizedNavigate } = useLocalizedNavigate()
 
 async function handleRegister() {
   error.value = ''
@@ -85,8 +133,10 @@ async function handleRegister() {
       email: form.email,
       password: form.password,
       avatar: avatarPreview.value,
+      accountType: form.accountType,
+      city: form.city,
     })
-    await localizedNavigate('/', { replace: true })
+    await navigateTo(afterAuthPath('/'), { replace: true })
   } catch (err) {
     error.value = err.message
   } finally {
@@ -98,6 +148,23 @@ async function handleRegister() {
 <style scoped lang="scss">
 .auth-back-link:hover {
   color: var(--es-primary) !important;
+}
+
+.account-type__btn {
+  width: 100%;
+  border: 1px solid var(--es-border);
+  background: var(--es-surface);
+  border-radius: 12px;
+  padding: 0.85rem 0.5rem;
+  color: var(--es-text-muted);
+  transition: all 0.2s ease;
+
+  &.active {
+    border-color: var(--es-primary);
+    color: var(--es-primary);
+    background: rgba(99, 102, 241, 0.06);
+    font-weight: 600;
+  }
 }
 
 .upload-preview {
