@@ -66,7 +66,7 @@
           </div>
 
           <div class="d-flex gap-2 mb-4">
-            <button class="btn btn-primary flex-grow-1">
+            <button type="button" class="btn btn-primary flex-grow-1" @click="contactSeller">
               <i class="bi bi-chat-dots me-1" /> {{ $t('product.contactSeller') }}
             </button>
             <button class="btn btn-outline-primary" :class="{ active: liked }" @click="toggleLike">
@@ -139,6 +139,8 @@ const { translateBusiness } = useBusinessName()
 const showVideo = ref(false)
 const liked = ref(false)
 const saved = ref(false)
+const { requireAuth } = useRequireAuth()
+const localePath = useLocalePath()
 
 const productId = computed(() => route.params.id)
 
@@ -215,6 +217,18 @@ async function toggleSave() {
 function share() {
   if (!product.value || !navigator.share) return
   navigator.share({ title: product.value.title, url: window.location.href })
+}
+
+function contactSeller() {
+  if (!product.value || !requireAuth()) return
+  navigateTo({
+    path: localePath('/messages'),
+    query: {
+      listingId: String(product.value.id),
+      sellerId: String(product.value.sellerId || product.value.seller?.id || ''),
+      title: product.value.title,
+    },
+  })
 }
 </script>
 

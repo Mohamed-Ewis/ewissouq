@@ -15,7 +15,9 @@
     "menu": "Menu",
     "home": "Accueil",
     "stores": "Offres",
-    "liveAuctions": "{count} enchères en direct"
+    "liveAuctions": "{count} enchères en direct",
+    "messages": "Messages",
+    "publish": "Publier"
   },
   "common": {
     "cancel": "Annuler",
@@ -44,7 +46,10 @@
     "welcomeBack": "Bon retour",
     "loginSubtitle": "Connectez-vous à votre compte EwiSSouq",
     "registerTitle": "Créer un compte",
-    "registerSubtitle": "Rejoignez la communauté EwiSSouq",
+    "registerSubtitle": "Choisissez votre type de compte et rejoignez EwiSSouq",
+    "accountTypeLabel": "Type de compte",
+    "accountIndividual": "Particulier",
+    "accountStore": "Magasin officiel",
     "rememberMe": "Se souvenir de moi",
     "forgotPassword": "Mot de passe oublié ?",
     "orContinueWith": "ou continuer avec",
@@ -74,7 +79,11 @@
     "passwordMin": "8 caractères minimum",
     "confirmPassword": "Confirmer le mot de passe",
     "fullName": "Nom complet",
-    "fullNamePlaceholder": "Jean Dupont"
+    "fullNamePlaceholder": "Jean Dupont",
+    "storeName": "Nom du magasin",
+    "storeNamePlaceholder": "ex. Tech World",
+    "storeCity": "Ville du magasin",
+    "storeCityPlaceholder": "Dubaï"
   },
   "social": {
     "google": "Google",
@@ -89,13 +98,20 @@
     "savedItems": "Articles enregistrés",
     "sellSomething": "Vendre un article",
     "liveAuctions": "Enchères en direct",
-    "timeline": "Fil chronologique",
+    "timeline": "Découvrir",
     "endReached": "Vous avez atteint la fin",
     "trending": "Tendances",
     "mostViewed": "Les plus vus",
     "recommended": "Recommandés",
-    "noPosts": "Aucune publication",
-    "noPostsDesc": "Soyez le premier à publier un produit !"
+    "endingOffers": "Offres qui expirent",
+    "noPosts": "Rien ici pour le moment",
+    "noPostsDesc": "Essayez un autre type ou revenez plus tard.",
+    "chips": {
+      "all": "Tout",
+      "classified": "Annonces",
+      "auction": "Enchères",
+      "offer": "Offres"
+    }
   },
   "ads": {
     "sponsored": "Annonce",
@@ -198,14 +214,18 @@
     "ariaLabel": "Notifications"
   },
   "listing": {
-    "title": "Créer une annonce",
-    "subtitle": "Publiez votre produit et atteignez des milliers d'acheteurs",
+    "title": "Publier sur EwiSSouq",
+    "subtitle": "Choisissez un type puis remplissez les détails",
     "photos": "Photos",
     "photosHint": "Cliquez pour télécharger des images (plusieurs)",
     "video": "Vidéo du produit (max 60 sec)",
     "titleLabel": "Titre",
     "titlePlaceholder": "Que vendez-vous ?",
     "price": "Prix (AED)",
+    "salePrice": "Prix de l'offre",
+    "startingBid": "Enchère de départ",
+    "validUntil": "Fin de l'offre",
+    "auctionEnds": "Fin de l'enchère",
     "description": "Description",
     "descriptionPlaceholder": "Décrivez votre produit...",
     "category": "Catégorie",
@@ -217,7 +237,31 @@
     "areaPlaceholder": "Marina",
     "country": "Pays",
     "success": "Annonce créée avec succès !",
-    "publish": "Publier l'annonce"
+    "successAuction": "Enchère préparée — bientôt dans la liste",
+    "successOffer": "Offre préparée — consultez Offres",
+    "publish": "Publier",
+    "offerStoreOnly": "Les offres magasin sont réservées aux comptes officiels. Inscrivez-vous comme magasin :",
+    "types": {
+      "classified": "Annonce",
+      "classifiedHint": "Vente directe entre particuliers",
+      "auction": "Enchère",
+      "auctionHint": "Mises avec délai",
+      "offer": "Offre magasin",
+      "offerHint": "Remise officielle de votre magasin"
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "Échangez autour des annonces et offres",
+    "aboutListing": "À propos de",
+    "viewListing": "Voir l'annonce",
+    "placeholder": "Écrire un message...",
+    "send": "Envoyer",
+    "emptyTitle": "Pas encore de conversation",
+    "emptyDesc": "Commencez via Contacter le vendeur sur une annonce.",
+    "defaultListing": "Annonce",
+    "autoReply": "Bonjour ! Comment puis-je vous aider pour cette annonce ?",
+    "justNow": "À l'instant"
   },
   "profile": {
     "follow": "Suivre",
@@ -461,6 +505,8 @@
     "offersCount": "offres",
     "featuredOffer": "Offre vedette",
     "claimOffer": "Obtenir l'offre",
+    "claimSuccessShort": "Réservé",
+    "claimSuccess": "Offre réservée. Visitez le magasin pour finaliser.",
     "noOffers": "Aucune offre pour le moment",
     "noOffersDesc": "Suivez le magasin pour être notifié.",
     "offerExpired": "Offre expirée",

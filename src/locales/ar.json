@@ -15,7 +15,9 @@
     "menu": "القائمة",
     "home": "الرئيسية",
     "stores": "العروض",
-    "liveAuctions": "{count} مزادات لايف"
+    "liveAuctions": "{count} مزادات لايف",
+    "messages": "الرسائل",
+    "publish": "أنشر"
   },
   "common": {
     "cancel": "إلغاء",
@@ -44,7 +46,10 @@
     "welcomeBack": "مرحباً بعودتك",
     "loginSubtitle": "سجّل الدخول إلى حسابك في EwiSSouq",
     "registerTitle": "إنشاء حساب",
-    "registerSubtitle": "انضم إلى مجتمع EwiSSouq",
+    "registerSubtitle": "اختر نوع حسابك وانضم إلى EwiSSouq",
+    "accountTypeLabel": "نوع الحساب",
+    "accountIndividual": "فرد",
+    "accountStore": "متجر رسمي",
     "rememberMe": "تذكرني",
     "forgotPassword": "نسيت كلمة المرور؟",
     "orContinueWith": "أو تابع عبر",
@@ -74,7 +79,11 @@
     "passwordMin": "8 أحرف على الأقل",
     "confirmPassword": "تأكيد كلمة المرور",
     "fullName": "الاسم الكامل",
-    "fullNamePlaceholder": "محمد أحمد"
+    "fullNamePlaceholder": "محمد أحمد",
+    "storeName": "اسم المتجر",
+    "storeNamePlaceholder": "مثلاً: إلكترونيات النور",
+    "storeCity": "مدينة المتجر",
+    "storeCityPlaceholder": "القاهرة"
   },
   "social": {
     "google": "جوجل",
@@ -89,13 +98,20 @@
     "savedItems": "العناصر المحفوظة",
     "sellSomething": "بِع شيئاً",
     "liveAuctions": "مزادات مباشرة",
-    "timeline": "الخط الزمني",
+    "timeline": "اكتشف الآن",
     "endReached": "وصلت إلى النهاية",
     "trending": "الأكثر رواجاً",
     "mostViewed": "الأكثر مشاهدة",
     "recommended": "موصى به",
-    "noPosts": "لا توجد منشورات",
-    "noPostsDesc": "كن أول من يعرض منتجاً!"
+    "endingOffers": "عروض تنتهي قريباً",
+    "noPosts": "لا توجد نتائج",
+    "noPostsDesc": "جرّب نوعاً آخر أو عد لاحقاً.",
+    "chips": {
+      "all": "الكل",
+      "classified": "إعلان",
+      "auction": "مزاد",
+      "offer": "عرض"
+    }
   },
   "ads": {
     "sponsored": "إعلان",
@@ -198,14 +214,18 @@
     "ariaLabel": "الإشعارات"
   },
   "listing": {
-    "title": "إنشاء إعلان",
-    "subtitle": "اعرض منتجك واصل إلى آلاف المشترين",
+    "title": "أنشر على EwiSSouq",
+    "subtitle": "اختر نوع النشر ثم أكمل التفاصيل",
     "photos": "الصور",
     "photosHint": "انقر لرفع الصور (متعددة)",
     "video": "فيديو المنتج (60 ثانية كحد أقصى)",
     "titleLabel": "العنوان",
     "titlePlaceholder": "ماذا تبيع؟",
     "price": "السعر (درهم)",
+    "salePrice": "سعر العرض",
+    "startingBid": "سعر البداية",
+    "validUntil": "ينتهي العرض في",
+    "auctionEnds": "ينتهي المزاد في",
     "description": "الوصف",
     "descriptionPlaceholder": "صف منتجك...",
     "category": "الفئة",
@@ -217,7 +237,31 @@
     "areaPlaceholder": "مارينا",
     "country": "الدولة",
     "success": "تم إنشاء الإعلان بنجاح!",
-    "publish": "نشر الإعلان"
+    "successAuction": "تم تجهيز المزاد — ستجده قريباً في قائمة المزادات",
+    "successOffer": "تم تجهيز العرض — راجعه من صفحة العروض",
+    "publish": "نشر",
+    "offerStoreOnly": "عروض الشركات متاحة لحسابات المتاجر فقط. سجّل كمتجر رسمي:",
+    "types": {
+      "classified": "إعلان",
+      "classifiedHint": "بيع مباشر بين الأفراد",
+      "auction": "مزاد",
+      "auctionHint": "بيع بالمزايدة بوقت محدد",
+      "offer": "عرض متجر",
+      "offerHint": "خصم رسمي من متجرك"
+    }
+  },
+  "messages": {
+    "title": "الرسائل",
+    "subtitle": "تواصل بخصوص الإعلانات والعروض",
+    "aboutListing": "بخصوص",
+    "viewListing": "عرض الإعلان",
+    "placeholder": "اكتب رسالتك...",
+    "send": "إرسال",
+    "emptyTitle": "لا توجد محادثة بعد",
+    "emptyDesc": "ابدأ من زر تواصل مع البائع في أي إعلان.",
+    "defaultListing": "إعلان",
+    "autoReply": "مرحباً! كيف يمكنني مساعدتك بخصوص هذا الإعلان؟",
+    "justNow": "الآن"
   },
   "profile": {
     "follow": "متابعة",
@@ -461,6 +505,8 @@
     "offersCount": "عرض",
     "featuredOffer": "عرض مميز",
     "claimOffer": "احصل على العرض",
+    "claimSuccessShort": "تم الحجز",
+    "claimSuccess": "تم حجز العرض بنجاح. تواصل مع المتجر لإتمام الاستلام.",
     "noOffers": "لا توجد عروض حالياً",
     "noOffersDesc": "تابع المتجر لتصلك العروض الجديدة.",
     "offerExpired": "انتهى العرض",

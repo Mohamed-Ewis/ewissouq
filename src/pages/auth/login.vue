@@ -60,18 +60,19 @@
 definePageMeta({ layout: 'auth' })
 
 const authStore = useAuthStore()
+const route = useRoute()
 const form = reactive({ email: 'ahmed@example.com', password: 'password123', remember: false })
 const loading = ref(false)
 const error = ref('')
 
-const { to: localizedNavigate } = useLocalizedNavigate()
+const { afterAuthPath } = useRequireAuth()
 
 async function handleLogin() {
   loading.value = true
   error.value = ''
   try {
     await authStore.login(form)
-    await localizedNavigate('/', { replace: true })
+    await navigateTo(afterAuthPath('/'), { replace: true })
   } catch (err) {
     error.value = err.message
   } finally {

@@ -1,20 +1,31 @@
 <template>
   <div class="home-page">
     <div class="row g-4">
-      <!-- Main feed — 9 columns -->
       <div class="col-lg-9">
         <StoriesBar v-if="stories.length" :stories="stories" />
 
-        <!-- <BusinessShowcase v-if="featuredBusinesses.length" :businesses="featuredBusinesses" class="mb-4" /> -->
-
         <div class="feed-timeline">
-          <h5 class="fw-bold mb-3">
-            <i class="bi bi-clock-history me-2 text-primary" />{{ $t('home.timeline') }}
-          </h5>
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <h5 class="fw-bold mb-0">
+              <i class="bi bi-compass me-2 text-primary" />{{ $t('home.timeline') }}
+            </h5>
+            <div class="feed-chips">
+              <button
+                v-for="chip in chips"
+                :key="chip.value"
+                type="button"
+                class="btn btn-sm"
+                :class="feedType === chip.value ? 'btn-primary' : 'btn-outline-secondary'"
+                @click="setFeedType(chip.value)"
+              >
+                <i :class="chip.icon" class="me-1" />{{ chip.label }}
+              </button>
+            </div>
+          </div>
 
           <template v-if="productsStore.feedLoading && !productsStore.feed.length">
-            <div class="feed-shuffle-grid feed-shuffle-grid--loading">
-              <UiSkeletonLoader v-for="i in 5" :key="i" type="card" :class="skeletonClass(i - 1)" />
+            <div class="feed-loading-grid">
+              <UiSkeletonLoader v-for="i in 4" :key="i" type="card" class="feed-skel" />
             </div>
           </template>
 
@@ -36,30 +47,40 @@
         </div>
       </div>
 
-      <!-- Sidebar — 3 columns -->
       <div class="col-lg-3 d-none d-lg-block">
         <aside class="home-sidebar">
           <AdsSlider v-if="homeAds.length" :ads="homeAds" variant="sidebar" class="mb-4" />
 
-          <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
-
-          <!-- <div class="sidebar-card card p-3 mb-4">
+          <div v-if="endingOffers.length" class="sidebar-card card p-3 mb-4">
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h6 class="fw-bold mb-0">
-                <i class="bi bi-building text-primary" /> {{ $t('businesses.featuredTitle') }}
+                <i class="bi bi-tag text-danger" /> {{ $t('home.endingOffers') }}
               </h6>
               <NuxtLinkLocale to="/stores" class="small text-primary text-decoration-none">
                 {{ $t('common.viewAll') }}
               </NuxtLinkLocale>
             </div>
-            <FeaturedBusinesses :businesses="featuredBusinesses" />
-          </div> -->
+            <div v-for="offer in endingOffers" :key="offer.id" class="mini-row mb-2">
+              <NuxtLinkLocale :to="`/offers/${offer.id}`" class="text-decoration-none d-flex gap-2 align-items-center">
+                <img :src="offer.image" class="mini-img" :alt="translateOffer(offer.titleKey)" />
+                <div class="min-w-0">
+                  <div class="small fw-medium text-truncate">{{ translateOffer(offer.titleKey) }}</div>
+                  <div class="small text-danger fw-bold">-{{ offer.discountPercent }}%</div>
+                </div>
+              </NuxtLinkLocale>
+            </div>
+          </div>
 
-          <!-- <div class="sidebar-card card p-3 mb-4">
-            <h6 class="fw-bold mb-3">
-              <i class="bi bi-hammer text-primary" /> {{ $t('home.liveAuctions') }}
-            </h6>
-            <div v-for="auction in liveAuctions.slice(0, 3)" :key="auction.id" class="mini-auction mb-2">
+          <div v-if="liveAuctions.length" class="sidebar-card card p-3 mb-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h6 class="fw-bold mb-0">
+                <i class="bi bi-hammer text-primary" /> {{ $t('home.liveAuctions') }}
+              </h6>
+              <NuxtLinkLocale to="/auctions" class="small text-primary text-decoration-none">
+                {{ $t('common.viewAll') }}
+              </NuxtLinkLocale>
+            </div>
+            <div v-for="auction in liveAuctions.slice(0, 3)" :key="auction.id" class="mini-row mb-2">
               <NuxtLinkLocale :to="`/auctions/${auction.id}`" class="text-decoration-none d-flex gap-2 align-items-center">
                 <img :src="auction.images[0]" class="mini-img" :alt="auction.title" />
                 <div class="min-w-0">
@@ -68,42 +89,13 @@
                 </div>
               </NuxtLinkLocale>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div class="sidebar-card card p-3 mb-4">
-            <h6 class="fw-bold mb-3">
-              <i class="bi bi-fire text-danger" /> {{ $t('home.trending') }}
-            </h6>
-            <div v-for="item in productsStore.trending.slice(0, 5)" :key="item.id" class="trending-item mb-2">
-              <NuxtLinkLocale :to="`/marketplace/${item.id}`" class="text-decoration-none d-flex gap-2">
-                <img :src="item.images[0]" class="trending-img" :alt="item.title" />
-                <div class="min-w-0">
-                  <div class="small fw-medium text-truncate">{{ item.title }}</div>
-                  <div class="small text-primary">{{ formatPrice(item.price) }}</div>
-                </div>
-              </NuxtLinkLocale>
-            </div>
-          </div> -->
-
-          <!-- <div class="sidebar-card card p-3">
-            <h6 class="fw-bold mb-3">
-              <i class="bi bi-eye text-info" /> {{ $t('home.mostViewed') }}
-            </h6>
-            <div v-for="item in productsStore.mostViewed.slice(0, 5)" :key="item.id" class="trending-item mb-2">
-              <NuxtLinkLocale :to="`/marketplace/${item.id}`" class="text-decoration-none d-flex gap-2">
-                <img :src="item.images[0]" class="trending-img" :alt="item.title" />
-                <div class="min-w-0">
-                  <div class="small fw-medium text-truncate">{{ item.title }}</div>
-                  <div class="small text-muted"><i class="bi bi-eye" /> {{ item.views }}</div>
-                </div>
-              </NuxtLinkLocale>
-            </div>
-          </div> -->
+          <CategoryGrid :categories="categoryTree" variant="sidebar" class="mb-4" />
         </aside>
       </div>
     </div>
 
-    <!-- Mobile sections -->
     <div class="d-lg-none mt-4">
       <CategoryGrid v-if="categoryTree.length" :categories="categoryTree" class="mb-4" />
       <FeedProductSection
@@ -127,28 +119,38 @@ definePageMeta({ layout: 'default' })
 
 import { getCategories, getStories } from '@/api/categories'
 import { getAuctions } from '@/api/auctions'
-import { getFeaturedBusinesses } from '@/api/businesses'
+import { getOffers } from '@/api/offers'
 import { getHomeAds } from '@/api/ads'
 
-const { t } = useI18n()
+const { t, te } = useI18n()
 const { formatPrice } = useFormatters()
 const productsStore = useProductsStore()
 const categoryTree = ref([])
 const stories = ref([])
 const liveAuctions = ref([])
-const featuredBusinesses = ref([])
+const endingOffers = ref([])
 const homeAds = ref([])
+const feedType = computed(() => productsStore.feedType || 'all')
 
+const chips = computed(() => [
+  { value: 'all', label: t('home.chips.all'), icon: 'bi bi-grid' },
+  { value: 'classified', label: t('home.chips.classified'), icon: 'bi bi-tag' },
+  { value: 'auction', label: t('home.chips.auction'), icon: 'bi bi-hammer' },
+  { value: 'offer', label: t('home.chips.offer'), icon: 'bi bi-percent' },
+])
 
 const { target: loadMoreRef } = useInfiniteScroll(
   () => productsStore.fetchFeed(true),
   { canLoad: () => productsStore.feedHasMore && !productsStore.feedLoading },
 )
 
-const BENTO_PATTERN = ['hero', 'tall', 'wide', 'standard', 'standard', 'compact', 'tall', 'compact', 'wide', 'standard']
+function translateOffer(key) {
+  if (key && te(key)) return t(key)
+  return key || ''
+}
 
-function skeletonClass(index) {
-  return `bento-skeleton--${BENTO_PATTERN[index % BENTO_PATTERN.length]}`
+async function setFeedType(type) {
+  await productsStore.fetchFeed(false, type)
 }
 
 onMounted(async () => {
@@ -158,7 +160,7 @@ onMounted(async () => {
     getCategories().then((r) => { categoryTree.value = r.data || r || [] }),
     getStories().then((r) => { stories.value = (r.data || r || []).slice(0, 5) }),
     getAuctions({ status: 'active' }).then((r) => { liveAuctions.value = r.data || r || [] }),
-    getFeaturedBusinesses().then((r) => { featuredBusinesses.value = r.data || r || [] }),
+    getOffers({ sort: 'ending', pageSize: 4 }).then((r) => { endingOffers.value = (r.data || r || []).slice(0, 4) }),
     getHomeAds().then((r) => { homeAds.value = r.data || r || [] }),
   ])
 })
@@ -174,38 +176,19 @@ $sidebar-sticky-top: 6.5rem;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--es-border) transparent;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--es-border);
-    border-radius: 4px;
-  }
 }
 
 .sidebar-card {
   border: 1px solid var(--es-border);
 }
 
-.sidebar-link {
-  color: var(--es-text-muted);
-  text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all $transition;
-  font-size: 0.9rem;
-
-  &:hover {
-    background: var(--es-surface-2);
-    color: var(--es-primary);
-  }
+.feed-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
-.mini-img,
-.trending-img {
+.mini-img {
   width: 48px;
   height: 48px;
   border-radius: 8px;
@@ -213,62 +196,18 @@ $sidebar-sticky-top: 6.5rem;
   flex-shrink: 0;
 }
 
-.feed-shuffle-grid--loading {
+.feed-loading-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: 0.85rem;
 
   @media (min-width: 576px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: minmax(180px, auto);
-    grid-auto-flow: dense;
-    gap: 0.875rem;
   }
+}
 
-  @media (min-width: 992px) {
-    grid-auto-rows: minmax(220px, auto);
-    gap: 1.25rem;
-  }
-
-  :deep(.skeleton-card),
-  :deep(.card) {
-    border-radius: 20px;
-    height: 100%;
-    min-height: inherit;
-  }
-
-  .bento-skeleton--hero {
-    min-height: 280px;
-
-    @media (min-width: 576px) {
-      grid-row: span 2;
-      min-height: 100%;
-    }
-  }
-
-  .bento-skeleton--tall {
-    min-height: 320px;
-
-    @media (min-width: 576px) {
-      grid-row: span 2;
-      min-height: 100%;
-    }
-  }
-
-  .bento-skeleton--wide {
-    min-height: 200px;
-
-    @media (min-width: 576px) {
-      grid-column: span 2;
-    }
-  }
-
-  .bento-skeleton--compact {
-    min-height: 180px;
-  }
-
-  .bento-skeleton--standard {
-    min-height: 240px;
-  }
+.feed-skel {
+  min-height: 220px;
+  border-radius: 14px;
 }
 </style>

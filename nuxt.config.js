@@ -1,10 +1,13 @@
 export default defineNuxtConfig({
   srcDir: "src/",
   compatibilityDate: "2024-12-01",
+  future: {
+    compatibilityVersion: 3,
+  },
   devtools: { enabled: true },
   ssr: false,
   experimental: {
-    // Workaround for Nuxt 3.21.8 dev crash with ssr:false (fixed in 3.21.9)
+    // Workaround for Nuxt 3.21.8 + ssr:false ("No entry found in rollupOptions.input")
     viteEnvironmentApi: true,
     // Avoid Vite pre-transform race on "#app-manifest" during dev
     appManifest: false,

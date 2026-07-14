@@ -29,11 +29,16 @@ export const useProductsStore = defineStore('products', {
     error: null,
     feedPage: 1,
     feedHasMore: true,
+    feedType: 'all',
     productsMeta: null,
   }),
 
   actions: {
-    async fetchFeed(append = false) {
+    async fetchFeed(append = false, type) {
+      if (type && type !== this.feedType) {
+        this.feedType = type
+        append = false
+      }
       if (!append) {
         this.feedPage = 1
         this.feedHasMore = true
@@ -41,7 +46,11 @@ export const useProductsStore = defineStore('products', {
       if (!this.feedHasMore) return
       this.feedLoading = true
       try {
-        const res = await getFeed({ page: this.feedPage, pageSize: PAGE_SIZE })
+        const res = await getFeed({
+          page: this.feedPage,
+          pageSize: PAGE_SIZE,
+          type: this.feedType === 'all' ? undefined : this.feedType,
+        })
         const items = res.data || []
         this.feed = append ? [...this.feed, ...items] : items
         this.feedHasMore = res.meta?.hasMore ?? false

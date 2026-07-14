@@ -100,6 +100,16 @@
 
                 <li>
 
+                  <NuxtLinkLocale to="/messages" class="dropdown-item">
+
+                    <i class="bi bi-chat-dots me-2" /> {{ $t('nav.messages') }}
+
+                  </NuxtLinkLocale>
+
+                </li>
+
+                <li>
+
                   <NuxtLinkLocale to="/saved" class="dropdown-item">
 
                     <i class="bi bi-bookmark me-2" /> {{ $t('nav.saved') }}

@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isLoggedIn: (state) => !!state.user,
     isVerified: (state) => state.user?.verified || false,
+    isStoreAccount: (state) => state.user?.accountType === 'business' || !!state.user?.businessId,
   },
 
   actions: {
