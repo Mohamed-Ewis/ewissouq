@@ -4,16 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nuxt dev",
-    "dev:clean": "nuxt cleanup && nuxt prepare && nuxt dev",
+    "dev": "concurrently -k -n front,back -c cyan,magenta \"yarn dev:front\" \"yarn dev:backend\"",
+    "dev:front": "nuxt dev",
+    "dev:backend": "yarn --cwd backend dev",
+    "dev:clean": "nuxt cleanup && nuxt prepare && yarn dev",
+    "seed:backend": "yarn --cwd backend seed",
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.9.0",
     "@nuxtjs/i18n": "^9.3.0",
+    "@pinia/nuxt": "^0.9.0",
     "@vueuse/core": "^12.0.0",
     "@vueuse/nuxt": "^12.0.0",
     "axios": "^1.7.9",
@@ -26,6 +29,7 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "concurrently": "^10.0.3",
     "sass": "^1.83.0"
   }
 }

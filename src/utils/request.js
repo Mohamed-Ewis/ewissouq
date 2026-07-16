@@ -72,13 +72,12 @@ function createAxiosInstance() {
         return Promise.reject(normalizeError(error))
       }
       try {
-        const refreshResponse = await handleMockRequest({
-          url: '/auth/refresh',
-          method: 'post',
-          data: { refreshToken },
+        const refreshResponse = await instance.post('/auth/refresh', { refreshToken })
+        const tokens = refreshResponse?.data || refreshResponse
+        setTokens({
+          accessToken: tokens.accessToken,
+          refreshToken: tokens.refreshToken || refreshToken,
         })
-        const tokens = refreshResponse.data || refreshResponse
-        setTokens({ accessToken: tokens.accessToken, refreshToken: tokens.refreshToken || refreshToken })
         processQueue(null, tokens.accessToken)
         originalRequest.headers.Authorization = `Bearer ${tokens.accessToken}`
         return instance(originalRequest)
