@@ -2,11 +2,11 @@
   <article
     ref="cardRef"
     class="feed-card"
+    :style="cardStyle"
     :class="[
       `feed-card--${listingType}`,
       { 'feed-card--inview': inView, 'feed-card--beckon': canBeckon },
     ]"
-    :style="cardStyle"
   >
     <NuxtLinkLocale :to="detailLink" class="feed-card__link">
       <div class="feed-card__media">
