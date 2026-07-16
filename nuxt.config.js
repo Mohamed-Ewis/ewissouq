@@ -75,6 +75,14 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    server: {
+      proxy: {
+        '/api': {
+          target: process.env.NUXT_API_PROXY_TARGET || 'http://127.0.0.1:5000',
+          changeOrigin: true,
+        },
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {
