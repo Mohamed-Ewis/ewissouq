@@ -111,6 +111,11 @@
       "classified": "Annonces",
       "auction": "Enchères",
       "offer": "Offres"
+    },
+    "beckon": {
+      "ad": "Hé ! Regardez ✨",
+      "auction": "Enchérissez vite ! 🔨",
+      "offer": "Offre flash ! 🔥"
     }
   },
   "ads": {
