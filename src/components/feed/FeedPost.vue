@@ -31,7 +31,6 @@
           :delay="beckonDelay"
           :duration="beckonDuration"
         />
-
         <div class="feed-card__shine" />
       </div>
 
