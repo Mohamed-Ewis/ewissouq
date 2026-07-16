@@ -28,8 +28,8 @@
           :label="beckonText"
           :variant="listingType"
           :active="inView"
-          :delay="beckonDelay"
           :duration="beckonDuration"
+          :delay="beckonDelay"
         />
         <div class="feed-card__shine" />
       </div>
