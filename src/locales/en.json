@@ -111,6 +111,11 @@
       "classified": "Ads",
       "auction": "Auctions",
       "offer": "Offers"
+    },
+    "beckon": {
+      "ad": "Hey! Look here ✨",
+      "auction": "Bid before it's gone! 🔨",
+      "offer": "Grab this deal! 🔥"
     }
   },
   "ads": {

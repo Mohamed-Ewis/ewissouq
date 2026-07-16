@@ -1,21 +1,47 @@
 <template>
-  <article class="feed-card animate-fade-in">
+  <article
+    ref="cardRef"
+    class="feed-card"
+    :class="[
+      `feed-card--${listingType}`,
+      { 'feed-card--inview': inView, 'feed-card--beckon': canBeckon },
+    ]"
+    :style="cardStyle"
+  >
     <NuxtLinkLocale :to="detailLink" class="feed-card__link">
       <div class="feed-card__media">
-        <img :src="mediaSrc" :alt="displayTitle" />
+        <img class="feed-card__photo" :src="mediaSrc" :alt="displayTitle" />
+        <div class="feed-card__media-shade" />
+
         <span class="feed-card__type" :class="`feed-card__type--${listingType}`">
+          <span v-if="listingType === 'auction'" class="feed-card__live-dot" />
           {{ typeLabel }}
         </span>
+
         <span v-if="listingType === 'offer' && product.discountPercent" class="feed-card__discount">
           -{{ product.discountPercent }}%
         </span>
+
+        <FeedSouqi
+          v-if="canBeckon"
+          :avatar="sellerAvatar"
+          :label="beckonText"
+          :variant="listingType"
+          :active="inView"
+          :delay="beckonDelay"
+          :duration="beckonDuration"
+        />
+
+        <div class="feed-card__shine" />
       </div>
 
       <div class="feed-card__body">
         <h3 class="feed-card__title">{{ displayTitle }}</h3>
         <div class="feed-card__meta">
           <span class="feed-card__seller text-truncate">
-            <img v-if="sellerAvatar" :src="sellerAvatar" alt="" />
+            <span class="feed-card__avatar-wrap">
+              <img v-if="sellerAvatar" :src="sellerAvatar" alt="" />
+            </span>
             {{ sellerLabel }}
           </span>
           <span class="feed-card__price">{{ priceLabel }}</span>
@@ -37,6 +63,7 @@
 <script setup>
 const props = defineProps({
   product: { type: Object, required: true },
+  index: { type: Number, default: 0 },
 })
 
 const productsStore = useProductsStore()
@@ -46,6 +73,8 @@ const { translateBusiness } = useBusinessName()
 const { requireAuth } = useRequireAuth()
 const liked = ref(false)
 const saved = ref(false)
+const cardRef = ref(null)
+const inView = ref(false)
 
 const listingType = computed(() => props.product.listingType || 'classified')
 
@@ -84,6 +113,31 @@ const sellerLabel = computed(() => {
 })
 
 const sellerAvatar = computed(() => props.product.seller?.avatar || props.product.business?.logo || '')
+const canBeckon = computed(() => !!sellerAvatar.value)
+
+const beckonText = computed(() => {
+  if (listingType.value === 'auction') return t('home.beckon.auction')
+  if (listingType.value === 'offer') return t('home.beckon.offer')
+  return t('home.beckon.ad')
+})
+
+const beckonDelay = computed(() => {
+  const i = props.index
+  const delay = ((i * 1.85) % 8) + (i % 4) * 0.65
+  return `${delay.toFixed(2)}s`
+})
+
+const beckonDuration = computed(() => {
+  const i = props.index
+  const duration = 5.4 + (i % 4) * 0.9
+  const pause = 3.8 + (i % 5) * 1.05
+  return `${(duration + pause).toFixed(2)}s`
+})
+
+const cardStyle = computed(() => ({
+  '--shine-delay': `${((props.index * 2.3) % 5).toFixed(2)}s`,
+  '--enter-delay': `${((props.index % 6) * 0.08).toFixed(2)}s`,
+}))
 
 const priceLabel = computed(() => {
   if (listingType.value === 'auction') {
@@ -96,6 +150,23 @@ const priceLabel = computed(() => {
     return formatPrice(amount)
   }
   return formatPrice(props.product.price)
+})
+
+let io
+
+onMounted(() => {
+  if (!import.meta.client || !cardRef.value) return
+  io = new IntersectionObserver(
+    ([entry]) => {
+      inView.value = entry.isIntersecting
+    },
+    { threshold: 0.32 },
+  )
+  io.observe(cardRef.value)
+})
+
+onBeforeUnmount(() => {
+  io?.disconnect()
 })
 
 async function toggleLike(e) {
@@ -117,21 +188,55 @@ async function toggleSave(e) {
 
 <style scoped lang="scss">
 .feed-card {
+  --shine-delay: 0s;
+  --enter-delay: 0s;
+
   position: relative;
   border: 1px solid var(--es-border);
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 16px;
+  overflow: visible;
   background: var(--es-surface);
   height: 100%;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: card-enter 0.55s ease forwards;
+  animation-delay: var(--enter-delay);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  &--inview .feed-card__shine {
+    animation-play-state: running;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+
+    .feed-card__photo {
+      transform: scale(1.05);
+    }
 
     .feed-card__actions {
       opacity: 1;
     }
+
+    .feed-card__price {
+      transform: scale(1.06);
+    }
+  }
+
+  &--auction {
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+
+  &--offer {
+    border-color: rgba(239, 68, 68, 0.28);
+  }
+}
+
+@keyframes card-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -141,18 +246,60 @@ async function toggleSave(e) {
   height: 100%;
   color: inherit;
   text-decoration: none;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--es-surface);
 }
 
 .feed-card__media {
   position: relative;
   aspect-ratio: 16 / 11;
   background: var(--es-surface-2);
+  overflow: hidden;
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+.feed-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.feed-card__media-shade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.5), transparent);
+  pointer-events: none;
+}
+
+.feed-card__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  animation: shine-sweep 6.5s ease-in-out infinite;
+  animation-delay: var(--shine-delay);
+  animation-play-state: paused;
+  pointer-events: none;
+}
+
+@keyframes shine-sweep {
+  0%,
+  70% {
+    transform: translateX(-120%);
+  }
+  85% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(120%);
   }
 }
 
@@ -160,16 +307,47 @@ async function toggleSave(e) {
   position: absolute;
   top: 0.65rem;
   inset-inline-start: 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 0.68rem;
   font-weight: 700;
-  padding: 0.2rem 0.55rem;
-  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
   color: #fff;
   background: #64748b;
+  z-index: 2;
+  backdrop-filter: blur(4px);
 
-  &--auction { background: #f59e0b; }
-  &--offer { background: #ef4444; }
-  &--classified { background: #6366f1; }
+  &--auction {
+    background: rgba(245, 158, 11, 0.95);
+  }
+  &--offer {
+    background: rgba(239, 68, 68, 0.95);
+  }
+  &--classified {
+    background: rgba(99, 102, 241, 0.95);
+  }
+}
+
+.feed-card__live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: live-pulse 1.4s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.65);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
 }
 
 .feed-card__discount {
@@ -180,12 +358,13 @@ async function toggleSave(e) {
   color: #fff;
   font-weight: 800;
   font-size: 0.75rem;
-  padding: 0.2rem 0.45rem;
-  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  z-index: 2;
 }
 
 .feed-card__body {
-  padding: 0.85rem 1rem 1rem;
+  padding: 0.9rem 1rem 1.05rem;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -193,7 +372,7 @@ async function toggleSave(e) {
 }
 
 .feed-card__title {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 700;
   line-height: 1.35;
   margin: 0;
@@ -214,25 +393,33 @@ async function toggleSave(e) {
 .feed-card__seller {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   min-width: 0;
   font-size: 0.78rem;
   color: var(--es-text-muted);
+}
+
+.feed-card__avatar-wrap {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1.5px solid var(--es-border);
 
   img {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    flex-shrink: 0;
   }
 }
 
 .feed-card__price {
   font-weight: 800;
   color: var(--es-primary);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   white-space: nowrap;
+  transition: transform 0.25s ease;
 }
 
 .feed-card__actions {
@@ -243,6 +430,7 @@ async function toggleSave(e) {
   gap: 0.35rem;
   opacity: 0;
   transition: opacity 0.2s ease;
+  z-index: 4;
 
   @media (hover: none) {
     opacity: 1;
@@ -254,15 +442,31 @@ async function toggleSave(e) {
   height: 34px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   color: #334155;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 
   &.active {
     color: #ef4444;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feed-card,
+  .feed-card__shine,
+  .feed-card__live-dot,
+  .feed-card__photo {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .feed-card {
+    opacity: 1;
+    transform: none;
   }
 }
 </style>
